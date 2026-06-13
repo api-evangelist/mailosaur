@@ -1,0 +1,98 @@
+specificationVersion: "0.1"
+id: mailosaur-plans-pricing
+name: Mailosaur Plans & Pricing
+description: >-
+  Mailosaur offers three pricing tiers for email and SMS testing, billed
+  annually. All plans include unlimited email addresses per inbox and a
+  14-day free trial. Enterprise pricing is available on request.
+url: https://mailosaur.com/pricing
+plans:
+  - name: Personal
+    description: >-
+      Entry-level plan for individual developers or small teams needing
+      basic email testing with API access.
+    url: https://mailosaur.com/pricing
+    price: 20.00
+    priceCurrency: USD
+    billingCycle: monthly
+    billingNote: Billed annually; monthly billing available at higher rate
+    users:
+      included: 1
+      maximum: 3
+    limits:
+      - name: Inboxes
+        value: 1
+        unit: inbox
+      - name: Inbound Emails
+        value: 15000
+        unit: emails/month
+      - name: Daily Email Cap
+        value: 500
+        unit: emails/day
+    features:
+      - REST API access
+      - Email forwarding
+      - SMTP connectivity
+      - Unlimited email addresses per inbox
+      - 14-day free trial
+
+  - name: Core
+    description: >-
+      The most popular plan for teams needing comprehensive email and SMS
+      testing with collaboration features and extended protocol support.
+    url: https://mailosaur.com/pricing
+    price: 50.00
+    priceCurrency: USD
+    billingCycle: monthly
+    billingNote: Billed annually; save 20% vs monthly billing
+    users:
+      included: 5
+      maximum: null
+    limits:
+      - name: Inboxes
+        value: null
+        unit: multiple
+      - name: Inbound Emails
+        value: 75000
+        unit: emails/month
+      - name: Daily Email Cap
+        value: 2500
+        unit: emails/day
+    features:
+      - Everything in Personal
+      - Team access
+      - Mail rules
+      - Reply and send to external addresses
+      - POP3 and IMAP support
+      - SMS testing
+      - Authenticator (TOTP) testing
+      - Email previews (add-on from $25/month)
+
+  - name: Enterprise
+    description: >-
+      Custom plan for large organizations requiring SSO, SCIM, dedicated
+      support, custom permissions, and advanced security features.
+    url: https://mailosaur.com/pricing
+    price: null
+    priceCurrency: USD
+    billingCycle: annual
+    billingNote: Custom pricing — contact Mailosaur sales
+    users:
+      included: null
+      maximum: null
+    limits:
+      - name: Inboxes
+        value: null
+        unit: custom
+      - name: Inbound Emails
+        value: null
+        unit: custom
+    features:
+      - Everything in Core
+      - Custom permissions
+      - SSO (SAML2 and OIDC)
+      - SCIM provisioning
+      - Custom session timeouts
+      - Dedicated account manager
+      - Advanced support with SLAs
+      - International phone number acquisition

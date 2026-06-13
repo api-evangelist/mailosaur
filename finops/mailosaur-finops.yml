@@ -1,0 +1,111 @@
+specificationVersion: "1.0"
+id: mailosaur-finops
+name: Mailosaur FinOps Framework
+description: >-
+  FinOps cost visibility and optimization guidance for teams using Mailosaur
+  for email and SMS testing. Covers cost allocation, usage optimization,
+  and rightsizing across Mailosaur's Personal, Core, and Enterprise plans.
+url: https://mailosaur.com/pricing
+framework: FinOps Framework 1.0
+focusDomain: SaaS
+vendor: Mailosaur
+
+costModel:
+  type: subscription
+  billingOptions:
+    - cycle: annual
+      discount: "20% savings vs monthly billing"
+    - cycle: monthly
+      discount: none
+  currency: USD
+  pricingTiers:
+    - tier: Personal
+      monthlyPrice: 20.00
+      billedAs: annual
+      primaryCostDriver: inbound email volume (15,000/month cap)
+    - tier: Core
+      monthlyPrice: 50.00
+      billedAs: annual
+      primaryCostDriver: inbound email volume (75,000/month cap)
+    - tier: Enterprise
+      monthlyPrice: null
+      billedAs: annual
+      primaryCostDriver: negotiated contract
+
+costAllocation:
+  recommendations:
+    - >-
+        Tag Mailosaur costs to engineering teams or QA cost centers via
+        finance tooling since Mailosaur does not natively expose cost
+        allocation tags.
+    - >-
+        Use the account usage API endpoint (GET /api/usage/limits and
+        GET /api/usage/transactions) to attribute email volume by server
+        (inbox) to specific teams or projects.
+    - >-
+        Map each Mailosaur server (inbox) to a project or team in internal
+        documentation to enable chargeback reporting.
+
+optimization:
+  rightsizing:
+    - >-
+        Monitor monthly inbound email counts via GET /api/usage/transactions
+        (31-day history) to determine whether the current plan tier is
+        appropriate.
+    - >-
+        Downgrade from Core to Personal if consistent monthly volume stays
+        below 15,000 emails and team size is 3 or fewer users.
+    - >-
+        Upgrade from Personal to Core before hitting daily caps to avoid
+        test failures in CI/CD pipelines.
+  wasteReduction:
+    - >-
+        Delete unused servers (inboxes) to keep the account within plan
+        inbox limits and reduce administrative overhead.
+    - >-
+        Remove inactive users to stay within per-plan seat limits and
+        avoid unnecessary Enterprise-tier upgrade triggers.
+    - >-
+        Use mail rules to auto-delete or filter low-value inbound messages,
+        preserving monthly email volume for meaningful tests.
+  annualVsMonthly:
+    - >-
+        Commit to annual billing for a 20% reduction in subscription cost
+        once the team's testing volume and plan requirements are stable.
+    - >-
+        Use the 14-day free trial to validate plan fit before committing to
+        an annual contract.
+
+visibility:
+  usageEndpoints:
+    - name: Account Limits
+      method: GET
+      path: /api/usage/limits
+      description: Returns current plan limits (emails, servers, users).
+    - name: Transaction History
+      method: GET
+      path: /api/usage/transactions
+      description: Returns 31 days of inbound email transaction counts.
+  monitoring:
+    - >-
+        Integrate the usage/limits endpoint into internal dashboards to
+        alert when daily or monthly email caps are approaching thresholds
+        (e.g., 80% consumed).
+    - >-
+        Monitor Mailosaur's status page (https://status.mailosaur.com)
+        to correlate service incidents with test failures and avoid
+        attributing outages to code regressions.
+
+addOns:
+  - name: Email Previews
+    description: >-
+      Visual email rendering previews across clients and devices.
+    price: 25.00
+    priceCurrency: USD
+    billingCycle: monthly
+    applicablePlans:
+      - Core
+      - Enterprise
+    finOpsNote: >-
+      Enable email previews only for teams that actively validate rendering;
+      disable for pure API/functional testing teams to reduce cost.

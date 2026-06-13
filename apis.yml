@@ -1,0 +1,71 @@
+aid: mailosaur
+name: Mailosaur
+description: >-
+  Mailosaur is an email and SMS testing platform for developers and QA teams.
+  It provides a REST API for creating test inboxes, capturing and retrieving
+  messages, running assertions, performing deliverability analysis, and
+  integrating email and SMS testing into CI/CD pipelines. The platform supports
+  authentication testing (TOTP/2FA), spam analysis, SPF/DKIM/DMARC validation,
+  and connects via SMTP, POP3, and IMAP protocols.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/mailosaur/refs/heads/main/apis.yml
+created: 2026-06-13
+modified: 2026-06-13
+specificationVersion: "0.19"
+tags:
+  - Email Testing
+  - SMS Testing
+  - Developer Tools
+  - QA Automation
+  - CI/CD
+  - SMTP
+  - TOTP
+  - Deliverability
+apis:
+  - aid: mailosaur:mailosaur-api
+    name: Mailosaur API
+    description: >-
+      REST API for email and SMS testing. Provides endpoints for managing test
+      inboxes (servers), retrieving and searching messages, running deliverability
+      checks, generating OTPs for authenticator testing, and accessing account
+      usage data. All requests authenticate via HTTP Basic Auth using an API key.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://mailosaur.com/docs/api
+    baseURL: https://mailosaur.com/api
+    tags:
+      - Email
+      - SMS
+      - Testing
+      - REST API
+    properties:
+      - type: Documentation
+        url: https://mailosaur.com/docs/api
+      - type: PostmanCollection
+        url: https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+common:
+  - type: Website
+    url: https://mailosaur.com
+  - type: Documentation
+    url: https://mailosaur.com/docs
+  - type: GitHubOrg
+    url: https://github.com/mailosaur
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/mailosaur
+  - type: X
+    url: https://x.com/mailosaur
+  - type: Blog
+    url: https://mailosaur.com/blog
+  - type: Pricing
+    url: https://mailosaur.com/pricing
+  - type: StatusPage
+    url: https://status.mailosaur.com
+  - type: Plans
+    url: plans/mailosaur-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/mailosaur-rate-limits.yml
+  - type: FinOps
+    url: finops/mailosaur-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

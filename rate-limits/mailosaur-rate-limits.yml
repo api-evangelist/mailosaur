@@ -1,0 +1,69 @@
+specificationVersion: "0.1"
+id: mailosaur-rate-limits
+name: Mailosaur Rate Limits
+description: >-
+  Mailosaur enforces inbound email volume limits per plan rather than
+  per-request HTTP rate limits on the REST API. Daily and monthly inbound
+  email caps vary by plan. The API itself does not publish explicit
+  per-second or per-minute request throttle limits in its documentation.
+url: https://mailosaur.com/docs/api
+rateLimits:
+  - name: Personal Plan — Monthly Email Cap
+    description: Maximum inbound emails received per calendar month on the Personal plan.
+    scope: account
+    limit: 15000
+    unit: emails
+    window: month
+    planApplicability:
+      - Personal
+
+  - name: Personal Plan — Daily Email Cap
+    description: Maximum inbound emails received per day on the Personal plan.
+    scope: account
+    limit: 500
+    unit: emails
+    window: day
+    planApplicability:
+      - Personal
+
+  - name: Core Plan — Monthly Email Cap
+    description: Maximum inbound emails received per calendar month on the Core plan.
+    scope: account
+    limit: 75000
+    unit: emails
+    window: month
+    planApplicability:
+      - Core
+
+  - name: Core Plan — Daily Email Cap
+    description: Maximum inbound emails received per day on the Core plan.
+    scope: account
+    limit: 2500
+    unit: emails
+    window: day
+    planApplicability:
+      - Core
+
+  - name: Enterprise Plan — Custom Caps
+    description: >-
+      Email volume limits are negotiated as part of the Enterprise plan
+      contract. Contact Mailosaur sales for details.
+    scope: account
+    limit: null
+    unit: emails
+    window: custom
+    planApplicability:
+      - Enterprise
+
+notes:
+  - >-
+    Mailosaur's public documentation does not specify HTTP request rate limits
+    (requests per second/minute) for the REST API. Developers hitting usage
+    limits will receive 429 or account-limit error responses.
+  - >-
+    The account usage endpoint (GET /api/usage/limits) can be queried
+    programmatically to retrieve current plan limits and consumption figures.
+  - >-
+    SMTP inbound is available on ports 25, 2525, and 587; POP3 on ports 110
+    and 995. These protocol endpoints are not subject to separate published
+    rate limits.
