@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mailosaur/main/json-schema/mailosaur-server.json",
+  "title": "Server",
+  "description": "A Mailosaur inbox (server) — a virtual SMTP/SMS endpoint.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the inbox (server)."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the inbox (server)."
+    },
+    "users": {
+      "type": "array",
+      "description": "Users (excluding administrators) who have access to the inbox (server) when access is restricted.",
+      "items": { "type": "string" }
+    },
+    "messages": {
+      "type": "integer",
+      "description": "The number of messages currently in the inbox (server)."
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mailosaur/main/json-schema/mailosaur-message.json",
+  "title": "Message",
+  "description": "An email or SMS message processed by Mailosaur.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the message."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["Email", "SMS"],
+      "description": "The type of message."
+    },
+    "from": {
+      "type": "array",
+      "description": "The sender(s) of the message.",
+      "items": { "$ref": "#/definitions/MessageAddress" }
+    },
+    "to": {
+      "type": "array",
+      "description": "The recipient(s) of the message.",
+      "items": { "$ref": "#/definitions/MessageAddress" }
+    },
+    "cc": {
+      "type": "array",
+      "description": "Carbon-copied recipients for email messages.",
+      "items": { "$ref": "#/definitions/MessageAddress" }
+    },
+    "bcc": {
+      "type": "array",
+      "description": "Blind carbon-copied recipients for email messages.",
+      "items": { "$ref": "#/definitions/MessageAddress" }
+    },
+    "received": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date/time that this message was received by Mailosaur."
+    },
+    "subject": {
+      "type": "string",
+      "description": "The subject of the message."
+    },
+    "html": {
+      "$ref": "#/definitions/MessageContent",
+      "description": "Message content that was sent in HTML format."
+    },
+    "text": {
+      "$ref": "#/definitions/MessageContent",
+      "description": "Message content that was sent in plain text format."
+    },
+    "attachments": {
+      "type": "array",
+      "description": "An array of attachment metadata for any attached files.",
+      "items": { "$ref": "#/definitions/Attachment" }
+    },
+    "metadata": {
+      "$ref": "#/definitions/Metadata",
+      "description": "Further metadata related to the message, including email headers."
+    },
+    "server": {
+      "type": "string",
+      "description": "Identifier for the inbox (server) in which the message is located."
+    }
+  },
+  "definitions": {
+    "MessageAddress": {
+      "type": "object",
+      "description": "An email address or SMS phone number.",
+      "properties": {
+        "name": { "type": "string", "description": "The display name." },
+        "email": { "type": "string", "description": "The email address." },
+        "phone": { "type": "string", "description": "The phone number (SMS)." }
+      }
+    },
+    "MessageContent": {
+      "type": "object",
+      "description": "The HTML or plain text content of a message.",
+      "properties": {
+        "links": {
+          "type": "array",
+          "description": "Hyperlinks found in the message body.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "href": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "codes": {
+          "type": "array",
+          "description": "Verification codes found in the message body.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "images": {
+          "type": "array",
+          "description": "Images found in the message body.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "src": { "type": "string" },
+              "alt": { "type": "string" }
+            }
+          }
+        },
+        "body": { "type": "string", "description": "The full body content." }
+      }
+    },
+    "Attachment": {
+      "type": "object",
+      "description": "A file attachment on a message.",
+      "properties": {
+        "id": { "type": "string" },
+        "contentType": { "type": "string" },
+        "fileName": { "type": "string" },
+        "content": { "type": "string" },
+        "contentId": { "type": "string" },
+        "length": { "type": "integer" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "Metadata": {
+      "type": "object",
+      "description": "Further metadata related to the message.",
+      "properties": {
+        "headers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "ehlo": { "type": "string" },
+        "mailFrom": { "type": "string" },
+        "rcptTo": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

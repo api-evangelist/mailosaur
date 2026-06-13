@@ -1,0 +1,76 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "mailosaur": "https://mailosaur.com/vocab#",
+
+    "Server": "mailosaur:Server",
+    "Message": "mailosaur:Message",
+    "Device": "mailosaur:Device",
+    "OtpResult": "mailosaur:OtpResult",
+    "SpamAnalysisResult": "mailosaur:SpamAnalysisResult",
+    "DeliverabilityReport": "mailosaur:DeliverabilityReport",
+    "Preview": "mailosaur:Preview",
+    "Attachment": "mailosaur:Attachment",
+
+    "id": "@id",
+    "type": "@type",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "received": {
+      "@id": "schema:dateReceived",
+      "@type": "schema:DateTime"
+    },
+    "subject": "schema:about",
+    "from": {
+      "@id": "schema:sender",
+      "@type": "schema:Person"
+    },
+    "to": {
+      "@id": "schema:recipient",
+      "@type": "schema:Person"
+    },
+    "cc": {
+      "@id": "mailosaur:cc",
+      "@type": "schema:Person"
+    },
+    "bcc": {
+      "@id": "mailosaur:bcc",
+      "@type": "schema:Person"
+    },
+    "email": "schema:email",
+    "phone": "schema:telephone",
+    "attachments": "schema:encoding",
+    "fileName": "schema:name",
+    "contentType": "schema:encodingFormat",
+    "length": "schema:contentSize",
+    "url": "schema:contentUrl",
+    "server": "mailosaur:server",
+    "users": "mailosaur:users",
+    "messages": "mailosaur:messageCount",
+    "code": "mailosaur:otpCode",
+    "expires": {
+      "@id": "schema:expires",
+      "@type": "schema:DateTime"
+    },
+    "sharedSecret": "mailosaur:sharedSecret",
+    "score": "mailosaur:score",
+    "spf": "mailosaur:spf",
+    "dkim": "mailosaur:dkim",
+    "dmarc": "mailosaur:dmarc",
+    "blockLists": "mailosaur:blockLists",
+    "dnsRecords": "mailosaur:dnsRecords",
+    "spamAssassin": "mailosaur:spamAssassin",
+    "spamFilterResults": "mailosaur:spamFilterResults",
+    "result": "mailosaur:result",
+    "rawValue": "mailosaur:rawValue",
+    "emailClient": "mailosaur:emailClient",
+    "limit": "mailosaur:limit",
+    "current": "mailosaur:current",
+    "timestamp": {
+      "@id": "schema:dateCreated",
+      "@type": "schema:DateTime"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "summary": "Create a new Mailosaur inbox (server)",
+  "request": {
+    "method": "POST",
+    "url": "https://mailosaur.com/api/servers",
+    "headers": {
+      "Authorization": "Basic {base64(api_key:)}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "My Test Inbox"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "id": "a1bcdef2",
+      "name": "My Test Inbox",
+      "users": [],
+      "messages": 0
+    }
+  }
+}

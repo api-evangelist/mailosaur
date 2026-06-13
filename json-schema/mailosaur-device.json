@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mailosaur/main/json-schema/mailosaur-device.json",
+  "title": "Device",
+  "description": "A Mailosaur virtual security device for TOTP/2FA testing.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the device."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the device."
+    }
+  },
+  "definitions": {
+    "OtpResult": {
+      "type": "object",
+      "description": "A one-time password result.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The current one-time password."
+        },
+        "expires": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The expiry date/time of the current one-time password."
+        }
+      }
+    },
+    "DeviceCreateOptions": {
+      "type": "object",
+      "description": "Options used to create a new virtual security device.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "A name used to identify the device."
+        },
+        "sharedSecret": {
+          "type": "string",
+          "description": "The base32-encoded shared secret for this device."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "summary": "Get a deliverability report for an email message",
+  "request": {
+    "method": "GET",
+    "url": "https://mailosaur.com/api/analysis/deliverability/msg_abc123",
+    "headers": {
+      "Authorization": "Basic {base64(api_key:)}"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "spf": {
+        "result": "Pass",
+        "description": "SPF check passed",
+        "rawValue": "v=spf1 include:example.com ~all",
+        "tags": {}
+      },
+      "dkim": [
+        {
+          "result": "Pass",
+          "description": "DKIM signature verified",
+          "rawValue": "v=DKIM1; k=rsa; p=...",
+          "tags": { "domain": "example.com", "selector": "mail" }
+        }
+      ],
+      "dmarc": {
+        "result": "Pass",
+        "description": "DMARC policy passed",
+        "rawValue": "v=DMARC1; p=reject; rua=mailto:dmarc@example.com",
+        "tags": {}
+      },
+      "blockLists": [
+        { "id": "spamhaus", "name": "Spamhaus SBL", "result": "NotListed" }
+      ],
+      "content": {
+        "embed": false,
+        "iframe": false,
+        "object": false,
+        "script": false,
+        "shortUrls": false,
+        "textSize": 256,
+        "totalSize": 4096,
+        "missingAlt": false,
+        "missingListUnsubscribe": false
+      },
+      "dnsRecords": {
+        "a": ["93.184.216.34"],
+        "mx": ["mail.example.com"],
+        "ptr": ["example.com"]
+      },
+      "spamAssassin": {
+        "score": 0.5,
+        "result": "Not Spam",
+        "rules": []
+      }
+    }
+  }
+}

@@ -43,6 +43,8 @@ apis:
         url: https://mailosaur.com/docs/api
       - type: PostmanCollection
         url: https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+      - type: OpenAPI
+        url: openapi/mailosaur-mailosaur-api-openapi.yml
 common:
   - type: Website
     url: https://mailosaur.com

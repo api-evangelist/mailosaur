@@ -1,0 +1,33 @@
+{
+  "summary": "Search for an email message in a Mailosaur inbox",
+  "request": {
+    "method": "POST",
+    "url": "https://mailosaur.com/api/messages/search?server=a1bcdef2&timeout=10000",
+    "headers": {
+      "Authorization": "Basic {base64(api_key:)}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "sentTo": "test-user@a1bcdef2.mailosaur.net",
+      "subject": "Welcome to Our Service",
+      "match": "ALL"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "items": [
+        {
+          "id": "msg_abc123",
+          "type": "Email",
+          "server": "a1bcdef2",
+          "from": [{ "name": "Sender Name", "email": "sender@example.com" }],
+          "to": [{ "name": "", "email": "test-user@a1bcdef2.mailosaur.net" }],
+          "subject": "Welcome to Our Service",
+          "received": "2026-06-13T10:00:00.000Z",
+          "attachments": 0
+        }
+      ]
+    }
+  }
+}

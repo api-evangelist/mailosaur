@@ -1,0 +1,17 @@
+{
+  "summary": "Retrieve the current OTP for a virtual security device",
+  "request": {
+    "method": "GET",
+    "url": "https://mailosaur.com/api/devices/dev_xyz789/otp",
+    "headers": {
+      "Authorization": "Basic {base64(api_key:)}"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "code": "123456",
+      "expires": "2026-06-13T10:00:30.000Z"
+    }
+  }
+}

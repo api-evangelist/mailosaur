@@ -1,0 +1,1457 @@
+openapi: 3.0.3
+info:
+  title: Mailosaur API
+  description: >-
+    REST API for email and SMS testing. Provides endpoints for managing test
+    inboxes (servers), retrieving and searching messages, running deliverability
+    checks, generating OTPs for authenticator testing, and accessing account
+    usage data. All requests authenticate via HTTP Basic Auth using an API key.
+  version: 1.0.0
+  contact:
+    name: Mailosaur Support
+    url: https://mailosaur.com/docs/api
+  termsOfService: https://mailosaur.com/terms
+  license:
+    name: Commercial
+    url: https://mailosaur.com/terms
+servers:
+  - url: https://mailosaur.com
+    description: Mailosaur production API
+
+security:
+  - basicAuth: []
+
+tags:
+  - name: Servers
+    description: >-
+      Operations for creating and managing your Mailosaur inboxes (servers).
+      Inboxes group your tests together, each with its own domain and
+      SMTP/POP3/IMAP credentials.
+  - name: Messages
+    description: >-
+      Operations for finding, retrieving, creating, forwarding, replying to,
+      and deleting the email and SMS messages received by your Mailosaur inboxes.
+  - name: Analysis
+    description: >-
+      Operations for analyzing the content and deliverability of an email,
+      including SpamAssassin scoring and per-provider deliverability reports.
+  - name: Files
+    description: >-
+      Operations for downloading the raw content associated with a message —
+      file attachments, the full EML source of an email, and rendered email
+      previews.
+  - name: Previews
+    description: >-
+      Operations for discovering the email clients available for generating
+      email previews (screenshots of an email rendered in real clients).
+  - name: Devices
+    description: >-
+      Operations for managing virtual security devices and retrieving their
+      current one-time passwords (OTPs), used to automate testing of app-based
+      multi-factor authentication.
+  - name: Usage
+    description: >-
+      Operations for inspecting your account's usage limits and recent
+      transactional usage. These endpoints require authentication with an
+      account-level API key.
+
+paths:
+  /api/servers:
+    get:
+      operationId: listServers
+      summary: List servers
+      description: >-
+        Returns a list of your inboxes (servers). Inboxes (servers) are returned
+        sorted in alphabetical order.
+      tags:
+        - Servers
+      responses:
+        "200":
+          description: A list of inboxes (servers).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerListResult'
+    post:
+      operationId: createServer
+      summary: Create a server
+      description: Creates a new inbox (server).
+      tags:
+        - Servers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServerCreateOptions'
+      responses:
+        "200":
+          description: The newly-created inbox (server).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+
+  /api/servers/{serverId}:
+    get:
+      operationId: getServer
+      summary: Get a server
+      description: Retrieves the detail for a single inbox (server).
+      tags:
+        - Servers
+      parameters:
+        - $ref: '#/components/parameters/serverId'
+      responses:
+        "200":
+          description: The inbox (server).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+    put:
+      operationId: updateServer
+      summary: Update a server
+      description: Updates the attributes of an inbox (server).
+      tags:
+        - Servers
+      parameters:
+        - $ref: '#/components/parameters/serverId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+      responses:
+        "200":
+          description: The updated inbox (server).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+    delete:
+      operationId: deleteServer
+      summary: Delete a server
+      description: >-
+        Permanently delete an inbox (server). This will also delete all messages,
+        associated attachments, etc. within the inbox (server). This operation
+        cannot be undone.
+      tags:
+        - Servers
+      parameters:
+        - $ref: '#/components/parameters/serverId'
+      responses:
+        "204":
+          description: The inbox (server) was successfully deleted.
+
+  /api/servers/{serverId}/password:
+    get:
+      operationId: getServerPassword
+      summary: Get server password
+      description: >-
+        Retrieves the password for an inbox (server). This password can be used
+        for SMTP, POP3, and IMAP connectivity.
+      tags:
+        - Servers
+      parameters:
+        - $ref: '#/components/parameters/serverId'
+      responses:
+        "200":
+          description: The password for the inbox (server).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: string
+                    description: The password value.
+
+  /api/messages:
+    get:
+      operationId: listMessages
+      summary: List messages
+      description: >-
+        Returns a list of your messages in summary form. The summaries are
+        returned sorted by received date, with the most recently-received
+        messages appearing first.
+      tags:
+        - Messages
+      parameters:
+        - name: server
+          in: query
+          required: true
+          description: The unique identifier of the required inbox (server).
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: >-
+            Used alongside itemsPerPage to paginate through results. This is
+            zero-based, meaning 0 is the first page of results.
+          schema:
+            type: integer
+            default: 0
+        - name: itemsPerPage
+          in: query
+          description: >-
+            A limit on the number of results to be returned. This can be set
+            between 1 and 1000, with the default being 50.
+          schema:
+            type: integer
+            default: 50
+            minimum: 1
+            maximum: 1000
+        - name: receivedAfter
+          in: query
+          description: >-
+            Limits results to only messages received after this date/time
+            (default 1 hour ago).
+          schema:
+            type: string
+            format: date-time
+        - name: dir
+          in: query
+          description: >-
+            Optionally limits results based on the direction (Sent or Received),
+            with the default being Received.
+          schema:
+            type: string
+            enum:
+              - Sent
+              - Received
+      responses:
+        "200":
+          description: A list of message summaries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageListResult'
+    post:
+      operationId: createMessage
+      summary: Create a message
+      description: >-
+        Creates a new message that can be sent to a verified email address. This
+        is useful in scenarios where you want an email to trigger a workflow in
+        your product.
+      tags:
+        - Messages
+      parameters:
+        - name: server
+          in: query
+          required: true
+          description: The unique identifier of the required inbox (server).
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreateOptions'
+      responses:
+        "200":
+          description: The newly-created message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+    delete:
+      operationId: deleteAllMessages
+      summary: Delete all messages
+      description: >-
+        Permanently delete all messages within an inbox (server). This operation
+        cannot be undone.
+      tags:
+        - Messages
+      parameters:
+        - name: server
+          in: query
+          required: true
+          description: The unique identifier of the inbox (server).
+          schema:
+            type: string
+      responses:
+        "204":
+          description: All messages were successfully deleted.
+
+  /api/messages/search:
+    post:
+      operationId: searchMessages
+      summary: Search messages
+      description: >-
+        Returns a list of messages matching the specified search criteria, in
+        summary form. The messages are returned sorted by received date, with the
+        most recently-received messages appearing first.
+      tags:
+        - Messages
+      parameters:
+        - name: server
+          in: query
+          required: true
+          description: The unique identifier of the inbox (server) to search.
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: >-
+            Used alongside itemsPerPage to paginate through results.
+          schema:
+            type: integer
+            default: 0
+        - name: itemsPerPage
+          in: query
+          description: >-
+            A limit on the number of results to be returned.
+          schema:
+            type: integer
+            default: 50
+            minimum: 1
+            maximum: 1000
+        - name: receivedAfter
+          in: query
+          description: Limits results to only messages received after this date/time.
+          schema:
+            type: string
+            format: date-time
+        - name: dir
+          in: query
+          description: Optionally limits results based on direction.
+          schema:
+            type: string
+            enum:
+              - Sent
+              - Received
+        - name: timeout
+          in: query
+          description: >-
+            Specify how long to wait for a matching result in milliseconds.
+            Default is 0 (no waiting).
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchCriteria'
+      responses:
+        "200":
+          description: A list of matching message summaries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageListResult'
+
+  /api/messages/{messageId}:
+    get:
+      operationId: getMessage
+      summary: Get a message
+      description: >-
+        Retrieves the detail for a single message. Must be used in conjunction
+        with either list or search in order to get the unique identifier for the
+        required message.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      responses:
+        "200":
+          description: The full message detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+    delete:
+      operationId: deleteMessage
+      summary: Delete a message
+      description: >-
+        Permanently deletes a message. Also deletes any attachments related to
+        the message. This operation cannot be undone.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      responses:
+        "204":
+          description: The message was successfully deleted.
+
+  /api/messages/{messageId}/forward:
+    post:
+      operationId: forwardMessage
+      summary: Forward a message
+      description: >-
+        Forwards the specified message to a verified email address. This is
+        useful for simulating a user forwarding one of your email messages.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageForwardOptions'
+      responses:
+        "200":
+          description: The forwarded message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+  /api/messages/{messageId}/reply:
+    post:
+      operationId: replyToMessage
+      summary: Reply to a message
+      description: >-
+        Sends a reply to the specified message. This is useful for when
+        simulating a user replying to one of your email or SMS messages.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageReplyOptions'
+      responses:
+        "200":
+          description: The reply message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+  /api/messages/{messageId}/screenshots:
+    post:
+      operationId: generateMessagePreviews
+      summary: Generate email previews
+      description: >-
+        Generates screenshots of an email rendered in the specified email
+        clients.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreviewRequestOptions'
+      responses:
+        "200":
+          description: The generated previews.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewListResult'
+
+  /api/analysis/spam/{messageId}:
+    get:
+      operationId: getSpamAnalysis
+      summary: Perform spam analysis
+      description: Perform a spam analysis of an email.
+      tags:
+        - Analysis
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      responses:
+        "200":
+          description: The spam analysis result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpamAnalysisResult'
+
+  /api/analysis/deliverability/{messageId}:
+    get:
+      operationId: getDeliverabilityReport
+      summary: Perform deliverability analysis
+      description: Perform a deliverability report of an email.
+      tags:
+        - Analysis
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      responses:
+        "200":
+          description: The deliverability report.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliverabilityReport'
+
+  /api/files/attachments/{attachmentId}:
+    get:
+      operationId: getAttachment
+      summary: Download an attachment
+      description: Downloads a single attachment.
+      tags:
+        - Files
+      parameters:
+        - name: attachmentId
+          in: path
+          required: true
+          description: The identifier for the required attachment.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The attachment binary content.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+
+  /api/files/email/{messageId}:
+    get:
+      operationId: getEmailFile
+      summary: Download email as EML
+      description: Downloads an EML file representing the specified email.
+      tags:
+        - Files
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      responses:
+        "200":
+          description: The raw EML content of the email.
+          content:
+            message/rfc822:
+              schema:
+                type: string
+                format: binary
+
+  /api/files/screenshots/{previewId}:
+    get:
+      operationId: getEmailPreview
+      summary: Download an email preview screenshot
+      description: >-
+        Downloads a screenshot of your email rendered in a real email client.
+        Simply supply the unique identifier for the required preview. Returns
+        202 while the preview is still being generated.
+      tags:
+        - Files
+      parameters:
+        - name: previewId
+          in: path
+          required: true
+          description: The identifier of the email preview to be downloaded.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The preview screenshot image.
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "202":
+          description: The preview is still being generated. Poll again shortly.
+
+  /api/screenshots/clients:
+    get:
+      operationId: listEmailClients
+      summary: List available email clients for previews
+      description: List all email clients that can be used to generate email previews.
+      tags:
+        - Previews
+      responses:
+        "200":
+          description: A list of available email clients.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailClientListResult'
+
+  /api/devices:
+    get:
+      operationId: listDevices
+      summary: List devices
+      description: Returns a list of your virtual security devices.
+      tags:
+        - Devices
+      responses:
+        "200":
+          description: A list of virtual security devices.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceListResult'
+    post:
+      operationId: createDevice
+      summary: Create a device
+      description: Creates a new virtual security device.
+      tags:
+        - Devices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceCreateOptions'
+      responses:
+        "200":
+          description: The newly-created virtual security device.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+
+  /api/devices/{deviceId}:
+    delete:
+      operationId: deleteDevice
+      summary: Delete a device
+      description: >-
+        Permanently delete a virtual security device. This operation cannot be
+        undone.
+      tags:
+        - Devices
+      parameters:
+        - $ref: '#/components/parameters/deviceId'
+      responses:
+        "204":
+          description: The device was successfully deleted.
+
+  /api/devices/{deviceId}/otp:
+    get:
+      operationId: getDeviceOtp
+      summary: Get OTP for a device
+      description: >-
+        Retrieves the current one-time password for a saved device.
+      tags:
+        - Devices
+      parameters:
+        - $ref: '#/components/parameters/deviceId'
+      responses:
+        "200":
+          description: The current one-time password result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtpResult'
+
+  /api/devices/otp:
+    post:
+      operationId: getOtpBySharedSecret
+      summary: Get OTP by shared secret
+      description: >-
+        Retrieves the current one-time password given a base32-encoded shared
+        secret.
+      tags:
+        - Devices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sharedSecret:
+                  type: string
+                  description: The base32-encoded shared secret.
+              required:
+                - sharedSecret
+      responses:
+        "200":
+          description: The current one-time password result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtpResult'
+
+  /api/usage/limits:
+    get:
+      operationId: getUsageLimits
+      summary: Get usage limits
+      description: >-
+        Retrieve account usage limits. Details the current limits and usage for
+        your account. This endpoint requires authentication with an account-level
+        API key.
+      tags:
+        - Usage
+      responses:
+        "200":
+          description: The account usage limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageAccountLimits'
+
+  /api/usage/transactions:
+    get:
+      operationId: getUsageTransactions
+      summary: Get usage transactions
+      description: >-
+        Retrieves the last 31 days of transactional usage. This endpoint
+        requires authentication with an account-level API key.
+      tags:
+        - Usage
+      responses:
+        "200":
+          description: A list of usage transactions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageTransactionListResult'
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: >-
+        HTTP Basic Auth using your Mailosaur API key as the username and an
+        empty password, or your API key as both username and password.
+
+  parameters:
+    serverId:
+      name: serverId
+      in: path
+      required: true
+      description: The unique identifier of the inbox (server).
+      schema:
+        type: string
+    messageId:
+      name: messageId
+      in: path
+      required: true
+      description: The unique identifier of the message.
+      schema:
+        type: string
+    deviceId:
+      name: deviceId
+      in: path
+      required: true
+      description: The unique identifier of the virtual security device.
+      schema:
+        type: string
+
+  schemas:
+    Server:
+      type: object
+      description: A Mailosaur inbox (server) — a virtual SMTP/SMS endpoint.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the inbox (server).
+        name:
+          type: string
+          description: The name of the inbox (server).
+        users:
+          type: array
+          description: >-
+            Users (excluding administrators) who have access to the inbox
+            (server) when access is restricted.
+          items:
+            type: string
+        messages:
+          type: integer
+          description: The number of messages currently in the inbox (server).
+
+    ServerCreateOptions:
+      type: object
+      description: Options used to create a new Mailosaur inbox (server).
+      properties:
+        name:
+          type: string
+          description: A name used to identify the inbox (server).
+
+    ServerListResult:
+      type: object
+      description: The result of a request to list Mailosaur inboxes (servers).
+      properties:
+        items:
+          type: array
+          description: A list of inboxes (servers).
+          items:
+            $ref: '#/components/schemas/Server'
+
+    MessageAddress:
+      type: object
+      description: An email address or SMS phone number.
+      properties:
+        name:
+          type: string
+          description: The display name of the sender or recipient.
+        email:
+          type: string
+          description: The email address of the sender or recipient.
+        phone:
+          type: string
+          description: The phone number of the sender or recipient (SMS).
+
+    Attachment:
+      type: object
+      description: A file attachment on a message.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the attachment.
+        contentType:
+          type: string
+          description: The MIME type of the attachment.
+        fileName:
+          type: string
+          description: The filename of the attachment.
+        content:
+          type: string
+          description: The base64-encoded content of the attachment.
+        contentId:
+          type: string
+          description: The content ID of the attachment (for inline attachments).
+        length:
+          type: integer
+          description: The size of the attachment in bytes.
+        url:
+          type: string
+          description: URL used to download the attachment.
+
+    Link:
+      type: object
+      description: A hyperlink found in a message body.
+      properties:
+        href:
+          type: string
+          description: The target URL of the hyperlink.
+        text:
+          type: string
+          description: The display text of the hyperlink.
+
+    Image:
+      type: object
+      description: An image found in a message body.
+      properties:
+        src:
+          type: string
+          description: The source URL of the image.
+        alt:
+          type: string
+          description: The alt text of the image.
+
+    MessageContent:
+      type: object
+      description: The HTML or plain text content of a message.
+      properties:
+        links:
+          type: array
+          description: A list of hyperlinks found in the message body.
+          items:
+            $ref: '#/components/schemas/Link'
+        codes:
+          type: array
+          description: A list of verification codes found in the message body.
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: The verification code value.
+        images:
+          type: array
+          description: A list of images found in the message body.
+          items:
+            $ref: '#/components/schemas/Image'
+        body:
+          type: string
+          description: The full HTML or plain text body of the message.
+
+    MessageHeader:
+      type: object
+      description: An email header.
+      properties:
+        field:
+          type: string
+          description: The header field name.
+        value:
+          type: string
+          description: The header field value.
+
+    Metadata:
+      type: object
+      description: Further metadata related to the message, including email headers.
+      properties:
+        headers:
+          type: array
+          description: A list of email headers.
+          items:
+            $ref: '#/components/schemas/MessageHeader'
+        ehlo:
+          type: string
+          description: The EHLO string.
+        mailFrom:
+          type: string
+          description: The MAIL FROM value.
+        rcptTo:
+          type: array
+          description: The RCPT TO values.
+          items:
+            type: string
+
+    Message:
+      type: object
+      description: An email or SMS message processed by Mailosaur.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the message.
+        type:
+          type: string
+          enum:
+            - Email
+            - SMS
+          description: The type of message.
+        from:
+          type: array
+          description: The sender(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        to:
+          type: array
+          description: The recipient(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        cc:
+          type: array
+          description: Carbon-copied recipients for email messages.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        bcc:
+          type: array
+          description: Blind carbon-copied recipients for email messages.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        received:
+          type: string
+          format: date-time
+          description: The date/time that this message was received by Mailosaur.
+        subject:
+          type: string
+          description: The subject of the message.
+        html:
+          $ref: '#/components/schemas/MessageContent'
+        text:
+          $ref: '#/components/schemas/MessageContent'
+        attachments:
+          type: array
+          description: An array of attachment metadata for any attached files.
+          items:
+            $ref: '#/components/schemas/Attachment'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        server:
+          type: string
+          description: Identifier for the inbox (server) in which the message is located.
+
+    MessageSummary:
+      type: object
+      description: A summary of a message (used in list results).
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the message.
+        type:
+          type: string
+          enum:
+            - Email
+            - SMS
+          description: The type of message.
+        server:
+          type: string
+          description: Identifier for the inbox (server) containing this message.
+        from:
+          type: array
+          description: The sender(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        to:
+          type: array
+          description: The recipient(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        cc:
+          type: array
+          description: Carbon-copied recipients.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        bcc:
+          type: array
+          description: Blind carbon-copied recipients.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        received:
+          type: string
+          format: date-time
+          description: The date/time that this message was received.
+        subject:
+          type: string
+          description: The subject of the message.
+        attachments:
+          type: integer
+          description: The number of attachments.
+
+    MessageListResult:
+      type: object
+      description: The result of a request to list or search messages.
+      properties:
+        items:
+          type: array
+          description: A list of message summaries.
+          items:
+            $ref: '#/components/schemas/MessageSummary'
+
+    MessageCreateOptions:
+      type: object
+      description: Options to use when creating a new message.
+      properties:
+        to:
+          type: string
+          description: >-
+            The email address to which the email will be sent. Must be a
+            verified email address.
+        cc:
+          type: string
+          description: >-
+            The email address to which the email will be CC'd to. Must be a
+            verified email address.
+        from:
+          type: string
+          description: >-
+            Allows for the partial override of the message's 'from' address.
+            This must be an address ending with YOUR_SERVER.mailosaur.net.
+        send:
+          type: boolean
+          description: If true, email will be sent upon creation.
+        subject:
+          type: string
+          description: The email subject line.
+        text:
+          type: string
+          description: >-
+            The plain text body of the message. Note that only text or html
+            can be supplied, not both.
+        html:
+          type: string
+          description: >-
+            The HTML body of the message. Note that only text or html can be
+            supplied, not both.
+        attachments:
+          type: array
+          description: Any message attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+
+    MessageForwardOptions:
+      type: object
+      description: Options to use when forwarding a message.
+      required:
+        - to
+      properties:
+        to:
+          type: string
+          description: >-
+            The email address to which the email will be sent. Must be a
+            verified email address.
+        cc:
+          type: string
+          description: >-
+            The email address to which the email will be CC'd to. Must be a
+            verified email address.
+        text:
+          type: string
+          description: >-
+            Any plain text to include when forwarding the message. Note that
+            only text or html can be supplied, not both.
+        html:
+          type: string
+          description: >-
+            Any HTML content to include when forwarding the message. Note that
+            only text or html can be supplied, not both.
+
+    MessageReplyOptions:
+      type: object
+      description: Options to use when replying to a message.
+      properties:
+        cc:
+          type: string
+          description: >-
+            The email address to which the email will be CC'd to. Must be a
+            verified email address.
+        text:
+          type: string
+          description: >-
+            Any additional plain text content to include in the reply. Note
+            that only text or html can be supplied, not both.
+        html:
+          type: string
+          description: >-
+            Any additional HTML content to include in the reply. Note that
+            only html or text can be supplied, not both.
+        attachments:
+          type: array
+          description: Any message attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+
+    SearchCriteria:
+      type: object
+      description: The criteria with which to find messages during a search.
+      properties:
+        sentFrom:
+          type: string
+          description: >-
+            The full email address (or phone number for SMS) from which the
+            target message was sent.
+        sentTo:
+          type: string
+          description: >-
+            The full email address (or phone number for SMS) to which the
+            target message was sent.
+        subject:
+          type: string
+          description: The value to seek within the subject line of a target email.
+        body:
+          type: string
+          description: The value to seek within the body of the target message.
+        match:
+          type: string
+          enum:
+            - ALL
+            - ANY
+          default: ALL
+          description: >-
+            If set to ALL (default), then only results that match all specified
+            criteria will be returned. If set to ANY, results that match any
+            of the specified criteria will be returned.
+
+    Preview:
+      type: object
+      description: A rendered email preview screenshot.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the preview.
+        emailClient:
+          type: string
+          description: The email client used to render the preview.
+        capture:
+          type: string
+          description: The type of capture (e.g. desktop, mobile).
+
+    PreviewListResult:
+      type: object
+      description: The result of a request to generate email previews.
+      properties:
+        items:
+          type: array
+          description: A list of generated previews.
+          items:
+            $ref: '#/components/schemas/Preview'
+
+    PreviewRequestOptions:
+      type: object
+      description: Options to use when requesting email previews.
+      properties:
+        previews:
+          type: array
+          description: A list of email clients to generate previews for.
+          items:
+            type: object
+            properties:
+              emailClient:
+                type: string
+                description: The email client identifier.
+
+    SpamAssassinRule:
+      type: object
+      description: A single SpamAssassin rule result.
+      properties:
+        score:
+          type: number
+          format: float
+          description: The score for this rule.
+        rule:
+          type: string
+          description: The rule name.
+        description:
+          type: string
+          description: The description of the rule.
+
+    SpamFilterResults:
+      type: object
+      description: Spam filter analysis results.
+      properties:
+        spamAssassin:
+          type: array
+          description: SpamAssassin rule results.
+          items:
+            $ref: '#/components/schemas/SpamAssassinRule'
+
+    SpamAnalysisResult:
+      type: object
+      description: The results of spam analysis performed by Mailosaur.
+      properties:
+        spamFilterResults:
+          $ref: '#/components/schemas/SpamFilterResults'
+        score:
+          type: number
+          format: float
+          description: Overall Mailosaur spam score.
+
+    EmailAuthenticationResult:
+      type: object
+      description: The result of an email authentication check (SPF, DKIM, or DMARC).
+      properties:
+        result:
+          type: string
+          description: The authentication result (e.g. Pass, Fail, None).
+        description:
+          type: string
+          description: A description of the authentication result.
+        rawValue:
+          type: string
+          description: The raw value of the authentication header.
+        tags:
+          type: object
+          description: Key-value pairs of authentication tags.
+          additionalProperties:
+            type: string
+
+    BlockListResult:
+      type: object
+      description: The result of checking against a blocklist.
+      properties:
+        id:
+          type: string
+          description: The blocklist identifier.
+        name:
+          type: string
+          description: The name of the blocklist.
+        result:
+          type: string
+          description: The blocklist check result (e.g. Listed, NotListed).
+
+    Content:
+      type: object
+      description: The result of content checks on the email.
+      properties:
+        embed:
+          type: boolean
+          description: Whether the email contains embedded content.
+        iframe:
+          type: boolean
+          description: Whether the email contains iframes.
+        object:
+          type: boolean
+          description: Whether the email contains object elements.
+        script:
+          type: boolean
+          description: Whether the email contains script elements.
+        shortUrls:
+          type: boolean
+          description: Whether the email contains short URLs.
+        textSize:
+          type: integer
+          description: The size of the plain text content.
+        totalSize:
+          type: integer
+          description: The total size of the email.
+        missingAlt:
+          type: boolean
+          description: Whether any images are missing alt text.
+        missingListUnsubscribe:
+          type: boolean
+          description: Whether the List-Unsubscribe header is missing.
+
+    DnsRecords:
+      type: object
+      description: DNS record checks made against the sender's domain.
+      properties:
+        a:
+          type: array
+          description: A records.
+          items:
+            type: string
+        mx:
+          type: array
+          description: MX records.
+          items:
+            type: string
+        ptr:
+          type: array
+          description: PTR (reverse DNS) records.
+          items:
+            type: string
+
+    SpamAssassinResult:
+      type: object
+      description: The result of SpamAssassin analysis.
+      properties:
+        score:
+          type: number
+          format: float
+          description: The SpamAssassin score.
+        result:
+          type: string
+          description: The SpamAssassin result.
+        rules:
+          type: array
+          description: Individual SpamAssassin rule results.
+          items:
+            $ref: '#/components/schemas/SpamAssassinRule'
+
+    DeliverabilityReport:
+      type: object
+      description: The results of a deliverability report performed by Mailosaur.
+      properties:
+        spf:
+          $ref: '#/components/schemas/EmailAuthenticationResult'
+        dkim:
+          type: array
+          description: The result(s) of checking for DKIM issues.
+          items:
+            $ref: '#/components/schemas/EmailAuthenticationResult'
+        dmarc:
+          $ref: '#/components/schemas/EmailAuthenticationResult'
+        blockLists:
+          type: array
+          description: The result of each blocklist that was checked.
+          items:
+            $ref: '#/components/schemas/BlockListResult'
+        content:
+          $ref: '#/components/schemas/Content'
+        dnsRecords:
+          $ref: '#/components/schemas/DnsRecords'
+        spamAssassin:
+          $ref: '#/components/schemas/SpamAssassinResult'
+
+    EmailClient:
+      type: object
+      description: An email client available for generating email previews.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the email client.
+        name:
+          type: string
+          description: The name of the email client.
+        platforms:
+          type: array
+          description: Available platform/capture variants for this client.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The platform identifier.
+              name:
+                type: string
+                description: The platform name.
+
+    EmailClientListResult:
+      type: object
+      description: A list of available email clients for generating previews.
+      properties:
+        items:
+          type: array
+          description: A list of email clients.
+          items:
+            $ref: '#/components/schemas/EmailClient'
+
+    Device:
+      type: object
+      description: A Mailosaur virtual security device (for TOTP/2FA testing).
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the device.
+        name:
+          type: string
+          description: The name of the device.
+
+    DeviceCreateOptions:
+      type: object
+      description: Options used to create a new Mailosaur virtual security device.
+      properties:
+        name:
+          type: string
+          description: A name used to identify the device.
+        sharedSecret:
+          type: string
+          description: The base32-encoded shared secret for this device.
+
+    DeviceListResult:
+      type: object
+      description: A list of virtual security devices.
+      properties:
+        items:
+          type: array
+          description: A list of devices.
+          items:
+            $ref: '#/components/schemas/Device'
+
+    OtpResult:
+      type: object
+      description: A one-time password result from a virtual security device.
+      properties:
+        code:
+          type: string
+          description: The current one-time password.
+        expires:
+          type: string
+          format: date-time
+          description: The expiry date/time of the current one-time password.
+
+    UsageAccountLimit:
+      type: object
+      description: A single account limit.
+      properties:
+        limit:
+          type: integer
+          description: The maximum value for this limit.
+        current:
+          type: integer
+          description: The current value for this limit.
+
+    UsageAccountLimits:
+      type: object
+      description: The account usage limits.
+      properties:
+        servers:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        users:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        email:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        sms:
+          $ref: '#/components/schemas/UsageAccountLimit'
+
+    UsageTransaction:
+      type: object
+      description: A usage transaction record.
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: The date/time of the transaction.
+        email:
+          type: integer
+          description: The number of email messages processed.
+        sms:
+          type: integer
+          description: The number of SMS messages processed.
+
+    UsageTransactionListResult:
+      type: object
+      description: A list of usage transaction records.
+      properties:
+        items:
+          type: array
+          description: A list of usage transactions for the last 31 days.
+          items:
+            $ref: '#/components/schemas/UsageTransaction'
