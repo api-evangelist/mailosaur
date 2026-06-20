@@ -8,7 +8,7 @@ description: >-
   authentication testing (TOTP/2FA), spam analysis, SPF/DKIM/DMARC validation,
   and connects via SMTP, POP3, and IMAP protocols.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/mailosaur/refs/heads/main/apis.yml
 created: 2026-06-13
 modified: 2026-06-13
@@ -30,7 +30,7 @@ apis:
       inboxes (servers), retrieving and searching messages, running deliverability
       checks, generating OTPs for authenticator testing, and accessing account
       usage data. All requests authenticate via HTTP Basic Auth using an API key.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://mailosaur.com/docs/api
     baseURL: https://mailosaur.com/api
     tags:
