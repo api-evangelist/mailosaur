@@ -2,6 +2,13 @@
   "repo": "mailosaur",
   "feeds": [
     {
+      "source": "https://mailosaur.com/blog/feed.xml",
+      "feed_url": "https://mailosaur.com/blog/feed.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://x.com/mailosaur",
       "feed_url": "https://x.com/mailosaur",
       "title": "",
@@ -10,5 +17,5 @@
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z"
 }
