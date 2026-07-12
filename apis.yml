@@ -46,6 +46,12 @@ apis:
       - type: OpenAPI
         url: openapi/mailosaur-mailosaur-api-openapi.yml
 common:
+  - type: TrustCenter
+    url: security/mailosaur-trust-center.yml
+  - type: DomainSecurity
+    url: security/mailosaur-domain-security.yml
+  - type: Authentication
+    url: authentication/mailosaur-authentication.yml
   - type: Website
     url: https://mailosaur.com
   - type: Documentation

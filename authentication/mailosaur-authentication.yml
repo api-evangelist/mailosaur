@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/mailosaur-mailosaur-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password,
+    or your API key as both username and password.
+  sources:
+  - openapi/mailosaur-mailosaur-api-openapi.yml
