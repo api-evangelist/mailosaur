@@ -46,6 +46,8 @@ apis:
       - type: OpenAPI
         url: openapi/mailosaur-mailosaur-api-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/mailosaur-agentic-access.yml
   - type: TrustCenter
     url: security/mailosaur-trust-center.yml
   - type: DomainSecurity
