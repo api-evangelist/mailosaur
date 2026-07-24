@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Mailosaur Analysis Previews API
+  description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
+  version: 1.0.0
+  contact:
+    name: Mailosaur Support
+    url: https://mailosaur.com/docs/api
+  termsOfService: https://mailosaur.com/terms
+  license:
+    name: Commercial
+    url: https://mailosaur.com/terms
+servers:
+- url: https://mailosaur.com
+  description: Mailosaur production API
+security:
+- basicAuth: []
+tags:
+- name: Previews
+  description: Operations for discovering the email clients available for generating email previews (screenshots of an email rendered in real clients).
+paths:
+  /api/screenshots/clients:
+    get:
+      operationId: listEmailClients
+      summary: List available email clients for previews
+      description: List all email clients that can be used to generate email previews.
+      tags:
+      - Previews
+      responses:
+        '200':
+          description: A list of available email clients.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailClientListResult'
+components:
+  schemas:
+    EmailClient:
+      type: object
+      description: An email client available for generating email previews.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the email client.
+        name:
+          type: string
+          description: The name of the email client.
+        platforms:
+          type: array
+          description: Available platform/capture variants for this client.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The platform identifier.
+              name:
+                type: string
+                description: The platform name.
+    EmailClientListResult:
+      type: object
+      description: A list of available email clients for generating previews.
+      properties:
+        items:
+          type: array
+          description: A list of email clients.
+          items:
+            $ref: '#/components/schemas/EmailClient'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password, or your API key as both username and password.

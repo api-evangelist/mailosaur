@@ -1,0 +1,171 @@
+openapi: 3.0.3
+info:
+  title: Mailosaur Analysis Servers API
+  description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
+  version: 1.0.0
+  contact:
+    name: Mailosaur Support
+    url: https://mailosaur.com/docs/api
+  termsOfService: https://mailosaur.com/terms
+  license:
+    name: Commercial
+    url: https://mailosaur.com/terms
+servers:
+- url: https://mailosaur.com
+  description: Mailosaur production API
+security:
+- basicAuth: []
+tags:
+- name: Servers
+  description: Operations for creating and managing your Mailosaur inboxes (servers). Inboxes group your tests together, each with its own domain and SMTP/POP3/IMAP credentials.
+paths:
+  /api/servers:
+    get:
+      operationId: listServers
+      summary: List servers
+      description: Returns a list of your inboxes (servers). Inboxes (servers) are returned sorted in alphabetical order.
+      tags:
+      - Servers
+      responses:
+        '200':
+          description: A list of inboxes (servers).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerListResult'
+    post:
+      operationId: createServer
+      summary: Create a server
+      description: Creates a new inbox (server).
+      tags:
+      - Servers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServerCreateOptions'
+      responses:
+        '200':
+          description: The newly-created inbox (server).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+  /api/servers/{serverId}:
+    get:
+      operationId: getServer
+      summary: Get a server
+      description: Retrieves the detail for a single inbox (server).
+      tags:
+      - Servers
+      parameters:
+      - $ref: '#/components/parameters/serverId'
+      responses:
+        '200':
+          description: The inbox (server).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+    put:
+      operationId: updateServer
+      summary: Update a server
+      description: Updates the attributes of an inbox (server).
+      tags:
+      - Servers
+      parameters:
+      - $ref: '#/components/parameters/serverId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+      responses:
+        '200':
+          description: The updated inbox (server).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+    delete:
+      operationId: deleteServer
+      summary: Delete a server
+      description: Permanently delete an inbox (server). This will also delete all messages, associated attachments, etc. within the inbox (server). This operation cannot be undone.
+      tags:
+      - Servers
+      parameters:
+      - $ref: '#/components/parameters/serverId'
+      responses:
+        '204':
+          description: The inbox (server) was successfully deleted.
+  /api/servers/{serverId}/password:
+    get:
+      operationId: getServerPassword
+      summary: Get server password
+      description: Retrieves the password for an inbox (server). This password can be used for SMTP, POP3, and IMAP connectivity.
+      tags:
+      - Servers
+      parameters:
+      - $ref: '#/components/parameters/serverId'
+      responses:
+        '200':
+          description: The password for the inbox (server).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: string
+                    description: The password value.
+components:
+  schemas:
+    ServerCreateOptions:
+      type: object
+      description: Options used to create a new Mailosaur inbox (server).
+      properties:
+        name:
+          type: string
+          description: A name used to identify the inbox (server).
+    Server:
+      type: object
+      description: A Mailosaur inbox (server) — a virtual SMTP/SMS endpoint.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the inbox (server).
+        name:
+          type: string
+          description: The name of the inbox (server).
+        users:
+          type: array
+          description: Users (excluding administrators) who have access to the inbox (server) when access is restricted.
+          items:
+            type: string
+        messages:
+          type: integer
+          description: The number of messages currently in the inbox (server).
+    ServerListResult:
+      type: object
+      description: The result of a request to list Mailosaur inboxes (servers).
+      properties:
+        items:
+          type: array
+          description: A list of inboxes (servers).
+          items:
+            $ref: '#/components/schemas/Server'
+  parameters:
+    serverId:
+      name: serverId
+      in: path
+      required: true
+      description: The unique identifier of the inbox (server).
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password, or your API key as both username and password.

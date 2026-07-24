@@ -1,0 +1,627 @@
+openapi: 3.0.3
+info:
+  title: Mailosaur Analysis Messages API
+  description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
+  version: 1.0.0
+  contact:
+    name: Mailosaur Support
+    url: https://mailosaur.com/docs/api
+  termsOfService: https://mailosaur.com/terms
+  license:
+    name: Commercial
+    url: https://mailosaur.com/terms
+servers:
+- url: https://mailosaur.com
+  description: Mailosaur production API
+security:
+- basicAuth: []
+tags:
+- name: Messages
+  description: Operations for finding, retrieving, creating, forwarding, replying to, and deleting the email and SMS messages received by your Mailosaur inboxes.
+paths:
+  /api/messages:
+    get:
+      operationId: listMessages
+      summary: List messages
+      description: Returns a list of your messages in summary form. The summaries are returned sorted by received date, with the most recently-received messages appearing first.
+      tags:
+      - Messages
+      parameters:
+      - name: server
+        in: query
+        required: true
+        description: The unique identifier of the required inbox (server).
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Used alongside itemsPerPage to paginate through results. This is zero-based, meaning 0 is the first page of results.
+        schema:
+          type: integer
+          default: 0
+      - name: itemsPerPage
+        in: query
+        description: A limit on the number of results to be returned. This can be set between 1 and 1000, with the default being 50.
+        schema:
+          type: integer
+          default: 50
+          minimum: 1
+          maximum: 1000
+      - name: receivedAfter
+        in: query
+        description: Limits results to only messages received after this date/time (default 1 hour ago).
+        schema:
+          type: string
+          format: date-time
+      - name: dir
+        in: query
+        description: Optionally limits results based on the direction (Sent or Received), with the default being Received.
+        schema:
+          type: string
+          enum:
+          - Sent
+          - Received
+      responses:
+        '200':
+          description: A list of message summaries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageListResult'
+    post:
+      operationId: createMessage
+      summary: Create a message
+      description: Creates a new message that can be sent to a verified email address. This is useful in scenarios where you want an email to trigger a workflow in your product.
+      tags:
+      - Messages
+      parameters:
+      - name: server
+        in: query
+        required: true
+        description: The unique identifier of the required inbox (server).
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreateOptions'
+      responses:
+        '200':
+          description: The newly-created message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+    delete:
+      operationId: deleteAllMessages
+      summary: Delete all messages
+      description: Permanently delete all messages within an inbox (server). This operation cannot be undone.
+      tags:
+      - Messages
+      parameters:
+      - name: server
+        in: query
+        required: true
+        description: The unique identifier of the inbox (server).
+        schema:
+          type: string
+      responses:
+        '204':
+          description: All messages were successfully deleted.
+  /api/messages/search:
+    post:
+      operationId: searchMessages
+      summary: Search messages
+      description: Returns a list of messages matching the specified search criteria, in summary form. The messages are returned sorted by received date, with the most recently-received messages appearing first.
+      tags:
+      - Messages
+      parameters:
+      - name: server
+        in: query
+        required: true
+        description: The unique identifier of the inbox (server) to search.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Used alongside itemsPerPage to paginate through results.
+        schema:
+          type: integer
+          default: 0
+      - name: itemsPerPage
+        in: query
+        description: A limit on the number of results to be returned.
+        schema:
+          type: integer
+          default: 50
+          minimum: 1
+          maximum: 1000
+      - name: receivedAfter
+        in: query
+        description: Limits results to only messages received after this date/time.
+        schema:
+          type: string
+          format: date-time
+      - name: dir
+        in: query
+        description: Optionally limits results based on direction.
+        schema:
+          type: string
+          enum:
+          - Sent
+          - Received
+      - name: timeout
+        in: query
+        description: Specify how long to wait for a matching result in milliseconds. Default is 0 (no waiting).
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchCriteria'
+      responses:
+        '200':
+          description: A list of matching message summaries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageListResult'
+  /api/messages/{messageId}:
+    get:
+      operationId: getMessage
+      summary: Get a message
+      description: Retrieves the detail for a single message. Must be used in conjunction with either list or search in order to get the unique identifier for the required message.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      responses:
+        '200':
+          description: The full message detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+    delete:
+      operationId: deleteMessage
+      summary: Delete a message
+      description: Permanently deletes a message. Also deletes any attachments related to the message. This operation cannot be undone.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      responses:
+        '204':
+          description: The message was successfully deleted.
+  /api/messages/{messageId}/forward:
+    post:
+      operationId: forwardMessage
+      summary: Forward a message
+      description: Forwards the specified message to a verified email address. This is useful for simulating a user forwarding one of your email messages.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageForwardOptions'
+      responses:
+        '200':
+          description: The forwarded message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /api/messages/{messageId}/reply:
+    post:
+      operationId: replyToMessage
+      summary: Reply to a message
+      description: Sends a reply to the specified message. This is useful for when simulating a user replying to one of your email or SMS messages.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageReplyOptions'
+      responses:
+        '200':
+          description: The reply message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /api/messages/{messageId}/screenshots:
+    post:
+      operationId: generateMessagePreviews
+      summary: Generate email previews
+      description: Generates screenshots of an email rendered in the specified email clients.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreviewRequestOptions'
+      responses:
+        '200':
+          description: The generated previews.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewListResult'
+components:
+  schemas:
+    PreviewRequestOptions:
+      type: object
+      description: Options to use when requesting email previews.
+      properties:
+        previews:
+          type: array
+          description: A list of email clients to generate previews for.
+          items:
+            type: object
+            properties:
+              emailClient:
+                type: string
+                description: The email client identifier.
+    MessageHeader:
+      type: object
+      description: An email header.
+      properties:
+        field:
+          type: string
+          description: The header field name.
+        value:
+          type: string
+          description: The header field value.
+    MessageSummary:
+      type: object
+      description: A summary of a message (used in list results).
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the message.
+        type:
+          type: string
+          enum:
+          - Email
+          - SMS
+          description: The type of message.
+        server:
+          type: string
+          description: Identifier for the inbox (server) containing this message.
+        from:
+          type: array
+          description: The sender(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        to:
+          type: array
+          description: The recipient(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        cc:
+          type: array
+          description: Carbon-copied recipients.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        bcc:
+          type: array
+          description: Blind carbon-copied recipients.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        received:
+          type: string
+          format: date-time
+          description: The date/time that this message was received.
+        subject:
+          type: string
+          description: The subject of the message.
+        attachments:
+          type: integer
+          description: The number of attachments.
+    MessageListResult:
+      type: object
+      description: The result of a request to list or search messages.
+      properties:
+        items:
+          type: array
+          description: A list of message summaries.
+          items:
+            $ref: '#/components/schemas/MessageSummary'
+    Image:
+      type: object
+      description: An image found in a message body.
+      properties:
+        src:
+          type: string
+          description: The source URL of the image.
+        alt:
+          type: string
+          description: The alt text of the image.
+    MessageCreateOptions:
+      type: object
+      description: Options to use when creating a new message.
+      properties:
+        to:
+          type: string
+          description: The email address to which the email will be sent. Must be a verified email address.
+        cc:
+          type: string
+          description: The email address to which the email will be CC'd to. Must be a verified email address.
+        from:
+          type: string
+          description: Allows for the partial override of the message's 'from' address. This must be an address ending with YOUR_SERVER.mailosaur.net.
+        send:
+          type: boolean
+          description: If true, email will be sent upon creation.
+        subject:
+          type: string
+          description: The email subject line.
+        text:
+          type: string
+          description: The plain text body of the message. Note that only text or html can be supplied, not both.
+        html:
+          type: string
+          description: The HTML body of the message. Note that only text or html can be supplied, not both.
+        attachments:
+          type: array
+          description: Any message attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+    Attachment:
+      type: object
+      description: A file attachment on a message.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the attachment.
+        contentType:
+          type: string
+          description: The MIME type of the attachment.
+        fileName:
+          type: string
+          description: The filename of the attachment.
+        content:
+          type: string
+          description: The base64-encoded content of the attachment.
+        contentId:
+          type: string
+          description: The content ID of the attachment (for inline attachments).
+        length:
+          type: integer
+          description: The size of the attachment in bytes.
+        url:
+          type: string
+          description: URL used to download the attachment.
+    SearchCriteria:
+      type: object
+      description: The criteria with which to find messages during a search.
+      properties:
+        sentFrom:
+          type: string
+          description: The full email address (or phone number for SMS) from which the target message was sent.
+        sentTo:
+          type: string
+          description: The full email address (or phone number for SMS) to which the target message was sent.
+        subject:
+          type: string
+          description: The value to seek within the subject line of a target email.
+        body:
+          type: string
+          description: The value to seek within the body of the target message.
+        match:
+          type: string
+          enum:
+          - ALL
+          - ANY
+          default: ALL
+          description: If set to ALL (default), then only results that match all specified criteria will be returned. If set to ANY, results that match any of the specified criteria will be returned.
+    MessageForwardOptions:
+      type: object
+      description: Options to use when forwarding a message.
+      required:
+      - to
+      properties:
+        to:
+          type: string
+          description: The email address to which the email will be sent. Must be a verified email address.
+        cc:
+          type: string
+          description: The email address to which the email will be CC'd to. Must be a verified email address.
+        text:
+          type: string
+          description: Any plain text to include when forwarding the message. Note that only text or html can be supplied, not both.
+        html:
+          type: string
+          description: Any HTML content to include when forwarding the message. Note that only text or html can be supplied, not both.
+    MessageContent:
+      type: object
+      description: The HTML or plain text content of a message.
+      properties:
+        links:
+          type: array
+          description: A list of hyperlinks found in the message body.
+          items:
+            $ref: '#/components/schemas/Link'
+        codes:
+          type: array
+          description: A list of verification codes found in the message body.
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: The verification code value.
+        images:
+          type: array
+          description: A list of images found in the message body.
+          items:
+            $ref: '#/components/schemas/Image'
+        body:
+          type: string
+          description: The full HTML or plain text body of the message.
+    MessageReplyOptions:
+      type: object
+      description: Options to use when replying to a message.
+      properties:
+        cc:
+          type: string
+          description: The email address to which the email will be CC'd to. Must be a verified email address.
+        text:
+          type: string
+          description: Any additional plain text content to include in the reply. Note that only text or html can be supplied, not both.
+        html:
+          type: string
+          description: Any additional HTML content to include in the reply. Note that only html or text can be supplied, not both.
+        attachments:
+          type: array
+          description: Any message attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+    PreviewListResult:
+      type: object
+      description: The result of a request to generate email previews.
+      properties:
+        items:
+          type: array
+          description: A list of generated previews.
+          items:
+            $ref: '#/components/schemas/Preview'
+    Metadata:
+      type: object
+      description: Further metadata related to the message, including email headers.
+      properties:
+        headers:
+          type: array
+          description: A list of email headers.
+          items:
+            $ref: '#/components/schemas/MessageHeader'
+        ehlo:
+          type: string
+          description: The EHLO string.
+        mailFrom:
+          type: string
+          description: The MAIL FROM value.
+        rcptTo:
+          type: array
+          description: The RCPT TO values.
+          items:
+            type: string
+    Preview:
+      type: object
+      description: A rendered email preview screenshot.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the preview.
+        emailClient:
+          type: string
+          description: The email client used to render the preview.
+        capture:
+          type: string
+          description: The type of capture (e.g. desktop, mobile).
+    MessageAddress:
+      type: object
+      description: An email address or SMS phone number.
+      properties:
+        name:
+          type: string
+          description: The display name of the sender or recipient.
+        email:
+          type: string
+          description: The email address of the sender or recipient.
+        phone:
+          type: string
+          description: The phone number of the sender or recipient (SMS).
+    Link:
+      type: object
+      description: A hyperlink found in a message body.
+      properties:
+        href:
+          type: string
+          description: The target URL of the hyperlink.
+        text:
+          type: string
+          description: The display text of the hyperlink.
+    Message:
+      type: object
+      description: An email or SMS message processed by Mailosaur.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the message.
+        type:
+          type: string
+          enum:
+          - Email
+          - SMS
+          description: The type of message.
+        from:
+          type: array
+          description: The sender(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        to:
+          type: array
+          description: The recipient(s) of the message.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        cc:
+          type: array
+          description: Carbon-copied recipients for email messages.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        bcc:
+          type: array
+          description: Blind carbon-copied recipients for email messages.
+          items:
+            $ref: '#/components/schemas/MessageAddress'
+        received:
+          type: string
+          format: date-time
+          description: The date/time that this message was received by Mailosaur.
+        subject:
+          type: string
+          description: The subject of the message.
+        html:
+          $ref: '#/components/schemas/MessageContent'
+        text:
+          $ref: '#/components/schemas/MessageContent'
+        attachments:
+          type: array
+          description: An array of attachment metadata for any attached files.
+          items:
+            $ref: '#/components/schemas/Attachment'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        server:
+          type: string
+          description: Identifier for the inbox (server) in which the message is located.
+  parameters:
+    messageId:
+      name: messageId
+      in: path
+      required: true
+      description: The unique identifier of the message.
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password, or your API key as both username and password.

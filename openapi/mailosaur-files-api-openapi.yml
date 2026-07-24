@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: Mailosaur Analysis Files API
+  description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
+  version: 1.0.0
+  contact:
+    name: Mailosaur Support
+    url: https://mailosaur.com/docs/api
+  termsOfService: https://mailosaur.com/terms
+  license:
+    name: Commercial
+    url: https://mailosaur.com/terms
+servers:
+- url: https://mailosaur.com
+  description: Mailosaur production API
+security:
+- basicAuth: []
+tags:
+- name: Files
+  description: Operations for downloading the raw content associated with a message — file attachments, the full EML source of an email, and rendered email previews.
+paths:
+  /api/files/attachments/{attachmentId}:
+    get:
+      operationId: getAttachment
+      summary: Download an attachment
+      description: Downloads a single attachment.
+      tags:
+      - Files
+      parameters:
+      - name: attachmentId
+        in: path
+        required: true
+        description: The identifier for the required attachment.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The attachment binary content.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/files/email/{messageId}:
+    get:
+      operationId: getEmailFile
+      summary: Download email as EML
+      description: Downloads an EML file representing the specified email.
+      tags:
+      - Files
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      responses:
+        '200':
+          description: The raw EML content of the email.
+          content:
+            message/rfc822:
+              schema:
+                type: string
+                format: binary
+  /api/files/screenshots/{previewId}:
+    get:
+      operationId: getEmailPreview
+      summary: Download an email preview screenshot
+      description: Downloads a screenshot of your email rendered in a real email client. Simply supply the unique identifier for the required preview. Returns 202 while the preview is still being generated.
+      tags:
+      - Files
+      parameters:
+      - name: previewId
+        in: path
+        required: true
+        description: The identifier of the email preview to be downloaded.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The preview screenshot image.
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        '202':
+          description: The preview is still being generated. Poll again shortly.
+components:
+  parameters:
+    messageId:
+      name: messageId
+      in: path
+      required: true
+      description: The unique identifier of the message.
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password, or your API key as both username and password.

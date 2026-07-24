@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: Mailosaur Analysis Devices API
+  description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
+  version: 1.0.0
+  contact:
+    name: Mailosaur Support
+    url: https://mailosaur.com/docs/api
+  termsOfService: https://mailosaur.com/terms
+  license:
+    name: Commercial
+    url: https://mailosaur.com/terms
+servers:
+- url: https://mailosaur.com
+  description: Mailosaur production API
+security:
+- basicAuth: []
+tags:
+- name: Devices
+  description: Operations for managing virtual security devices and retrieving their current one-time passwords (OTPs), used to automate testing of app-based multi-factor authentication.
+paths:
+  /api/devices:
+    get:
+      operationId: listDevices
+      summary: List devices
+      description: Returns a list of your virtual security devices.
+      tags:
+      - Devices
+      responses:
+        '200':
+          description: A list of virtual security devices.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceListResult'
+    post:
+      operationId: createDevice
+      summary: Create a device
+      description: Creates a new virtual security device.
+      tags:
+      - Devices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceCreateOptions'
+      responses:
+        '200':
+          description: The newly-created virtual security device.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+  /api/devices/{deviceId}:
+    delete:
+      operationId: deleteDevice
+      summary: Delete a device
+      description: Permanently delete a virtual security device. This operation cannot be undone.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/deviceId'
+      responses:
+        '204':
+          description: The device was successfully deleted.
+  /api/devices/{deviceId}/otp:
+    get:
+      operationId: getDeviceOtp
+      summary: Get OTP for a device
+      description: Retrieves the current one-time password for a saved device.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/deviceId'
+      responses:
+        '200':
+          description: The current one-time password result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtpResult'
+  /api/devices/otp:
+    post:
+      operationId: getOtpBySharedSecret
+      summary: Get OTP by shared secret
+      description: Retrieves the current one-time password given a base32-encoded shared secret.
+      tags:
+      - Devices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sharedSecret:
+                  type: string
+                  description: The base32-encoded shared secret.
+              required:
+              - sharedSecret
+      responses:
+        '200':
+          description: The current one-time password result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtpResult'
+components:
+  parameters:
+    deviceId:
+      name: deviceId
+      in: path
+      required: true
+      description: The unique identifier of the virtual security device.
+      schema:
+        type: string
+  schemas:
+    DeviceCreateOptions:
+      type: object
+      description: Options used to create a new Mailosaur virtual security device.
+      properties:
+        name:
+          type: string
+          description: A name used to identify the device.
+        sharedSecret:
+          type: string
+          description: The base32-encoded shared secret for this device.
+    DeviceListResult:
+      type: object
+      description: A list of virtual security devices.
+      properties:
+        items:
+          type: array
+          description: A list of devices.
+          items:
+            $ref: '#/components/schemas/Device'
+    Device:
+      type: object
+      description: A Mailosaur virtual security device (for TOTP/2FA testing).
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the device.
+        name:
+          type: string
+          description: The name of the device.
+    OtpResult:
+      type: object
+      description: A one-time password result from a virtual security device.
+      properties:
+        code:
+          type: string
+          description: The current one-time password.
+        expires:
+          type: string
+          format: date-time
+          description: The expiry date/time of the current one-time password.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password, or your API key as both username and password.

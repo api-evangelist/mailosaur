@@ -1,0 +1,101 @@
+openapi: 3.0.3
+info:
+  title: Mailosaur Analysis Usage API
+  description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
+  version: 1.0.0
+  contact:
+    name: Mailosaur Support
+    url: https://mailosaur.com/docs/api
+  termsOfService: https://mailosaur.com/terms
+  license:
+    name: Commercial
+    url: https://mailosaur.com/terms
+servers:
+- url: https://mailosaur.com
+  description: Mailosaur production API
+security:
+- basicAuth: []
+tags:
+- name: Usage
+  description: Operations for inspecting your account's usage limits and recent transactional usage. These endpoints require authentication with an account-level API key.
+paths:
+  /api/usage/limits:
+    get:
+      operationId: getUsageLimits
+      summary: Get usage limits
+      description: Retrieve account usage limits. Details the current limits and usage for your account. This endpoint requires authentication with an account-level API key.
+      tags:
+      - Usage
+      responses:
+        '200':
+          description: The account usage limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageAccountLimits'
+  /api/usage/transactions:
+    get:
+      operationId: getUsageTransactions
+      summary: Get usage transactions
+      description: Retrieves the last 31 days of transactional usage. This endpoint requires authentication with an account-level API key.
+      tags:
+      - Usage
+      responses:
+        '200':
+          description: A list of usage transactions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageTransactionListResult'
+components:
+  schemas:
+    UsageTransaction:
+      type: object
+      description: A usage transaction record.
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: The date/time of the transaction.
+        email:
+          type: integer
+          description: The number of email messages processed.
+        sms:
+          type: integer
+          description: The number of SMS messages processed.
+    UsageAccountLimits:
+      type: object
+      description: The account usage limits.
+      properties:
+        servers:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        users:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        email:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        sms:
+          $ref: '#/components/schemas/UsageAccountLimit'
+    UsageAccountLimit:
+      type: object
+      description: A single account limit.
+      properties:
+        limit:
+          type: integer
+          description: The maximum value for this limit.
+        current:
+          type: integer
+          description: The current value for this limit.
+    UsageTransactionListResult:
+      type: object
+      description: A list of usage transaction records.
+      properties:
+        items:
+          type: array
+          description: A list of usage transactions for the last 31 days.
+          items:
+            $ref: '#/components/schemas/UsageTransaction'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password, or your API key as both username and password.
