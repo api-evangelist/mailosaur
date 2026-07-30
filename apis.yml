@@ -8,7 +8,20 @@ description: >-
   authentication testing (TOTP/2FA), spam analysis, SPF/DKIM/DMARC validation,
   and connects via SMTP, POP3, and IMAP protocols.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Paid (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/mailosaur.png
 url: https://raw.githubusercontent.com/api-evangelist/mailosaur/refs/heads/main/apis.yml
 created: 2026-06-13
 modified: 2026-06-13
@@ -23,28 +36,125 @@ tags:
   - TOTP
   - Deliverability
 apis:
-  - aid: mailosaur:mailosaur-api
-    name: Mailosaur API
-    description: >-
-      REST API for email and SMS testing. Provides endpoints for managing test
-      inboxes (servers), retrieving and searching messages, running deliverability
-      checks, generating OTPs for authenticator testing, and accessing account
-      usage data. All requests authenticate via HTTP Basic Auth using an API key.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://mailosaur.com/docs/api
-    baseURL: https://mailosaur.com/api
-    tags:
-      - Email
-      - SMS
-      - Testing
-      - REST API
-    properties:
-      - type: Documentation
-        url: https://mailosaur.com/docs/api
-      - type: PostmanCollection
-        url: https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
-      - type: OpenAPI
-        url: openapi/mailosaur-mailosaur-api-openapi.yml
+- aid: mailosaur:mailosaur-analysis-api
+  name: Mailosaur Analysis API
+  description: >-
+    Operations for analyzing the content and deliverability of an email, including SpamAssassin scoring
+    and per-provider deliverability reports.
+  humanURL: https://mailosaur.com/docs/api
+  baseURL: https://mailosaur.com/api
+  tags:
+  - Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/mailosaur-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://mailosaur.com/docs/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+- aid: mailosaur:mailosaur-devices-api
+  name: Mailosaur Devices API
+  description: >-
+    Operations for managing virtual security devices and retrieving their current one-time passwords (OTPs),
+    used to automate testing of app-based multi-factor authentication.
+  humanURL: https://mailosaur.com/docs/api
+  baseURL: https://mailosaur.com/api
+  tags:
+  - Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/mailosaur-devices-api-openapi.yml
+  - type: Documentation
+    url: https://mailosaur.com/docs/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+- aid: mailosaur:mailosaur-files-api
+  name: Mailosaur Files API
+  description: >-
+    Operations for downloading the raw content associated with a message — file attachments, the full
+    EML source of an email, and rendered email previews.
+  humanURL: https://mailosaur.com/docs/api
+  baseURL: https://mailosaur.com/api
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/mailosaur-files-api-openapi.yml
+  - type: Documentation
+    url: https://mailosaur.com/docs/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+- aid: mailosaur:mailosaur-messages-api
+  name: Mailosaur Messages API
+  description: >-
+    Operations for finding, retrieving, creating, forwarding, replying to, and deleting the email and
+    SMS messages received by your Mailosaur inboxes.
+  humanURL: https://mailosaur.com/docs/api
+  baseURL: https://mailosaur.com/api
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/mailosaur-messages-api-openapi.yml
+  - type: Documentation
+    url: https://mailosaur.com/docs/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+- aid: mailosaur:mailosaur-previews-api
+  name: Mailosaur Previews API
+  description: >-
+    Operations for discovering the email clients available for generating email previews (screenshots
+    of an email rendered in real clients).
+  humanURL: https://mailosaur.com/docs/api
+  baseURL: https://mailosaur.com/api
+  tags:
+  - Previews
+  properties:
+  - type: OpenAPI
+    url: openapi/mailosaur-previews-api-openapi.yml
+  - type: Documentation
+    url: https://mailosaur.com/docs/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+- aid: mailosaur:mailosaur-servers-api
+  name: Mailosaur Servers API
+  description: >-
+    Operations for creating and managing your Mailosaur inboxes (servers). Inboxes group your tests together,
+    each with its own domain and SMTP/POP3/IMAP credentials.
+  humanURL: https://mailosaur.com/docs/api
+  baseURL: https://mailosaur.com/api
+  tags:
+  - Servers
+  properties:
+  - type: OpenAPI
+    url: openapi/mailosaur-servers-api-openapi.yml
+  - type: Documentation
+    url: https://mailosaur.com/docs/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
+- aid: mailosaur:mailosaur-usage-api
+  name: Mailosaur Usage API
+  description: >-
+    Operations for inspecting your account's usage limits and recent transactional usage. These endpoints
+    require authentication with an account-level API key.
+  humanURL: https://mailosaur.com/docs/api
+  baseURL: https://mailosaur.com/api
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/mailosaur-usage-api-openapi.yml
+  - type: Documentation
+    url: https://mailosaur.com/docs/api
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
 common:
   - type: AgenticAccess
     url: agentic-access/mailosaur-agentic-access.yml
