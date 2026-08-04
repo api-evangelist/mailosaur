@@ -1,0 +1,26 @@
+{
+  "provider": "mailosaur",
+  "sources": [
+    "mailosaur-analysis-api-openapi.yml",
+    "mailosaur-devices-api-openapi.yml",
+    "mailosaur-files-api-openapi.yml",
+    "mailosaur-messages-api-openapi.yml",
+    "mailosaur-previews-api-openapi.yml",
+    "mailosaur-servers-api-openapi.yml",
+    "mailosaur-usage-api-openapi.yml"
+  ],
+  "outputs": [
+    "mailosaur-analysis-api-openapi.yml",
+    "mailosaur-devices-api-openapi.yml",
+    "mailosaur-files-api-openapi.yml",
+    "mailosaur-messages-api-openapi.yml",
+    "mailosaur-previews-api-openapi.yml",
+    "mailosaur-servers-api-openapi.yml",
+    "mailosaur-usage-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
