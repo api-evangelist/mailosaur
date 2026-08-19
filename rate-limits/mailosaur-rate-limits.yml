@@ -1,3 +1,57 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://mailosaur.com/pricing,
+  https://mailosaur.com/docs/managing-your-account/usage-limits,
+  https://mailosaur.com/docs/inboxes/usage-limits, https://mailosaur.com/docs/api,
+  plus a live unauthenticated probe of https://mailosaur.com/api/servers (2026-08-14)
+limit_count: 5
+response_headers:
+  headers: []
+  status_on_exhaustion: null
+  probed:
+    url: https://mailosaur.com/api/servers
+    fetched: '2026-08-14'
+    http_status: 401
+    observed_headers:
+      - 'date'
+      - 'cache-control: no-store, must-revalidate, no-cache'
+      - 'www-authenticate: Bearer'
+      - 'strict-transport-security: max-age=31536000; includeSubdomains; preload'
+      - 'x-frame-options: SAMEORIGIN'
+      - 'x-content-type-options: nosniff'
+  note: >-
+    Mailosaur returns NO runtime rate-limit signal. No X-RateLimit-*,
+    RateLimit-* or Retry-After header is documented, and none appears on a live
+    response. There is no documented HTTP status for exhaustion either: per
+    https://mailosaur.com/docs/managing-your-account/usage-limits, exceeding the
+    daily email allowance causes inbound email to be REJECTED at the mail layer
+    and SMS to stop being processed — neither of which the API caller ever sees.
+    Per https://mailosaur.com/docs/inboxes/usage-limits, an inbox over its
+    monthly inbound SMS limit SILENTLY DROPS further messages, while an
+    over-limit outbound SMS send returns a validation error. The only
+    programmatic signal available to an agent is polling GET /api/usage/limits
+    (getUsageLimits), which returns current limits and consumption for servers,
+    users, email and SMS.
+reset_schedule:
+  daily: midnight UTC each day
+  monthly: midnight UTC on the 1st of each calendar month
+metered_dimensions:
+  - Email (daily; received and sent combined)
+  - SMS (monthly; received and sent counted separately)
+  - Email previews (monthly)
+  - Screenshots (monthly; one per client/device per preview)
+resource_quotas:
+  - Inboxes (servers)
+  - Users
+  - Phone numbers
+inbox_level_limits:
+  available_on: Enterprise
+  note: >-
+    Enterprise accounts can cap an individual inbox's daily email, monthly
+    inbound SMS and monthly outbound SMS, so one team cannot consume the whole
+    account allowance. A message is rejected when it exceeds either the account
+    limit or the inbox limit, whichever is reached first.
 specificationVersion: "0.1"
 id: mailosaur-rate-limits
 name: Mailosaur Rate Limits

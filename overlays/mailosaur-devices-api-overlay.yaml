@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Mailosaur Analysis Devices API
+  version: 1.0.0
+extends: openapi/mailosaur-devices-api-openapi.yml
+x-generated: '2026-08-14'
+x-method: generated
+x-source: openapi/mailosaur-devices-api-openapi.yml + repo artifacts (conventions/, errors/, authentication/, lifecycle/, data-model/)
+actions:
+  - target: $.info
+    description: Bind this contract to the API Evangelist artifacts derived from it.
+    update:
+      x-apievangelist-provider: mailosaur
+      x-apievangelist-artifacts:
+        conventions: conventions/mailosaur-conventions.yml
+        errors: errors/mailosaur-problem-types.yml
+        authentication: authentication/mailosaur-authentication.yml
+        lifecycle: lifecycle/mailosaur-lifecycle.yml
+        data_model: data-model/mailosaur-data-model.yml
+        rate_limits: rate-limits/mailosaur-rate-limits.yml
+        skills: skills/_index.yml
+  - target: $.info
+    description: >-
+      Record the two facts the original contract does not state: the API is
+      unversioned, and it declares no error responses.
+    update:
+      x-api-versioning: unversioned
+      x-error-responses-declared: false
+  - target: $.components.securitySchemes.basicAuth
+    description: >-
+      PROBED 2026-08-14 — an unauthenticated request to
+      https://mailosaur.com/api/servers answers 401 with
+      'www-authenticate: Bearer' and an empty body, contradicting the
+      documented Basic scheme that actually works.
+    update:
+      x-observed-challenge: Bearer
+      x-observed-401-body: empty
+  - target: $.paths.*.*
+    description: >-
+      No operation in this document declares a 4xx or 5xx response. The real
+      error contract is catalogued in errors/mailosaur-problem-types.yml:
+      400 returns a {type,message,parameters,model} envelope; 401 and 404
+      return no body.
+    update:
+      x-error-catalog: errors/mailosaur-problem-types.yml
+      x-idempotent-retry-safe: false

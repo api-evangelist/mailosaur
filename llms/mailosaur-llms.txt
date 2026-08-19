@@ -1,0 +1,137 @@
+# Mailosaur
+
+## docs
+
+- [Email and SMS Testing API](https://mailosaur.com/docs/api.md): Mailosaur Email and SMS Testing API for automated tests. Integrate effortlessly with Nodejs, Cypress, Python, Java, .NET, Go, Ruby, and PHP.
+- [Authenticator (TOTP) testing](https://mailosaur.com/docs/authenticator.md): The Mailosaur authenticator is a virtual TOTP (Time-based One-Time Password) generator. It works like Google Authenticator or similar apps.
+- [Automating TOTP tests](https://mailosaur.com/docs/authenticator/automate-totp-testing.md): You can retrieve the current 6-digit TOTP code directly from the Mailosaur API by passing a shared secret.
+- [Create and delete TOTP devices](https://mailosaur.com/docs/authenticator/create-and-delete-devices.md): An authenticator device stores a shared secret and generates TOTP codes on demand. Creating a device is like adding an account to Google Authenticator.
+- [Automation](https://mailosaur.com/docs/automation.md): Automate your tests by integrating Mailosaur with any testing framework or project, regardless of the programming language it's written in.
+- [Email attachments](https://mailosaur.com/docs/automation/attachments.md): This guide shows how easy it is to test email attachments and properties like name, content type, size, images, and fetching attachments in various languages.
+- [Extracting codes from email and SMS](https://mailosaur.com/docs/automation/codes.md): This guide shows how easy it is to automatically extract verification and offer codes from the content of email or SMS messages.
+- [Common assertions](https://mailosaur.com/docs/automation/common-assertions.md): Learn how to automate common assertions for email and SMS testing, including HTML content, links, codes, attachments, images, and spam scores.
+- [Using Mailosaur with Cucumber](https://mailosaur.com/docs/automation/cucumber.md): Mailosaur integrates very simply into Cucumber. To make the most of Mailosaur's key features within Cucumber, follow our guides and get testing in minutes.
+- [Email testing with Cucumber](https://mailosaur.com/docs/automation/cucumber/email-testing.md): Documentation showing how to add Mailosaur automated email testing to your Cucumber tests in Java, Python, .NET, Ruby and Node.js projects.
+- [Quickstart guide for Mailosaur and Cucumber](https://mailosaur.com/docs/automation/cucumber/quickstart.md): Documentation showing how to create a starter project for Mailosaur tests using Cucumber and how to write your first automated Mailosaur test.
+- [SMS testing with Cucumber](https://mailosaur.com/docs/automation/cucumber/sms-testing.md): Documentation showing how to add Mailosaur automated SMS testing to your Cucumber tests in Java, Python, .NET, Ruby and Node.js projects.
+- [Using Mailosaur with Cypress](https://mailosaur.com/docs/automation/cypress.md): Cypress integrates with Mailosaur easily, follow our guides on automation, email testing, and SMS testing.
+- [Email testing for Cypress](https://mailosaur.com/docs/automation/cypress/email-testing.md): Test email and SMS workflows in Cypress using Mailosaur’s API. Automate password resets, OTPs, and user verification with speed and reliability.
+- [Mailosaur and Cypress - Quickstart guide](https://mailosaur.com/docs/automation/cypress/quickstart.md): Get started testing emails and SMS with Cypress using Mailosaur. Automate verification codes, alerts, and app notifications.
+- [SMS testing for Cypress](https://mailosaur.com/docs/automation/cypress/sms-testing.md): Learn how to integrate and perform SMS testing with Cypress and Mailosaur. See all testing scenarios here.
+- [How to test email and SMS in .NET](https://mailosaur.com/docs/automation/dotnet.md): Add email and SMS automation to your .NET QA with Mailosaur for signup flows, OTPs, and end-to-end testing.
+- [How to test email and SMS using Ghost Inspector](https://mailosaur.com/docs/automation/ghost-inspector.md): Learn how to automate email and SMS testing with Ghost Inspector using the Mailosaur API.
+- [How to test email and SMS in Go](https://mailosaur.com/docs/automation/go.md): Learn how to automate email and SMS testing with Golang using the Mailosaur API.
+- [HTML content of an email](https://mailosaur.com/docs/automation/html-content.md): This guide shows how easy it is to extract and test HTML and text content within emails using Mailosaur.
+- [Images and web beacons](https://mailosaur.com/docs/automation/images.md): This guide shows how easy it is to test images, including web beacons, within a HTML email. Automate using Mailosaur's simple guide.
+- [How to test email and SMS with Insomnia](https://mailosaur.com/docs/automation/insomnia.md): Use Mailosaur with Insomnia to send and test email and SMS via API. Validate 2FA, signup flows and more without leaving your API workspace.
+- [How to test email and SMS in Java](https://mailosaur.com/docs/automation/java.md): Use Mailosaur’s Java SDK to automate email and SMS workflows, validate OTPs and alerts, and integrate testing into CI/CD and QA pipelines.
+- [How to test email and SMS with JavaScript](https://mailosaur.com/docs/automation/javascript.md): Use Mailosaur’s JavaScript SDK to test email and SMS flows, automate notifications, and validate OTPs in your QA and CI/CD pipelines.
+- [Extracting links from email and SMS](https://mailosaur.com/docs/automation/links.md): This guide shows how easy it is to test links and hyperlinks from the content on your emails or messages to test they work correctly.
+- [Message properties](https://mailosaur.com/docs/automation/message-properties.md): This guide shows how easy it is to test the common properties of an email or SMS message including subject line, recipients, senders and email headers.
+- [Using Node.js to test email or SMS messages](https://mailosaur.com/docs/automation/nodejs.md): Learn how to automate email and SMS testing with Node.js using the Mailosaur API.
+- [How to test email and SMS in PHP](https://mailosaur.com/docs/automation/php.md): Automate email and SMS tests in PHP using Mailosaur. Validate workflows, OTPs, and user alerts across staging and CI.
+- [Using Mailosaur with Playwright](https://mailosaur.com/docs/automation/playwright.md): Effectively integrate Mailosaur with Playwright, follow our guides on automation, email testing, and SMS testing.
+- [Email testing for Playwright](https://mailosaur.com/docs/automation/playwright/email-testing.md): Automate email and SMS testing in Playwright with Mailosaur’s API. Catch bugs in OTP, signup, and notification workflows in end-to-end QA.
+- [Mailosaur and Playwright - Quickstart guide](https://mailosaur.com/docs/automation/playwright/quickstart.md): Rapidly start automating your SMS and email testing using our quickstart guide for Playwright and Mailosaur.
+- [SMS testing for Playwright](https://mailosaur.com/docs/automation/playwright/sms-testing.md): Learn how to integrate and perform SMS testing with Playwright and Mailosaur. See all testing scenarios here.
+- [How to test email and SMS with Postman](https://mailosaur.com/docs/automation/postman.md): Integrate Mailosaur with your Postman suite to automate email and SMS testing, OTP verification, and notification workflows in end-to-end QA.
+- [How to test email and SMS with PowerShell](https://mailosaur.com/docs/automation/powershell.md): Automate testing of 2FA, account verification, and transactional email notifications in PowerShell using the Mailosaur API and dynamic test inboxes.
+- [How to test email and SMS in Python](https://mailosaur.com/docs/automation/python.md): Automate email and SMS testing in Python with the Mailosaur API. Validate tokens, links, and transactional workflows in your test suite.
+- [How to test email and SMS with Robot Framework](https://mailosaur.com/docs/automation/robot-framework.md): Automate your email and SMS testing, from validating OTPs to verifying end-to-end flows by integrating Robot Framework with Mailosaur's API.
+- [How to test email and SMS in Ruby](https://mailosaur.com/docs/automation/ruby.md): Automate your SMS and email testing with Ruby, allowing you to authenticate login flows, validate OTPs and test your transactional messages.
+- [Using Mailosaur with Selenium](https://mailosaur.com/docs/automation/selenium.md): Selenium integrates with Mailosaur easily, follow our guides on automation, email testing, and SMS testing.
+- [Screenshot guide for Selenium](https://mailosaur.com/docs/automation/selenium/email-screenshots.md): See exactly which parts of an email are causing problems.
+- [Email testing for Selenium](https://mailosaur.com/docs/automation/selenium/email-testing.md): Automate end-to-end flows, OTP and validation as well as test suite management by integrating Selenium with Mailosaur's API.
+- [Mailosaur and Selenium - Quickstart guide](https://mailosaur.com/docs/automation/selenium/quickstart.md): Run end-to-end email and SMS tests in Selenium with Mailosaur. Capture OTPs, links, and user flows across web apps.
+- [SMS testing for Selenium](https://mailosaur.com/docs/automation/selenium/sms-testing.md): Learn how to integrate and perform SMS testing with Selenium and Mailosaur. See all testing scenarios here.
+- [How to test email spam score](https://mailosaur.com/docs/automation/spam.md): This guide shows how easy it is to test your email spam score with Mailosaur's deliverability report and SpamAssassin checks.
+- [How to test email and SMS with TestCafe](https://mailosaur.com/docs/automation/testcafe.md): Learn how to automate email and SMS testing with TestCafe using the Mailosaur API.
+- [How to test the text content of email or SMS](https://mailosaur.com/docs/automation/text-content.md): This guide shows how easy it is to automate the testing of the contents of an email or SMS message using the Mailosaur API.
+- [How to test email and SMS with WebdriverIO](https://mailosaur.com/docs/automation/webdriverio.md): Run automated email and SMS tests in WebdriverIO with Mailosaur. Validate links, OTPs, and 2FA in end-to-end test flows.
+- [Check email accessibility and compatibility](https://mailosaur.com/docs/compliance.md): Use Mailosaur Compliance checks to find WCAG accessibility issues and email client compatibility problems before you send.
+- [How to test the appearance of emails with Mailosaur](https://mailosaur.com/docs/email-previews.md): Set up email previews, allowing you to view your email appearance and functionality across clients and devices with Mailosaur.
+- [Email testing](https://mailosaur.com/docs/email-testing.md): Learn how to use our virtual SMTP inboxes to create test emails, account verification emails, password resets, email tracking, and more.
+- [Overview of deliverability reporting](https://mailosaur.com/docs/email-testing/deliverability.md): Understand whether your emails are likely to reach recipients' inboxes or get caught by spam filters.
+- [Forwarding email](https://mailosaur.com/docs/email-testing/forwarding.md): Learn how to forward individual emails and set up automatic forwarding rules to send emails outside of Mailosaur.
+- [How to test email in Node.js](https://mailosaur.com/docs/email-testing/nodejs.md): Automate email and SMS testing in Node.js using the Mailosaur API for verifying OTPs, transactional flows, and notifications in CI pipelines.
+- [Testing with POP3 and IMAP](https://mailosaur.com/docs/email-testing/pop3-imap.md): Connect to your Mailosaur inbox with POP3 or IMAP to retrieve and interact with test emails in real-time using email clients and services.
+- [Replying to email](https://mailosaur.com/docs/email-testing/replying.md): Learn how to use Mailosaur to simulate replying to test emails in your automated email testing workflow.
+- [Sending email out from Mailosaur](https://mailosaur.com/docs/email-testing/sending-from-mailosaur.md): Learn how to send test emails from Mailosaur to simulate inbound email workflows. Easily build automated tests for complex functionality.
+- [Sending test email to Mailosaur](https://mailosaur.com/docs/email-testing/sending-to-mailosaur.md): Begin testing email in minutes. Instant access to unlimited email addresses as well as a test SMTP server from Mailosaur.
+- [Testing with SMTP](https://mailosaur.com/docs/email-testing/smtp.md): Capture every email your product sends. Use Mailosaur as a test SMTP server to avoid costs and prevent emails from reaching real customers.
+- [Inboxes overview](https://mailosaur.com/docs/inboxes.md): Captures emails and SMS messages for testing, groups your tests and settings, and manages access for your team.
+- [Create an inbox](https://mailosaur.com/docs/inboxes/create-an-inbox.md): Create a new inbox to start capturing emails and SMS messages.
+- [Delete an inbox](https://mailosaur.com/docs/inboxes/delete-an-inbox.md): Deleting an inbox permanently removes it and all of its messages.
+- [Forwarding rules](https://mailosaur.com/docs/inboxes/forwarding-rules.md): Forwarding rules automatically forward emails or SMS messages that match given criteria to an external email address.
+- [Inbox settings](https://mailosaur.com/docs/inboxes/inbox-settings.md): Each inbox has configurable settings that control its name, message retention, and performance behavior.
+- [Manage inbox access](https://mailosaur.com/docs/inboxes/manage-inbox-access.md): You can restrict access to an inbox so that only specific users and teams can access it.
+- [SMTP, POP3, and IMAP connection details](https://mailosaur.com/docs/inboxes/smtp-pop3-imap.md): You can connect to a Mailosaur inbox using standard email protocols: SMTP, POP3, and IMAP.
+- [Inbox usage limits](https://mailosaur.com/docs/inboxes/usage-limits.md): Set email and SMS usage limits on individual inboxes to control how your account allowance is shared across teams and projects.
+- [Documentation](https://mailosaur.com/docs/index.md): Explore API docs and automation guides to test email, SMS, OTPs, and more with Mailosaur.
+- [Managing your account](https://mailosaur.com/docs/managing-your-account.md): Explore the Mailosaur Dashboard. Easily control emails and SMS messages, manage users, permissions, API keys, SSO and more.
+- [API keys](https://mailosaur.com/docs/managing-your-account/api-keys.md): API keys authenticate your requests to the Mailosaur API.
+- [Deleting your account](https://mailosaur.com/docs/managing-your-account/deleting-your-account.md): Maybe you have a duplicate account or perhaps you want to leave Mailosaur. Either way, here is how to delete an account.
+- [Managing External Email Addresses](https://mailosaur.com/docs/managing-your-account/external-email-addresses.md): Learn how to manage external email addresses with Mailosaur. Verify ownership for sending, replying, and forwarding emails.
+- [IP addresses and ports](https://mailosaur.com/docs/managing-your-account/ip-addresses.md): Learn how to configure Mailosaur for corporate networks blocking unknown IP addresses or port numbers.
+- [Verifying Domain Ownership](https://mailosaur.com/docs/managing-your-account/managing-domains.md): Learn how to verify a domain you own, so that you can use it with your Mailosaur account for email and SMS testing.
+- [Managing Users and Teams](https://mailosaur.com/docs/managing-your-account/managing-users.md): Learn how to manage user permissions in Mailosaur. Control team access and actions, configure user permissions.
+- [SCIM](https://mailosaur.com/docs/managing-your-account/scim.md): How to manage user access with Mailosaur's SCIM API. Automate provisioning, access, and team organization with SCIM-enabled Identity Providers.
+- [Configure Single Sign On (SSO) with Mailosaur and Microsoft Entra](https://mailosaur.com/docs/managing-your-account/sso-mailosaur-microsoft-entra.md): Configure SSO with Microsoft Entra to securely manage Mailosaur access across QA and development teams.
+- [Configure Single Sign On (SSO) with Mailosaur and Okta](https://mailosaur.com/docs/managing-your-account/sso-mailosaur-okta.md): Supporting SP-initiated SSO, JIT provisioning and SCIM provisioning, learn how to secure Mailosaur using SSO with Okta.
+- [Single sign-on](https://mailosaur.com/docs/managing-your-account/sso.md): Enhance security with Single Sign-On (SSO). Mailosaur supports both SAML or OpenID Connect for Enterprise-grade authentication and access control.
+- [Usage alerts](https://mailosaur.com/docs/managing-your-account/usage-alerts.md): Get an email when your account approaches its email or SMS usage limits, so you can act before messages are blocked.
+- [Account usage limits](https://mailosaur.com/docs/managing-your-account/usage-limits.md): Understand the limits included with your Mailosaur plan — email, SMS, previews, screenshots, inboxes, users, and phone numbers — and how to track your usage.
+- [How to test SMS messages with Mailosaur](https://mailosaur.com/docs/sms-testing.md): Learn how to use Mailosaur mobile phone numbers to create end-to-end tests that cover identity verification, alerting, promotional messages and more.
+- [Test phone numbers](https://mailosaur.com/docs/sms-testing/phone-numbers.md): Learn to test SMS functionality with Mailosaur. Request, cost, and allocate mobile phone numbers for testing.
+- [Replying to SMS messages](https://mailosaur.com/docs/sms-testing/replying.md): This guide shows how easy it is to use the reply function to simulate a user replying to one of your SMS messages using the Mailosaur API.
+
+## pages
+
+- [Automate tests you never thought you could](https://mailosaur.com/automation.md): Learn more about testing one-time passcodes, password resets, and secure flows with our automated SMS and email testing tool.
+- [Use Cucumber to test user interaction, in minutes](https://mailosaur.com/cucumber.md): Automate email, SMS, and 2FA testing in minutes with Cucumber and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+- [Use Cypress to test user interaction, in minutes](https://mailosaur.com/cypress.md): Automate email, SMS, and 2FA testing in minutes with Cypress and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+- [Book a personalised demo](https://mailosaur.com/demo.md): Take the opportunity to request a free Mailosaur demo for yourself and your team and find out how it can fit into your existing workflow.
+- [Email designer ](https://mailosaur.com/email-designer.md): Catch layout issues, visual inconsistencies, and formatting problems before you even hit send. .
+- [See how your emails look before you hit send](https://mailosaur.com/email-previews.md): Preview emails in every major client and device, from Gmail on Android to Apple Mail on macOS, before you hit send. .
+- [Test everything that relies on email](https://mailosaur.com/email-testing.md): Learn to automate email testing, validate email content, and preview emails in real-world clients. Test password reset and account verification.
+- [Email & SMS test automation for engineering teams](https://mailosaur.com/engineering.md): Developer sandboxes, simple API, test emails and SMS in one place, environment segregation, and unlimited email addresses for hassle-free testing.
+- [Email & SMS testing for enterprise](https://mailosaur.com/enterprise.md): Revolutionize global enterprises with Mailosaur's email and SMS testing platform.
+- [Frequently asked questions](https://mailosaur.com/faqs.md): Everything you need to know about your favourite QA testing tool, including questions on email and sms testing, billing, accounts and features.
+- [Use Ghost Inspector to test user interaction](https://mailosaur.com/ghost-inspector.md): Automate email, SMS, and 2FA testing in minutes with Ghost Inspector and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+- [Give your AI agent the tools a human has ](https://mailosaur.com/give-ai-tools.md): Mailosaur gives AI agents access to inboxes, phone numbers, and one-time passcodes, so they can complete real user flows without manual steps.
+- [Preview, test, and trust every customer touchpoint](https://mailosaur.com/index.md): Instant, secure inboxes, test numbers, and email previews to test every sign-up, password reset, and authentication flow automatically.  .
+- [Confident communication for marketers](https://mailosaur.com/marketing.md): Help marketing teams preview emails and guarantee high-quality content. Unlimited email addresses, easy implementation, and live support.
+- [Message testing](https://mailosaur.com/message-testing.md): Email and SMS sit at the centre of critical user journeys, meaning if they fail, the experience breaks immediately.
+- [Multifactor authentication testing](https://mailosaur.com/mfa.md): Start testing OTPs, two-factor, and multi-factor authentication flows using Mailosaur's intuitive tool. .
+- [Embed email testing your customers will trust          ](https://mailosaur.com/partnerships.md): Embed Mailosaur's testing capabilities into your product, or resell our best in class email confidence suite.
+- [Use Playwright to test user interaction](https://mailosaur.com/playwright.md): Automate email, SMS, and 2FA testing in minutes with Playwright and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+- [Use Postman to test user interaction, in minutes](https://mailosaur.com/postman.md): Automate email, SMS, and 2FA testing in minutes with Postman and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+- [Communication testing for Product Managers](https://mailosaur.com/product-management.md): Manage email and SMS QA in one place with Mailosaur. Track test results, monitor deliverability, and collaborate across teams for faster bug detection.
+- [Reliable end‑to‑end testing for QA teams](https://mailosaur.com/quality-assurance.md): Build reliable QA workflows for email and SMS with Mailosaur. Automate testing in CI/CD and catch issues before they hit production.
+- [Use Robot Framework to test user interactions](https://mailosaur.com/robot-framework.md): Automate email, SMS, and 2FA testing in minutes with Robot Framework and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+- [Security and trust](https://mailosaur.com/security.md): Trust Mailosaur for secure data protection. Hosted on Google Cloud Platform, GDPR, and ISO 27001 certified.
+- [Use Selenium to test user interaction, in minutes](https://mailosaur.com/selenium.md): Automate email, SMS, and 2FA testing in minutes with Selenium and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+- [End-to-end SMS testing made simple](https://mailosaur.com/sms-testing.md): SMS automation with Mailosaur's end-to-end SMS testing API. Verify delivery, test codes, ensure message accuracy, use any framework.
+- [Email & SMS testing for startups](https://mailosaur.com/startups.md): Start your email and SMS testing with Mailosaur. Catch issues earlier, validate OTPs and flows, and scale QA confidently across staging and CI/CD.
+- [Use WebdriverIO to test user interaction](https://mailosaur.com/webdriverio.md): Automate email, SMS, and 2FA testing in minutes with WebdriverIO and Mailosaur. Build end-to-end tests for password resets, account verification, and more. .
+
+## features
+
+- [Use your own domain](https://mailosaur.com/features/custom-domains.md): Generate unlimited brand-friendly test email addresses with Mailosaur. Simulate real scenarios and safely test email flows, delivery, and compliance.
+- [Forwarding rules](https://mailosaur.com/features/forwarding-rules.md): Automate email workflows with Mailosaur's forwarding rules. Easily forward emails based on custom rules.
+- [Test links & verification codes](https://mailosaur.com/features/links-and-codes.md): Extract and test links, OTPs, and confirmation codes from emails and SMS automatically using Mailosaur.
+- [Message analysis with Mailosaur](https://mailosaur.com/features/message-analysis.md): Analyze and debug emails with Mailosaur's message analysis. Gain insights, ensure accuracy, and enhance test email performance.
+- [Make your own rules](https://mailosaur.com/features/rules.md): Ensure your product can handle real-world scenarios like email bounces, out-of-office replies, and server errors.
+- [Sending, replying & forwarding emails](https://mailosaur.com/features/send-reply-forward.md): Send, reply to, and forward emails using Mailosaur inboxes. Simulate real user actions, automate multi-step flows, and validate email workflows.
+- [Virtual SMTP servers from Mailosaur](https://mailosaur.com/features/smtp.md): Use our ultimate dummy/virtual SMTP server and capture every email your product sends effortlessly for email and SMS testing.
+- [Enterprise-level security with Mailosaur](https://mailosaur.com/features/sso.md): With Mailosaur, you can easily secure your dashboard with your organization's SAML or OpenID Connect Identity Provider.
+
+## industries
+
+- [Confidence in every campus message](https://mailosaur.com/industries/education.md): Deliver accurate, engaging, and personalized messages to staff, students and parents, preview your communications and provide a seamless experience.
+- [Maintain high quality, compliant products](https://mailosaur.com/industries/financial.md): Test financial email and SMS with Mailosaur. Ensure accuracy, compliance, and data security. Drive customer engagement with experiences and maintain testing.
+- [Enable flawless digital public services](https://mailosaur.com/industries/government.md): Deliver accurate, engaging, and personalized messages to your audience, preview your communications and provide a seamless experience.
+- [Quality messaging to match quality care](https://mailosaur.com/industries/healthcare.md): Use cases for healthcare communications with email and SMS testing. Validate accuracy, regulatory compliance, enhance data security, and patient engagement.
+- [Retail-ready messaging, tested from end to end](https://mailosaur.com/industries/retail.md): Don't take chances with your transactional messages; ensure order confirmations, shipping notifications and more arrive exactly as intended.
+- [Catch booking issues before your users do](https://mailosaur.com/industries/travel.md): Travel email and SMS testing with our simple API. Enhance loyalty with personalized campaigns, bookings, optimize promotions, and ensure data security.
+- [Power smooth connections with every message](https://mailosaur.com/industries/utilities.md): Deliver accurate, engaging, and personalized messages to your customers, preview your communications and provide a seamless experience.

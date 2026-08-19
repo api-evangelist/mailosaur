@@ -1,0 +1,29 @@
+generated: '2026-08-14'
+method: generated
+source: >-
+  Generated from the seven OpenAPI documents in openapi/ (every operationId
+  verified verbatim against the specs) plus conventions/mailosaur-conventions.yml,
+  errors/mailosaur-problem-types.yml and the Mailosaur automation docs at
+  https://mailosaur.com/docs/automation. Mailosaur publishes no AGENTS.md and no
+  skill files of its own — searched and not found.
+skills:
+  - file: mailosaur-verify-otp-code.md
+    name: Verify a one-time passcode delivered by email or SMS
+    api: openapi/mailosaur-messages-api-openapi.yml
+    operations: [listServers, searchMessages, getMessage]
+  - file: mailosaur-test-password-reset-link.md
+    name: Test a password-reset or account-verification link end to end
+    api: openapi/mailosaur-messages-api-openapi.yml
+    operations: [listServers, searchMessages, getMessage, getEmailFile, deleteMessage]
+  - file: mailosaur-automate-totp-mfa.md
+    name: Automate authenticator-app (TOTP) multi-factor login
+    api: openapi/mailosaur-devices-api-openapi.yml
+    operations: [getOtpBySharedSecret, createDevice, listDevices, getDeviceOtp, deleteDevice]
+  - file: mailosaur-check-deliverability-and-spam.md
+    name: Check an email's deliverability and spam score before it ships
+    api: openapi/mailosaur-analysis-api-openapi.yml
+    operations: [searchMessages, getSpamAnalysis, getDeliverabilityReport]
+  - file: mailosaur-provision-disposable-inbox.md
+    name: Provision and tear down a disposable test inbox
+    api: openapi/mailosaur-servers-api-openapi.yml
+    operations: [listServers, createServer, getServer, updateServer, getServerPassword, deleteServer, deleteAllMessages, getUsageLimits]

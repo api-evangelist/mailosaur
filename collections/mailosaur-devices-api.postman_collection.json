@@ -1,0 +1,517 @@
+{
+  "item": [
+    {
+      "id": "a1a5f4e9-55f2-48d0-8490-7d54a9793f9b",
+      "name": "Devices",
+      "description": {
+        "content": "Operations for managing virtual security devices and retrieving their current one-time passwords (OTPs), used to automate testing of app-based multi-factor authentication.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d98b3bc9-c675-4053-8284-fc915af78ed3",
+          "name": "List devices",
+          "request": {
+            "name": "List devices",
+            "description": {
+              "content": "Returns a list of your virtual security devices.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "devices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef35dc6e-7da7-431e-8c41-3be6bfecf4f0",
+              "name": "A list of virtual security devices.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f8862a4e-b3fa-4225-b854-c29753393928",
+          "name": "Create a device",
+          "request": {
+            "name": "Create a device",
+            "description": {
+              "content": "Creates a new virtual security device.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "devices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"sharedSecret\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0da2ce3a-d15d-479d-885e-7b023b88c917",
+              "name": "The newly-created virtual security device.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"sharedSecret\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06d9b07d-af1e-40e5-98a2-c82f195f71c1",
+          "name": "Delete a device",
+          "request": {
+            "name": "Delete a device",
+            "description": {
+              "content": "Permanently delete a virtual security device. This operation cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "devices",
+                ":deviceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) The unique identifier of the virtual security device."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75f76bba-74fe-4ace-8b8a-3cf1d365d9fb",
+              "name": "The device was successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) The unique identifier of the virtual security device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f23ce08d-7c39-470c-996f-d31151b7855c",
+          "name": "Get OTP for a device",
+          "request": {
+            "name": "Get OTP for a device",
+            "description": {
+              "content": "Retrieves the current one-time password for a saved device.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "devices",
+                ":deviceId",
+                "otp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deviceId",
+                  "description": "(Required) The unique identifier of the virtual security device."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "13be6e48-7e5c-4bcb-8fb7-71b81f1de4f0",
+              "name": "The current one-time password result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "devices",
+                    ":deviceId",
+                    "otp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deviceId",
+                      "description": "(Required) The unique identifier of the virtual security device."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"expires\": \"1952-09-02T01:42:29.526Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3c27c9d-c680-4369-bdb6-5d61d7c37193",
+          "name": "Get OTP by shared secret",
+          "request": {
+            "name": "Get OTP by shared secret",
+            "description": {
+              "content": "Retrieves the current one-time password given a base32-encoded shared secret.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "devices",
+                "otp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sharedSecret\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "195de6a0-32f1-433a-bd11-6054ddd5fae5",
+              "name": "The current one-time password result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "devices",
+                    "otp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sharedSecret\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"expires\": \"1952-09-02T01:42:29.526Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://mailosaur.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "16384729-012f-45d7-895a-7e2b919c1058",
+    "name": "Mailosaur Analysis Devices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.\n\nContact Support:\n Name: Mailosaur Support",
+      "type": "text/plain"
+    }
+  }
+}

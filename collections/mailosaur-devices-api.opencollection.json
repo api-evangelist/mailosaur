@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mailosaur Analysis Devices API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/devices"
+          },
+          "docs": "Returns a list of your virtual security devices."
+        },
+        {
+          "info": {
+            "name": "Create a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/devices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new virtual security device."
+        },
+        {
+          "info": {
+            "name": "Delete a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://mailosaur.com/api/devices/:deviceId",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the virtual security device."
+              }
+            ]
+          },
+          "docs": "Permanently delete a virtual security device. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get OTP for a device",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/devices/:deviceId/otp",
+            "params": [
+              {
+                "name": "deviceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the virtual security device."
+              }
+            ]
+          },
+          "docs": "Retrieves the current one-time password for a saved device."
+        },
+        {
+          "info": {
+            "name": "Get OTP by shared secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/devices/otp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves the current one-time password given a base32-encoded shared secret."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

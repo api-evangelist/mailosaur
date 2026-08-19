@@ -1,0 +1,631 @@
+{
+  "item": [
+    {
+      "id": "e7edb2c7-1fd4-4b76-acad-dad1d0134c64",
+      "name": "Servers",
+      "description": {
+        "content": "Operations for creating and managing your Mailosaur inboxes (servers). Inboxes group your tests together, each with its own domain and SMTP/POP3/IMAP credentials.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "adfbe832-7bc9-4e19-8c3f-cddced3f3700",
+          "name": "List servers",
+          "request": {
+            "name": "List servers",
+            "description": {
+              "content": "Returns a list of your inboxes (servers). Inboxes (servers) are returned sorted in alphabetical order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "servers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e0c55de-e620-413c-89ac-8638a6c7f5e1",
+              "name": "A list of inboxes (servers).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"users\": [\n        \"string\",\n        \"string\"\n      ],\n      \"messages\": 8144\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"users\": [\n        \"string\",\n        \"string\"\n      ],\n      \"messages\": 3778\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94e02f7e-61ca-4cb6-b894-d167cb1cbdf0",
+          "name": "Create a server",
+          "request": {
+            "name": "Create a server",
+            "description": {
+              "content": "Creates a new inbox (server).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "servers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cd70d149-8026-4d9e-adab-c31b63c113cf",
+              "name": "The newly-created inbox (server).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"users\": [\n    \"string\",\n    \"string\"\n  ],\n  \"messages\": 5101\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c7e0785-2d3f-43b0-a485-11cd7b0cac0e",
+          "name": "Get a server",
+          "request": {
+            "name": "Get a server",
+            "description": {
+              "content": "Retrieves the detail for a single inbox (server).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "servers",
+                ":serverId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serverId",
+                  "description": "(Required) The unique identifier of the inbox (server)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e54da8f5-90b2-4517-b9d7-4f394c06ad07",
+              "name": "The inbox (server).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "servers",
+                    ":serverId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The unique identifier of the inbox (server)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"users\": [\n    \"string\",\n    \"string\"\n  ],\n  \"messages\": 5101\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc00c21b-6de2-47ef-b354-44d734a38ded",
+          "name": "Update a server",
+          "request": {
+            "name": "Update a server",
+            "description": {
+              "content": "Updates the attributes of an inbox (server).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "servers",
+                ":serverId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serverId",
+                  "description": "(Required) The unique identifier of the inbox (server)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messages\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c14f4888-ccf0-40d3-b32f-f3ccdc7a7146",
+              "name": "The updated inbox (server).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "servers",
+                    ":serverId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The unique identifier of the inbox (server)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messages\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"users\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"messages\": \"<integer>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7d394d9-eb9a-4249-8e27-82cf92cfa673",
+          "name": "Delete a server",
+          "request": {
+            "name": "Delete a server",
+            "description": {
+              "content": "Permanently delete an inbox (server). This will also delete all messages, associated attachments, etc. within the inbox (server). This operation cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "servers",
+                ":serverId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serverId",
+                  "description": "(Required) The unique identifier of the inbox (server)."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "57fb57df-dd23-472d-94e3-f4be30b4508a",
+              "name": "The inbox (server) was successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "servers",
+                    ":serverId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The unique identifier of the inbox (server)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e988199a-763a-4e8f-8fd5-497c1510b5be",
+          "name": "Get server password",
+          "request": {
+            "name": "Get server password",
+            "description": {
+              "content": "Retrieves the password for an inbox (server). This password can be used for SMTP, POP3, and IMAP connectivity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "servers",
+                ":serverId",
+                "password"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serverId",
+                  "description": "(Required) The unique identifier of the inbox (server)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a13c40a-3f4b-4160-93cc-cee5cdcf1fe3",
+              "name": "The password for the inbox (server).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "servers",
+                    ":serverId",
+                    "password"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The unique identifier of the inbox (server)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://mailosaur.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "677a46d9-75d5-4096-aa06-ab14343ccbc7",
+    "name": "Mailosaur Analysis Servers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.\n\nContact Support:\n Name: Mailosaur Support",
+      "type": "text/plain"
+    }
+  }
+}

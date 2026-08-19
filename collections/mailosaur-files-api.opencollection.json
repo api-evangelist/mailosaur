@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mailosaur Analysis Files API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/files/attachments/:attachmentId",
+            "params": [
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier for the required attachment."
+              }
+            ]
+          },
+          "docs": "Downloads a single attachment."
+        },
+        {
+          "info": {
+            "name": "Download email as EML",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/files/email/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ]
+          },
+          "docs": "Downloads an EML file representing the specified email."
+        },
+        {
+          "info": {
+            "name": "Download an email preview screenshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/files/screenshots/:previewId",
+            "params": [
+              {
+                "name": "previewId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the email preview to be downloaded."
+              }
+            ]
+          },
+          "docs": "Downloads a screenshot of your email rendered in a real email client. Simply supply the unique identifier for the required preview. Returns 202 while the preview is still being generated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

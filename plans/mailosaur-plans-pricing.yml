@@ -1,3 +1,8 @@
+generated: '2026-08-14'
+method: searched
+source: https://mailosaur.com/pricing
+verified: '2026-08-14'
+plan_count: 3
 specificationVersion: "0.1"
 id: mailosaur-plans-pricing
 name: Mailosaur Plans & Pricing
@@ -67,6 +72,7 @@ plans:
       - SMS testing
       - Authenticator (TOTP) testing
       - Email previews (add-on from $25/month)
+      - SMS and authentication (add-on from $37.50/month)
 
   - name: Enterprise
     description: >-

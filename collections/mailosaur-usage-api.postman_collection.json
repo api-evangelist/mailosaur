@@ -1,0 +1,209 @@
+{
+  "item": [
+    {
+      "id": "77fb83cb-ed42-41ab-a742-db0c225552b5",
+      "name": "Usage",
+      "description": {
+        "content": "Operations for inspecting your account's usage limits and recent transactional usage. These endpoints require authentication with an account-level API key.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b54e80a-65fd-4e77-9608-9644962ca63b",
+          "name": "Get usage limits",
+          "request": {
+            "name": "Get usage limits",
+            "description": {
+              "content": "Retrieve account usage limits. Details the current limits and usage for your account. This endpoint requires authentication with an account-level API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "usage",
+                "limits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4d773cbc-62d5-42a7-8414-6996add929d0",
+              "name": "The account usage limits.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "usage",
+                    "limits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"servers\": {\n    \"limit\": 3659,\n    \"current\": 7530\n  },\n  \"users\": {\n    \"limit\": 2816,\n    \"current\": 5744\n  },\n  \"email\": {\n    \"limit\": 2037,\n    \"current\": 7634\n  },\n  \"sms\": {\n    \"limit\": 8709,\n    \"current\": 1175\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b118fcaf-23a1-4cc0-bf77-3f9481ee0bb2",
+          "name": "Get usage transactions",
+          "request": {
+            "name": "Get usage transactions",
+            "description": {
+              "content": "Retrieves the last 31 days of transactional usage. This endpoint requires authentication with an account-level API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "usage",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2b2808cc-bbdc-4cdf-ba00-c9365d975d44",
+              "name": "A list of usage transactions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "usage",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"timestamp\": \"1952-01-05T19:31:45.741Z\",\n      \"email\": 2317,\n      \"sms\": 9732\n    },\n    {\n      \"timestamp\": \"1959-05-03T10:49:28.371Z\",\n      \"email\": 312,\n      \"sms\": 8222\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://mailosaur.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0523d734-4a7d-4d14-9bf5-4476ea0f81ea",
+    "name": "Mailosaur Analysis Usage API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.\n\nContact Support:\n Name: Mailosaur Support",
+      "type": "text/plain"
+    }
+  }
+}

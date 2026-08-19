@@ -1,0 +1,53 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://mailosaur.com/docs/api, https://status.mailosaur.com,
+  https://mailosaur.com/legal/enterprise-sla, https://mailosaur.com/pricing,
+  https://mailosaur.com/docs/managing-your-account/ip-addresses, plus derivation
+  from the seven OpenAPI documents in openapi/
+versioning:
+  scheme: unversioned
+  current: null
+  docs: https://mailosaur.com/docs/api
+  note: >-
+    The REST API carries no version segment, header or date pin — every path is
+    served under https://mailosaur.com/api/ directly (e.g. /api/messages,
+    /api/servers, /api/scim/Users). The SDKs are versioned independently and
+    have moved through several majors (Node 11.x, .NET and Java 9.x, Python/Ruby/
+    PHP 8.x) while the wire API stayed unversioned, so the client library major
+    is the only version signal a consumer has.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  found: false
+  note: >-
+    No deprecation policy, sunset schedule, or RFC 8594 Sunset/Deprecation header
+    support is published. The one deprecation-shaped fact Mailosaur does publish
+    is infrastructural: mailosaur.io is documented as the "Legacy" SMTP/POP3
+    host, still served alongside the current mailosaur.net, with no stated
+    end-of-life —
+    https://mailosaur.com/docs/managing-your-account/ip-addresses
+status_page: https://status.mailosaur.com
+sla:
+  url: https://mailosaur.com/legal/enterprise-sla
+  tier: Enterprise
+  uptime_target: null
+  note: >-
+    An Enterprise SLA document is published at
+    https://mailosaur.com/legal/enterprise-sla (HTTP 200). Advanced support with
+    SLAs is an Enterprise-plan feature per https://mailosaur.com/pricing; no
+    numeric uptime target is published on the public pages.
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in any of the seven OpenAPI documents carries `deprecated: true`.
+support:
+  channel: https://mailosaur.com/contact
+  note: Contact form; no public issue tracker or community forum found.
+change_log:
+  found: false
+  note: >-
+    No product changelog or release-notes page exists. The 265-URL sitemap
+    contains no /changelog, /releases or /whats-new path, and
+    https://mailosaur.com/changelog returns 404. Dated release history exists
+    only per-SDK, in the GitHub repositories under github.com/mailosaur. No
+    ChangeLog pointer is emitted for this reason.

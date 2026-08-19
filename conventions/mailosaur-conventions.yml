@@ -1,0 +1,143 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://mailosaur.com/docs/api, https://mailosaur.com/docs/managing-your-account/api-keys,
+  https://mailosaur.com/docs/automation/postman, plus derivation from the seven
+  OpenAPI documents in openapi/ and one live unauthenticated probe of
+  https://mailosaur.com/api/servers (2026-08-14)
+base_url: https://mailosaur.com/api
+transport:
+  https_only: true
+  note: >-
+    "All API requests must be made over HTTPS. Calls made over plain HTTP will
+    fail." The OpenAPI servers[] entry is https://mailosaur.com and every path
+    is prefixed /api/, which together give the documented base
+    https://mailosaur.com/api.
+authentication:
+  style: http-basic
+  credential: API key as the Basic username, empty password
+  example: 'curl https://mailosaur.com/api/servers -u api:YOUR_API_KEY'
+  key_types:
+    - name: standard
+      scope: account-wide
+    - name: server-restricted
+      scope: single inbox; cannot create or delete inboxes
+  expiry: none — keys do not expire and are revoked only by deletion
+  observed_challenge:
+    header: 'www-authenticate: Bearer'
+    note: >-
+      PROBED 2026-08-14: an unauthenticated GET https://mailosaur.com/api/servers
+      returns 401 with `www-authenticate: Bearer` and a zero-length body. The
+      documented and working scheme is Basic; the advertised challenge scheme
+      contradicts it. A client that follows the challenge header rather than the
+      docs will negotiate the wrong scheme.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Mailosaur documents no idempotency key, no request-replay window and no
+    de-duplication contract, and no OpenAPI operation declares an
+    Idempotency-Key parameter. Write operations (createServer, createMessage,
+    createDevice, forwardMessage, replyToMessage) are not safe to retry blindly
+    — a retried createMessage sends a second email. NO Idempotency pointer is
+    emitted in apis.yml, because none is earned.
+pagination:
+  style: page-number
+  applies_to: [listMessages, searchMessages]
+  parameters:
+    - name: page
+      in: query
+      default: 0
+      note: Zero-based — page 0 is the first page of results.
+    - name: itemsPerPage
+      in: query
+      default: 50
+      minimum: 1
+      maximum: 1000
+  response_fields:
+    - items
+  note: >-
+    List and search responses return a bare `items` array. There is no total
+    count, no next-page cursor and no link header, so a client cannot tell
+    whether more results exist except by requesting the next page and seeing it
+    come back empty. Other list operations (listServers, listDevices,
+    listEmailClients, getUsageTransactions) are unpaginated. The SCIM API uses a
+    different convention entirely — startIndex/count, per SCIM 2.0.
+filtering:
+  parameters:
+    - name: receivedAfter
+      in: query
+      format: date-time
+      note: Defaults to one hour ago on listMessages.
+    - name: dir
+      in: query
+      enum: [Sent, Received]
+      default: Received
+    - name: server
+      in: query
+      required: true
+      note: Every message operation is scoped to one inbox (server) id.
+  search_body:
+    schema: SearchCriteria
+    fields: [sentFrom, sentTo, subject, body, match]
+    match_semantics: 'match=ALL (default) requires every criterion; match=ANY requires one.'
+polling_and_waiting:
+  parameter: timeout
+  applies_to: [searchMessages]
+  units: milliseconds
+  default: 0
+  note: >-
+    This is the convention that matters most for Mailosaur, because messages
+    arrive asynchronously. `searchMessages` accepts a server-side `timeout` in
+    milliseconds and holds the request open until a match arrives or the timeout
+    expires. The official client libraries wrap this: the docs recommend the
+    SDK `.Get` method over `.GetById` "as it automatically waits for results to
+    arrive". Raw HTTP clients (including Postman) must implement the retry loop
+    themselves — https://mailosaur.com/docs/automation/postman documents the
+    poll-until-match pattern.
+field_expansion:
+  supported: false
+  note: >-
+    Two fixed representations rather than sparse fieldsets: MessageSummary
+    (list/search) and Message (retrieve). Summaries deliberately omit body
+    content, so an agent must follow every search hit with getMessage to read
+    links, codes, images or headers.
+metadata:
+  supported: false
+  note: >-
+    No customer-defined metadata on any resource. `Message.metadata` is a
+    different thing — the captured SMTP envelope (headers, ehlo, mailFrom,
+    rcptTo).
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation header documented, and none observed on the
+    live 401 response. There is no supported way to quote a request identifier
+    to support.
+versioning:
+  scheme: unversioned
+  note: See lifecycle/mailosaur-lifecycle.yml — no version segment, header or date pin.
+error_envelope:
+  media_type: application/json
+  shape: 'type, message, parameters, model'
+  applies_to: ['400']
+  note: >-
+    401 and 404 return no body at all (content-length 0 observed on the live
+    401). See errors/mailosaur-problem-types.yml.
+rate_limit_signalling:
+  headers: []
+  status_on_exhaustion: null
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After headers are documented, and none
+    appear on the live response. Mailosaur meters plan allowances (daily email,
+    monthly SMS/previews/screenshots) rather than HTTP request rate, and
+    enforcement happens at the mail layer — over-limit inbound email is rejected
+    and over-limit inbound SMS is silently dropped, neither of which the API
+    caller observes. `getUsageLimits` is the only programmatic way to read
+    current consumption. See rate-limits/mailosaur-rate-limits.yml.
+cross_references:
+  authentication: authentication/mailosaur-authentication.yml
+  errors: errors/mailosaur-problem-types.yml
+  lifecycle: lifecycle/mailosaur-lifecycle.yml
+  rate_limits: rate-limits/mailosaur-rate-limits.yml
+  data_model: data-model/mailosaur-data-model.yml

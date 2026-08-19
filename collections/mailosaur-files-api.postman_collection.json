@@ -1,0 +1,395 @@
+{
+  "item": [
+    {
+      "id": "19f13824-eaee-49e3-a714-050ebfdd20bd",
+      "name": "Files",
+      "description": {
+        "content": "Operations for downloading the raw content associated with a message — file attachments, the full EML source of an email, and rendered email previews.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1bb87d5-26d7-4308-94b8-3809b20dba3f",
+          "name": "Download an attachment",
+          "request": {
+            "name": "Download an attachment",
+            "description": {
+              "content": "Downloads a single attachment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "files",
+                "attachments",
+                ":attachmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "attachmentId",
+                  "description": "(Required) The identifier for the required attachment."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6c2b0b1e-b478-46b3-8051-e0c431d7e21c",
+              "name": "The attachment binary content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "files",
+                    "attachments",
+                    ":attachmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "attachmentId",
+                      "description": "(Required) The identifier for the required attachment."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7ba9881-e638-4d0a-931a-3266d04183d9",
+          "name": "Download email as EML",
+          "request": {
+            "name": "Download email as EML",
+            "description": {
+              "content": "Downloads an EML file representing the specified email.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "files",
+                "email",
+                ":messageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "message/rfc822"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1d2d7f0e-5f8f-4e54-ac85-71bc1e5b75fb",
+              "name": "The raw EML content of the email.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "files",
+                    "email",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "message/rfc822"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "message/rfc822"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48c91193-7fad-44f1-bd57-f74d7defc853",
+          "name": "Download an email preview screenshot",
+          "request": {
+            "name": "Download an email preview screenshot",
+            "description": {
+              "content": "Downloads a screenshot of your email rendered in a real email client. Simply supply the unique identifier for the required preview. Returns 202 while the preview is still being generated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "files",
+                "screenshots",
+                ":previewId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "previewId",
+                  "description": "(Required) The identifier of the email preview to be downloaded."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "330d514b-b4a6-4712-93f5-d3bef70341f0",
+              "name": "The preview screenshot image.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "files",
+                    "screenshots",
+                    ":previewId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "previewId",
+                      "description": "(Required) The identifier of the email preview to be downloaded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "image/png"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/png"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d057c71-50ef-445b-b92a-e7735de6fb59",
+              "name": "The preview is still being generated. Poll again shortly.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "files",
+                    "screenshots",
+                    ":previewId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "previewId",
+                      "description": "(Required) The identifier of the email preview to be downloaded."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://mailosaur.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ce6a31b8-154d-4d05-8c4f-166e0a5c9c23",
+    "name": "Mailosaur Analysis Files API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.\n\nContact Support:\n Name: Mailosaur Support",
+      "type": "text/plain"
+    }
+  }
+}

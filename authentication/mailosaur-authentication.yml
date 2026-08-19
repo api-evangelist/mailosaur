@@ -1,14 +1,84 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/mailosaur-mailosaur-api-openapi.yml
+generated: '2026-08-14'
+method: searched
+docs: https://mailosaur.com/docs/managing-your-account/api-keys
+source: >-
+  https://mailosaur.com/docs/api (Authentication section),
+  https://mailosaur.com/docs/managing-your-account/api-keys,
+  https://mailosaur.com/docs/managing-your-account/sso,
+  https://mailosaur.com/docs/managing-your-account/scim, and the securitySchemes
+  of openapi/mailosaur-analysis-api-openapi.yml, openapi/mailosaur-devices-api-openapi.yml,
+  openapi/mailosaur-files-api-openapi.yml, openapi/mailosaur-messages-api-openapi.yml,
+  openapi/mailosaur-previews-api-openapi.yml, openapi/mailosaur-servers-api-openapi.yml,
+  openapi/mailosaur-usage-api-openapi.yml
 summary:
   types:
   - http
+  http_schemes:
+  - basic
+  api_key_in: []
+  oauth2_flows: []
 schemes:
 - name: basicAuth
   type: http
   scheme: basic
   description: HTTP Basic Auth using your Mailosaur API key as the username and an empty password,
     or your API key as both username and password.
+  applied: global
   sources:
-  - openapi/mailosaur-mailosaur-api-openapi.yml
+  - openapi/mailosaur-analysis-api-openapi.yml
+  - openapi/mailosaur-devices-api-openapi.yml
+  - openapi/mailosaur-files-api-openapi.yml
+  - openapi/mailosaur-messages-api-openapi.yml
+  - openapi/mailosaur-previews-api-openapi.yml
+  - openapi/mailosaur-servers-api-openapi.yml
+  - openapi/mailosaur-usage-api-openapi.yml
+credentials:
+  kind: api-key
+  transport: HTTP Basic — API key as the username, password left empty
+  example: 'curl https://mailosaur.com/api/servers -u api:YOUR_API_KEY'
+  https_required: true
+  key_types:
+    - name: standard
+      scope: account-wide
+      capabilities: >-
+        Full access to all inboxes and all API operations, including creating and
+        deleting inboxes. Required for account-level surfaces — the Usage API,
+        the Devices (TOTP) API and the SCIM API.
+    - name: server-restricted
+      scope: single inbox (server)
+      capabilities: >-
+        Email and SMS functions on one inbox only. Cannot create or delete
+        inboxes. A resource outside the key's scope is indistinguishable from one
+        that does not exist — both answer 404 with an empty body.
+  management:
+    console: https://mailosaur.com/app/keys
+    api_manageable: false
+    note: >-
+      Keys can only be created, revealed and deleted in the dashboard, and only
+      by an Account Administrator. There is no key-management API.
+  rotation:
+    expiry: none
+    note: >-
+      Keys never expire and cannot be renamed. Rotation means creating a
+      replacement and deleting the old key; deletion revokes immediately, so cut
+      over before deleting.
+  limits:
+    max_keys: unlimited
+x-evidence:
+  probed: '2026-08-14'
+  url: https://mailosaur.com/api/servers
+  http_status: 401
+  observation: >-
+    An unauthenticated GET returns 401 with `www-authenticate: Bearer` and
+    content-length 0. The advertised challenge scheme contradicts the documented
+    and working Basic scheme, and the empty body means the response carries no
+    diagnostic at all. Recorded as observed; not corrected.
+account_authentication:
+  note: >-
+    Distinct from API authentication. Dashboard sign-in supports Enterprise SSO
+    via SAML2 or OpenID Connect (documented integrations: Okta, Microsoft Entra),
+    with JIT and SCIM 2.0 provisioning. None of this applies to the REST API,
+    which is API-key-over-Basic only — there is no OAuth surface, and therefore
+    no scopes/ artifact for this provider.
+  sso_docs: https://mailosaur.com/docs/managing-your-account/sso
+  scim_docs: https://mailosaur.com/docs/managing-your-account/scim

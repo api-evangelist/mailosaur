@@ -1,0 +1,101 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://mailosaur.com/security, https://mailosaur.com/docs/managing-your-account/scim,
+  https://mailosaur.com/docs/managing-your-account/sso, https://mailosaur.com/docs/api,
+  plus derivation from the seven OpenAPI documents in openapi/
+compliance_page: https://mailosaur.com/security
+standards:
+  - id: scim-2.0
+    conforms: true
+    evidence: >-
+      "The Mailosaur API is based on version 2.0 of the SCIM standard. The SCIM
+      endpoint that an IdP should use is: https://mailosaur.com/api/scim/" —
+      https://mailosaur.com/docs/managing-your-account/scim. Enterprise plan only.
+      Endpoint paths are case-sensitive (/api/scim/Users).
+  - id: saml-2.0
+    conforms: true
+    evidence: >-
+      Enterprise SSO supports SAML2 identity providers; documented integrations
+      for Okta and Microsoft Entra —
+      https://mailosaur.com/docs/managing-your-account/sso
+  - id: openid-connect
+    conforms: true
+    evidence: >-
+      Enterprise SSO supports OpenID Connect identity providers —
+      https://mailosaur.com/docs/managing-your-account/sso. NOTE: this is
+      dashboard sign-in only; the REST API itself is HTTP Basic Auth with an API
+      key and declares no openIdConnect security scheme.
+  - id: iso-27001
+    conforms: true
+    evidence: >-
+      "ISO27001:2022 certified" — https://mailosaur.com/security. Audited by
+      independent third-party assessors.
+  - id: pci-dss
+    conforms: true
+    evidence: '"PCI DSS compliant" — https://mailosaur.com/security'
+  - id: gdpr
+    conforms: true
+    evidence: >-
+      "GDPR, Data Protection Act, CCPA" — https://mailosaur.com/security. Data
+      is hosted on Google Cloud Platform in EU and UK data centres, encrypted at
+      rest with AES-256.
+  - id: ccpa
+    conforms: true
+    evidence: '"GDPR, Data Protection Act, CCPA" — https://mailosaur.com/security'
+  - id: rfc7617-http-basic
+    conforms: true
+    evidence: >-
+      All seven OpenAPI documents declare a single securityScheme
+      `basicAuth` (type http, scheme basic) applied globally; the API reference
+      states "Authentication to the API is performed via HTTP Basic Auth."
+  - id: smtp
+    conforms: true
+    evidence: >-
+      Inbound SMTP on ports 25, 2525, 465 and 587 with SSL or StartTLS —
+      https://mailosaur.com/docs/inboxes/smtp-pop3-imap
+  - id: pop3
+    conforms: true
+    evidence: 'POP3 on ports 110 and 995; Core and Enterprise plans only.'
+  - id: imap
+    conforms: true
+    evidence: 'IMAP retrieval documented; Core and Enterprise plans only.'
+  - id: spf-dkim-dmarc
+    conforms: true
+    evidence: >-
+      The deliverability report (getDeliverabilityReport) evaluates SPF, DKIM and
+      DMARC on captured messages — https://mailosaur.com/docs/email-testing/deliverability.
+      Mailosaur's own domain also publishes SPF and a DMARC p=reject policy
+      (security/mailosaur-domain-security.yml).
+  - id: wcag
+    conforms: partial
+    evidence: >-
+      Mailosaur Compliance checks scan emails for WCAG accessibility issues —
+      https://mailosaur.com/docs/compliance. This is a product capability applied
+      to customer content, not a certification of Mailosaur's own surfaces.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      The documented 400 error envelope is a bespoke JSON object with
+      type/message/parameters/model fields served as application/json; no
+      application/problem+json media type appears in the docs or the specs.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme in any OpenAPI document and no OAuth flow in the
+      API docs. API access is API-key-over-Basic only.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header support documented.
+  - id: soc2
+    conforms: false
+    evidence: >-
+      Not claimed. https://mailosaur.com/security names ISO 27001:2022, PCI DSS,
+      GDPR/DPA/CCPA and a Vendor Security Alliance (VSA) questionnaire response,
+      but no SOC 2 report.
+  - id: hipaa
+    conforms: false
+    evidence: Not claimed on https://mailosaur.com/security.
+  - id: fedramp
+    conforms: false
+    evidence: Not claimed on https://mailosaur.com/security.

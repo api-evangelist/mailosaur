@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mailosaur Analysis Servers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/servers"
+          },
+          "docs": "Returns a list of your inboxes (servers). Inboxes (servers) are returned sorted in alphabetical order."
+        },
+        {
+          "info": {
+            "name": "Create a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/servers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new inbox (server)."
+        },
+        {
+          "info": {
+            "name": "Get a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/servers/:serverId",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the inbox (server)."
+              }
+            ]
+          },
+          "docs": "Retrieves the detail for a single inbox (server)."
+        },
+        {
+          "info": {
+            "name": "Update a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://mailosaur.com/api/servers/:serverId",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the inbox (server)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the attributes of an inbox (server)."
+        },
+        {
+          "info": {
+            "name": "Delete a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://mailosaur.com/api/servers/:serverId",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the inbox (server)."
+              }
+            ]
+          },
+          "docs": "Permanently delete an inbox (server). This will also delete all messages, associated attachments, etc. within the inbox (server). This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get server password",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/servers/:serverId/password",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the inbox (server)."
+              }
+            ]
+          },
+          "docs": "Retrieves the password for an inbox (server). This password can be used for SMTP, POP3, and IMAP connectivity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

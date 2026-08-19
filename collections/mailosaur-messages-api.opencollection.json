@@ -1,0 +1,270 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mailosaur Analysis Messages API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/messages",
+            "params": [
+              {
+                "name": "server",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the required inbox (server)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Used alongside itemsPerPage to paginate through results. This is zero-based, meaning 0 is the first page of results."
+              },
+              {
+                "name": "itemsPerPage",
+                "value": "",
+                "type": "query",
+                "description": "A limit on the number of results to be returned. This can be set between 1 and 1000, with the default being 50."
+              },
+              {
+                "name": "receivedAfter",
+                "value": "",
+                "type": "query",
+                "description": "Limits results to only messages received after this date/time (default 1 hour ago)."
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Optionally limits results based on the direction (Sent or Received), with the default being Received."
+              }
+            ]
+          },
+          "docs": "Returns a list of your messages in summary form. The summaries are returned sorted by received date, with the most recently-received messages appearing first."
+        },
+        {
+          "info": {
+            "name": "Create a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/messages",
+            "params": [
+              {
+                "name": "server",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the required inbox (server)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new message that can be sent to a verified email address. This is useful in scenarios where you want an email to trigger a workflow in your product."
+        },
+        {
+          "info": {
+            "name": "Delete all messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://mailosaur.com/api/messages",
+            "params": [
+              {
+                "name": "server",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the inbox (server)."
+              }
+            ]
+          },
+          "docs": "Permanently delete all messages within an inbox (server). This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Search messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/messages/search",
+            "params": [
+              {
+                "name": "server",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the inbox (server) to search."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Used alongside itemsPerPage to paginate through results."
+              },
+              {
+                "name": "itemsPerPage",
+                "value": "",
+                "type": "query",
+                "description": "A limit on the number of results to be returned."
+              },
+              {
+                "name": "receivedAfter",
+                "value": "",
+                "type": "query",
+                "description": "Limits results to only messages received after this date/time."
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Optionally limits results based on direction."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Specify how long to wait for a matching result in milliseconds. Default is 0 (no waiting)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a list of messages matching the specified search criteria, in summary form. The messages are returned sorted by received date, with the most recently-received messages appearing first."
+        },
+        {
+          "info": {
+            "name": "Get a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ]
+          },
+          "docs": "Retrieves the detail for a single message. Must be used in conjunction with either list or search in order to get the unique identifier for the required message."
+        },
+        {
+          "info": {
+            "name": "Delete a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://mailosaur.com/api/messages/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a message. Also deletes any attachments related to the message. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Forward a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/messages/:messageId/forward",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Forwards the specified message to a verified email address. This is useful for simulating a user forwarding one of your email messages."
+        },
+        {
+          "info": {
+            "name": "Reply to a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/messages/:messageId/reply",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a reply to the specified message. This is useful for when simulating a user replying to one of your email or SMS messages."
+        },
+        {
+          "info": {
+            "name": "Generate email previews",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://mailosaur.com/api/messages/:messageId/screenshots",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates screenshots of an email rendered in the specified email clients."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

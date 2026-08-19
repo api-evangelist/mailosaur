@@ -1,0 +1,130 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  Public package registries (registry.npmjs.org, pypi.org, rubygems.org,
+  api.nuget.org, repo1.maven.org, repo.packagist.org, proxy.golang.org,
+  pub.dev) plus the Mailosaur GitHub organization
+  (https://github.com/mailosaur) and https://mailosaur.com/docs/automation
+notes:
+  - >-
+    Mailosaur maintains one first-party client library per language, all under
+    the github.com/mailosaur organization and all linked from the official
+    automation docs. Eight of the ten libraries were re-released together on
+    2026-05-27, so the SDK fleet is current with the API rather than trailing it.
+  - >-
+    mailosaur-swift is distributed only through Swift Package Manager (a git tag,
+    no central registry), and Swift Package Index carries no queryable release
+    metadata endpoint, so `version` is recorded null rather than guessed.
+  - >-
+    The Dart client (pub.dev/packages/mailosaur, 1.0.1) is the oldest release in
+    the fleet — 2025-04-24, more than a year behind the 2026-05-27 group release.
+packages:
+  - language: javascript
+    registry: npm
+    name: mailosaur
+    url: https://www.npmjs.com/package/mailosaur
+    install: npm install mailosaur
+    repository: https://github.com/mailosaur/mailosaur-node
+    version: 11.1.1
+    published: '2026-05-27'
+    official: true
+  - language: javascript
+    registry: npm
+    name: cypress-mailosaur
+    url: https://www.npmjs.com/package/cypress-mailosaur
+    install: npm install cypress-mailosaur --save-dev
+    repository: https://github.com/mailosaur/cypress-mailosaur
+    version: 5.0.0
+    published: '2026-02-17'
+    official: true
+    note: Cypress plugin exposing Mailosaur commands inside a Cypress test run.
+  - language: javascript
+    registry: npm
+    name: create-mailosaur
+    url: https://www.npmjs.com/package/create-mailosaur
+    install: npm create mailosaur@latest
+    repository: https://github.com/mailosaur/create-mailosaur
+    version: 1.0.9
+    published: '2026-05-27'
+    official: true
+    note: >-
+      Project scaffolder / CLI wizard, not a client library. Command surface is
+      captured in cli/mailosaur-cli.yml.
+  - language: python
+    registry: pypi
+    name: mailosaur
+    url: https://pypi.org/project/mailosaur/
+    install: pip install mailosaur
+    repository: https://github.com/mailosaur/mailosaur-python
+    version: 8.1.1
+    published: '2026-05-27'
+    official: true
+  - language: ruby
+    registry: rubygems
+    name: mailosaur
+    url: https://rubygems.org/gems/mailosaur
+    install: gem install mailosaur
+    repository: https://github.com/mailosaur/mailosaur-ruby
+    version: 8.1.1
+    published: '2026-05-27'
+    official: true
+  - language: csharp
+    registry: nuget
+    name: Mailosaur
+    url: https://www.nuget.org/packages/Mailosaur/
+    install: dotnet add package Mailosaur
+    repository: https://github.com/mailosaur/mailosaur-dotnet
+    version: 9.1.1
+    published: '2026-05-27'
+    official: true
+  - language: java
+    registry: maven
+    name: com.mailosaur:mailosaur-java
+    url: https://central.sonatype.com/artifact/com.mailosaur/mailosaur-java
+    install: 'implementation "com.mailosaur:mailosaur-java:9.1.1"'
+    repository: https://github.com/mailosaur/mailosaur-java
+    version: 9.1.1
+    published: '2026-05-27'
+    official: true
+  - language: php
+    registry: packagist
+    name: mailosaur/mailosaur
+    url: https://packagist.org/packages/mailosaur/mailosaur
+    install: composer require mailosaur/mailosaur
+    repository: https://github.com/mailosaur/mailosaur-php
+    version: 8.1.1
+    published: '2026-05-27'
+    official: true
+  - language: go
+    registry: go
+    name: github.com/mailosaur/mailosaur-go
+    url: https://pkg.go.dev/github.com/mailosaur/mailosaur-go
+    install: go get github.com/mailosaur/mailosaur-go
+    repository: https://github.com/mailosaur/mailosaur-go
+    version: v0.0.0-20260527102007-dfa120292622
+    published: '2026-05-27'
+    official: true
+    note: >-
+      Published as a pseudo-version — the module has no semantic-version tag, so
+      consumers pin a commit rather than a release.
+  - language: dart
+    registry: pub.dev
+    name: mailosaur
+    url: https://pub.dev/packages/mailosaur
+    install: dart pub add mailosaur
+    repository: https://github.com/mailosaur/mailosaur-dart
+    version: 1.0.1
+    published: '2025-04-24'
+    official: true
+  - language: swift
+    registry: swift-package-manager
+    name: mailosaur-swift
+    url: https://github.com/mailosaur/mailosaur-swift
+    install: '.package(url: "https://github.com/mailosaur/mailosaur-swift.git", from: "1.0.0")'
+    repository: https://github.com/mailosaur/mailosaur-swift
+    version: null
+    published: null
+    official: true
+    note: >-
+      Checked — Swift Package Manager distributes from a git tag with no central
+      registry metadata endpoint, so there is no published version/date to read.

@@ -1,0 +1,76 @@
+generated: '2026-08-14'
+method: searched
+source: https://mailosaur.com/docs/api (Errors section), enriched against the seven OpenAPI documents in openapi/
+format: custom
+media_type: application/json
+note: >-
+  Mailosaur does NOT use RFC 9457 problem+json. It documents a bespoke JSON error
+  envelope returned on 400 responses only; 401 and 404 carry no body, and the
+  status code is the whole signal. The seven OpenAPI documents in openapi/
+  declare 2xx responses exclusively — no 4xx/5xx response objects exist in the
+  contract, so this catalogue is searched from the published API reference
+  rather than derived from the specs, and an agent cannot learn the error shape
+  from the machine-readable contract alone. That gap is recorded, not repaired.
+envelope:
+  fields:
+    - name: type
+      description: The type of error returned.
+    - name: message
+      description: A human-readable message providing more details about the error.
+    - name: parameters
+      description: >-
+        A JSON object containing a key for each property name at fault, with a
+        human-readable message per field.
+    - name: model
+      description: The request model that was sent and failed to be processed.
+  applies_to: ['400']
+problems:
+  - status: 400
+    title: Bad Request
+    description: >-
+      The request could not be handled, often due to missing a required
+      parameter. This is the only status that returns the structured error
+      envelope above.
+    body: envelope
+  - status: 401
+    title: Unauthorized
+    description: >-
+      No valid API key provided. Returned when the HTTP Basic credential is
+      missing, malformed, or belongs to a deleted key. Also returned for plain
+      HTTP requests — all API requests must be made over HTTPS.
+    body: none
+    remediation: >-
+      Send the API key as the HTTP Basic username with an empty password
+      (`-u api:YOUR_API_KEY`). Keys are created and revoked in the dashboard at
+      https://mailosaur.com/app/keys; a deleted key is revoked immediately.
+  - status: 404
+    title: Not Found
+    description: The requested resource doesn't exist.
+    body: none
+    remediation: >-
+      Message and inbox identifiers are obtained from listMessages,
+      searchMessages or listServers. A server-restricted API key can only reach
+      one inbox, so a 404 may mean the resource exists but is outside the key's
+      scope.
+  - status: 5XX
+    title: Server Error
+    description: >-
+      Something went wrong at Mailosaur. The docs ask customers to report these
+      ("give us a shout") rather than documenting individual 5xx codes.
+    body: none
+success_codes:
+  - status: 200
+    description: Request was successful.
+  - status: 204
+    description: Request was successful, no response content.
+usage_limit_behaviour:
+  note: >-
+    Exhausting a plan allowance is not surfaced as an API error on read paths.
+    Per https://mailosaur.com/docs/managing-your-account/usage-limits, hitting
+    the daily email limit causes further inbound emails to be REJECTED at the
+    mail layer, SMS messages stop being processed, and preview/screenshot
+    generation is blocked. Per
+    https://mailosaur.com/docs/inboxes/usage-limits, an inbox that exceeds its
+    monthly inbound SMS limit silently DROPS further received messages, while an
+    outbound SMS over-limit returns a validation error. Silent drop is the
+    failure mode an agent most needs to know about and it has no HTTP signal.

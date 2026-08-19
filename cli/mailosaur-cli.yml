@@ -1,0 +1,46 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://www.npmjs.com/package/create-mailosaur (registry README, version 1.0.9,
+  published 2026-05-27) and https://github.com/mailosaur/create-mailosaur
+name: create-mailosaur
+official: true
+kind: scaffolder
+description: >-
+  Mailosaur's only first-party command-line tool. It is a project scaffolder, not
+  an API client: it generates a ready-to-run test project wired to Mailosaur for
+  a chosen framework and language, with example tests for password reset,
+  email/SMS one-time passcodes and authenticator-app flows. There is no CLI for
+  calling the REST API itself — inbox, message and device operations are reached
+  through the language SDKs in packages/ or raw HTTP.
+install:
+  - method: npm
+    command: npm create mailosaur@latest
+  - method: npx
+    command: npx create-mailosaur
+  - method: yarn
+    command: yarn create mailosaur
+prerequisites:
+  - Node.js 18 or later to run the wizard itself
+  - A Mailosaur account (a free trial works) — https://mailosaur.com/app/signup
+  - The language tooling for the chosen target; the wizard checks and exits early if it is missing
+commands:
+  - name: create-mailosaur
+    description: >-
+      Interactive wizard — prompts for framework, language and optionally an API
+      key, then writes the example project. No subcommands are published.
+supported_targets:
+  - framework: Cypress
+    languages: [Node.js]
+  - framework: Playwright
+    languages: [Node.js, .NET]
+  - framework: Robot Framework
+    languages: [Python]
+  - framework: Selenium
+    languages: [.NET, Java, Python, Ruby]
+  - framework: WebdriverIO
+    languages: [Node.js]
+  - framework: none
+    languages: [Node.js, .NET, Java, Python, PHP, Ruby, Go]
+example_source: https://github.com/mailosaur/examples
+package: packages/mailosaur-packages.yml

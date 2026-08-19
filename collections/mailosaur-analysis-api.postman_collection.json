@@ -1,0 +1,245 @@
+{
+  "item": [
+    {
+      "id": "7c818c5d-c2b9-43ad-a782-78944057cc55",
+      "name": "Analysis",
+      "description": {
+        "content": "Operations for analyzing the content and deliverability of an email, including SpamAssassin scoring and per-provider deliverability reports.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea3e20a5-59ae-4aca-ac97-0a6c47376154",
+          "name": "Perform spam analysis",
+          "request": {
+            "name": "Perform spam analysis",
+            "description": {
+              "content": "Perform a spam analysis of an email.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analysis",
+                "spam",
+                ":messageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e730151d-a121-400d-a3f1-c47e12dd705b",
+              "name": "The spam analysis result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analysis",
+                    "spam",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"spamFilterResults\": {\n    \"spamAssassin\": [\n      {\n        \"score\": 6508.653949166957,\n        \"rule\": \"string\",\n        \"description\": \"string\"\n      },\n      {\n        \"score\": 4523.926191614431,\n        \"rule\": \"string\",\n        \"description\": \"string\"\n      }\n    ]\n  },\n  \"score\": 4021.9471336352062\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9bfce0e-770c-4509-bef1-918f08db655a",
+          "name": "Perform deliverability analysis",
+          "request": {
+            "name": "Perform deliverability analysis",
+            "description": {
+              "content": "Perform a deliverability report of an email.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "analysis",
+                "deliverability",
+                ":messageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "beb6c0f3-d3f7-4e31-be07-4c0a7763a4b2",
+              "name": "The deliverability report.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "analysis",
+                    "deliverability",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"spf\": {\n    \"result\": \"string\",\n    \"description\": \"string\",\n    \"rawValue\": \"string\",\n    \"tags\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"dkim\": [\n    {\n      \"result\": \"string\",\n      \"description\": \"string\",\n      \"rawValue\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"result\": \"string\",\n      \"description\": \"string\",\n      \"rawValue\": \"string\",\n      \"tags\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"dmarc\": {\n    \"result\": \"string\",\n    \"description\": \"string\",\n    \"rawValue\": \"string\",\n    \"tags\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  },\n  \"blockLists\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"result\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"result\": \"string\"\n    }\n  ],\n  \"content\": {\n    \"embed\": false,\n    \"iframe\": true,\n    \"object\": true,\n    \"script\": true,\n    \"shortUrls\": false,\n    \"textSize\": 3536,\n    \"totalSize\": 8985,\n    \"missingAlt\": true,\n    \"missingListUnsubscribe\": true\n  },\n  \"dnsRecords\": {\n    \"a\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mx\": [\n      \"string\",\n      \"string\"\n    ],\n    \"ptr\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"spamAssassin\": {\n    \"score\": 7909.797313481032,\n    \"result\": \"string\",\n    \"rules\": [\n      {\n        \"score\": 9001.569963524114,\n        \"rule\": \"string\",\n        \"description\": \"string\"\n      },\n      {\n        \"score\": 928.6522590803447,\n        \"rule\": \"string\",\n        \"description\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://mailosaur.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f0722042-4d62-4c64-af61-39d92dab0fea",
+    "name": "Mailosaur Analysis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.\n\nContact Support:\n Name: Mailosaur Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mailosaur Analysis API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Perform spam analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/analysis/spam/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ]
+          },
+          "docs": "Perform a spam analysis of an email."
+        },
+        {
+          "info": {
+            "name": "Perform deliverability analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://mailosaur.com/api/analysis/deliverability/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ]
+          },
+          "docs": "Perform a deliverability report of an email."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

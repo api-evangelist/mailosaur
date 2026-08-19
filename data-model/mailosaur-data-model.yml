@@ -1,0 +1,211 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/mailosaur-analysis-api-openapi.yml, openapi/mailosaur-devices-api-openapi.yml,
+  openapi/mailosaur-files-api-openapi.yml, openapi/mailosaur-messages-api-openapi.yml,
+  openapi/mailosaur-previews-api-openapi.yml, openapi/mailosaur-servers-api-openapi.yml,
+  openapi/mailosaur-usage-api-openapi.yml — schema $ref graph plus id-reference fields;
+  entity descriptions cross-checked against https://mailosaur.com/docs/api
+id_format:
+  style: uuid
+  prefixes: none
+  note: >-
+    Mailosaur uses bare UUIDs for every identifier (message, server, attachment,
+    device, preview). There are no typed id prefixes, so an id string carries no
+    indication of which entity it belongs to — an agent must track the entity
+    type alongside the id.
+root_entity: Server
+entities:
+  - name: Server
+    label: Inbox (server)
+    description: >-
+      The container for all testing. An inbox has its own domain, its own
+      SMTP/POP3/IMAP credentials and its own message store. Every message
+      operation is scoped to a server id.
+    key: id
+    fields: [id, name, users, messages]
+    operations: [listServers, createServer, getServer, updateServer, deleteServer, getServerPassword]
+  - name: Message
+    description: >-
+      A captured email or SMS message, in full detail — parsed body content,
+      extracted links/codes/images, attachments and SMTP envelope metadata.
+    key: id
+    fields: [id, type, from, to, cc, bcc, received, subject, html, text, attachments, metadata, server]
+    operations: [getMessage, createMessage, forwardMessage, replyToMessage, deleteMessage, deleteAllMessages]
+  - name: MessageSummary
+    description: >-
+      The reduced projection returned by list and search. Deliberately omits body
+      content, so it is not the same entity shape as Message.
+    key: id
+    fields: [id, type, server, from, to, cc, bcc, received, subject, attachments]
+    operations: [listMessages, searchMessages]
+  - name: MessageAddress
+    description: An email address or SMS phone number with an optional display name.
+    fields: [name, email, phone]
+  - name: MessageContent
+    description: The HTML or plain-text body of a message plus everything extracted from it.
+    fields: [body, links, codes, images]
+  - name: Link
+    description: A hyperlink found in a message body.
+    fields: [href, text]
+  - name: Image
+    description: An image (including tracking beacons) found in a message body.
+    fields: [src, alt]
+  - name: Attachment
+    description: A file attached to a message.
+    key: id
+    fields: [id, contentType, fileName, content, contentId, length, url]
+    operations: [getAttachment]
+  - name: Metadata
+    description: The captured SMTP envelope for a message.
+    fields: [headers, ehlo, mailFrom, rcptTo]
+  - name: MessageHeader
+    description: A single email header field/value pair.
+    fields: [field, value]
+  - name: Preview
+    description: A screenshot of an email rendered in a specific email client.
+    key: id
+    fields: [id, emailClient, capture]
+    operations: [generateMessagePreviews, getEmailPreview]
+  - name: EmailClient
+    description: An email client available as a preview target.
+    operations: [listEmailClients]
+  - name: Device
+    description: >-
+      A virtual TOTP authenticator device holding a shared secret, used to
+      automate app-based multi-factor authentication tests.
+    key: id
+    operations: [listDevices, createDevice, deleteDevice]
+  - name: OtpResult
+    description: The current one-time passcode and its expiry.
+    operations: [getDeviceOtp, getOtpBySharedSecret]
+  - name: SpamAnalysisResult
+    description: SpamAssassin scoring for a captured message.
+    operations: [getSpamAnalysis]
+  - name: DeliverabilityReport
+    description: >-
+      Deliverability analysis for a captured message — SPF/DKIM/DMARC
+      authentication results, DNS record checks, blocklist checks, content
+      checks and spam-filter results.
+    operations: [getDeliverabilityReport]
+  - name: SpamAssassinResult
+    description: The SpamAssassin section of an analysis, containing per-rule results.
+  - name: SpamAssassinRule
+    description: A single SpamAssassin rule hit with its score.
+  - name: SpamFilterResults
+    description: Spam-filter analysis results within a deliverability report.
+  - name: EmailAuthenticationResult
+    description: The outcome of one email-authentication check (SPF, DKIM or DMARC).
+  - name: DnsRecords
+    description: DNS record checks made against the sender's domain.
+  - name: BlockListResult
+    description: The result of checking the sender against one blocklist.
+  - name: Content
+    description: The result of content checks on the email.
+  - name: UsageAccountLimits
+    description: Current account limits and consumption for servers, users, email and SMS.
+    operations: [getUsageLimits]
+  - name: UsageTransaction
+    description: One day of email/SMS processing volume; the API returns the last 31 days.
+    operations: [getUsageTransactions]
+relationships:
+  - from: Server
+    to: Message
+    type: has_many
+    via: 'Message.server (and the required `server` query parameter)'
+  - from: Message
+    to: Server
+    type: belongs_to
+    via: server
+  - from: MessageSummary
+    to: Server
+    type: belongs_to
+    via: server
+  - from: Message
+    to: MessageAddress
+    type: has_many
+    via: 'from, to, cc, bcc ($ref)'
+  - from: MessageSummary
+    to: MessageAddress
+    type: has_many
+    via: 'from, to, cc, bcc ($ref)'
+  - from: Message
+    to: MessageContent
+    type: has_one
+    via: 'html ($ref)'
+  - from: Message
+    to: MessageContent
+    type: has_one
+    via: 'text ($ref)'
+  - from: MessageContent
+    to: Link
+    type: has_many
+    via: 'links ($ref)'
+  - from: MessageContent
+    to: Image
+    type: has_many
+    via: 'images ($ref)'
+  - from: Message
+    to: Attachment
+    type: has_many
+    via: 'attachments ($ref)'
+  - from: Message
+    to: Metadata
+    type: has_one
+    via: 'metadata ($ref)'
+  - from: Metadata
+    to: MessageHeader
+    type: has_many
+    via: 'headers ($ref)'
+  - from: Message
+    to: Preview
+    type: has_many
+    via: 'generateMessagePreviews returns PreviewListResult keyed on messageId'
+  - from: Preview
+    to: EmailClient
+    type: has_one
+    via: emailClient
+  - from: Device
+    to: OtpResult
+    type: has_one
+    via: 'getDeviceOtp on deviceId'
+  - from: Message
+    to: SpamAnalysisResult
+    type: has_one
+    via: 'getSpamAnalysis on messageId'
+  - from: Message
+    to: DeliverabilityReport
+    type: has_one
+    via: 'getDeliverabilityReport on messageId'
+  - from: DeliverabilityReport
+    to: EmailAuthenticationResult
+    type: has_many
+    via: 'SPF/DKIM/DMARC sections ($ref)'
+  - from: DeliverabilityReport
+    to: BlockListResult
+    type: has_many
+    via: '$ref'
+  - from: DeliverabilityReport
+    to: SpamFilterResults
+    type: has_one
+    via: '$ref'
+  - from: SpamAssassinResult
+    to: SpamAssassinRule
+    type: has_many
+    via: '$ref'
+  - from: UsageAccountLimits
+    to: UsageAccountLimit
+    type: has_many
+    via: 'servers, users, email, sms ($ref)'
+notes:
+  - >-
+    Device is NOT scoped to a Server. Authenticator devices are account-level,
+    while every message operation is inbox-scoped — the one place the object
+    graph breaks the inbox containment rule.
+  - >-
+    Attachment.content (base64) and Attachment.url both exist; the Files API
+    (getAttachment) is the streaming path and the field is the inline path.
+  - >-
+    There is no Account entity in the contract. The account exists only through
+    the Usage API's aggregate limits, so an agent has no object to read
+    account-level configuration from.

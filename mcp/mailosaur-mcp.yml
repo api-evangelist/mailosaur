@@ -1,0 +1,120 @@
+generated: '2026-08-14'
+method: derived
+status: candidate
+source: >-
+  Derived from the seven OpenAPI documents in openapi/. No Mailosaur MCP server
+  was found: mcp.mailosaur.com does not resolve (DNS failure, curl exit 6),
+  https://mailosaur.com/.well-known/mcp.json returns 404, the sitemap
+  (265 URLs) and the published llms.txt (26,652 bytes) name no MCP endpoint or
+  package, the github.com/mailosaur organization publishes no MCP repository,
+  and no `@mailosaur/*` MCP package exists on npm. Mailosaur's agent-facing
+  page (https://mailosaur.com/give-ai-tools) markets the REST API to agent
+  builders but does not ship an MCP server.
+deployment:
+  mode: none
+  auth: api-key
+  verified: derived
+  note: >-
+    mode is `none` because nobody ships a server — this file is an API
+    Evangelist candidate tool list derived from the provider's OpenAPI, not a
+    surface an agent can reach today. No endpoint or install command is
+    recorded, because inventing either would misrepresent Mailosaur as running
+    an agent surface it does not run.
+server:
+  name: mailosaur
+  transport: http
+  url: null
+authentication:
+  type: http-basic
+  note: >-
+    Every backing operation authenticates with HTTP Basic Auth, API key as the
+    username and an empty password. See authentication/mailosaur-authentication.yml.
+tools:
+  - name: list_messages
+    description: List message summaries in an inbox, newest first.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#listMessages
+  - name: search_messages
+    description: Search an inbox for messages matching sender, recipient, subject or body criteria, optionally waiting for arrival.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#searchMessages
+  - name: get_message
+    description: Retrieve the full detail of a single message, including links, codes, images and headers.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#getMessage
+  - name: create_message
+    description: Create and optionally send a message to a verified email address.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#createMessage
+  - name: forward_message
+    description: Forward a captured message to a verified email address.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#forwardMessage
+  - name: reply_to_message
+    description: Send a reply to a captured email or SMS message.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#replyToMessage
+  - name: delete_message
+    description: Permanently delete a single message and its attachments.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#deleteMessage
+  - name: delete_all_messages
+    description: Permanently delete every message in an inbox.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#deleteAllMessages
+  - name: generate_message_previews
+    description: Generate rendered screenshots of an email in the specified email clients.
+    source_operation: openapi/mailosaur-messages-api-openapi.yml#generateMessagePreviews
+  - name: list_servers
+    description: List the inboxes (servers) on the account.
+    source_operation: openapi/mailosaur-servers-api-openapi.yml#listServers
+  - name: create_server
+    description: Create a new inbox (server).
+    source_operation: openapi/mailosaur-servers-api-openapi.yml#createServer
+  - name: get_server
+    description: Retrieve the detail of a single inbox (server).
+    source_operation: openapi/mailosaur-servers-api-openapi.yml#getServer
+  - name: update_server
+    description: Update the attributes of an inbox (server).
+    source_operation: openapi/mailosaur-servers-api-openapi.yml#updateServer
+  - name: delete_server
+    description: Permanently delete an inbox (server) and everything in it.
+    source_operation: openapi/mailosaur-servers-api-openapi.yml#deleteServer
+  - name: get_server_password
+    description: Retrieve the SMTP/POP3/IMAP password for an inbox (server).
+    source_operation: openapi/mailosaur-servers-api-openapi.yml#getServerPassword
+  - name: list_devices
+    description: List the virtual TOTP authenticator devices on the account.
+    source_operation: openapi/mailosaur-devices-api-openapi.yml#listDevices
+  - name: create_device
+    description: Create a virtual TOTP authenticator device from a shared secret.
+    source_operation: openapi/mailosaur-devices-api-openapi.yml#createDevice
+  - name: delete_device
+    description: Delete a virtual TOTP authenticator device.
+    source_operation: openapi/mailosaur-devices-api-openapi.yml#deleteDevice
+  - name: get_device_otp
+    description: Get the current one-time passcode for a stored authenticator device.
+    source_operation: openapi/mailosaur-devices-api-openapi.yml#getDeviceOtp
+  - name: get_otp_by_shared_secret
+    description: Get the current one-time passcode for a shared secret without storing a device.
+    source_operation: openapi/mailosaur-devices-api-openapi.yml#getOtpBySharedSecret
+  - name: get_spam_analysis
+    description: Run a SpamAssassin spam analysis against a captured message.
+    source_operation: openapi/mailosaur-analysis-api-openapi.yml#getSpamAnalysis
+  - name: get_deliverability_report
+    description: Run a deliverability analysis (SPF/DKIM/DMARC, blocklists, content) against a captured message.
+    source_operation: openapi/mailosaur-analysis-api-openapi.yml#getDeliverabilityReport
+  - name: get_attachment
+    description: Download a message attachment.
+    source_operation: openapi/mailosaur-files-api-openapi.yml#getAttachment
+  - name: get_email_file
+    description: Download the raw EML source of an email.
+    source_operation: openapi/mailosaur-files-api-openapi.yml#getEmailFile
+  - name: get_email_preview
+    description: Download a rendered email preview screenshot.
+    source_operation: openapi/mailosaur-files-api-openapi.yml#getEmailPreview
+  - name: list_email_clients
+    description: List the email clients available for generating previews.
+    source_operation: openapi/mailosaur-previews-api-openapi.yml#listEmailClients
+  - name: get_usage_limits
+    description: Retrieve current account usage limits and consumption.
+    source_operation: openapi/mailosaur-usage-api-openapi.yml#getUsageLimits
+  - name: get_usage_transactions
+    description: Retrieve the last 31 days of transactional usage.
+    source_operation: openapi/mailosaur-usage-api-openapi.yml#getUsageTransactions
+coverage:
+  rest_operations_total: 28
+  tools_derived: 28
+  tools_published_by_provider: 0

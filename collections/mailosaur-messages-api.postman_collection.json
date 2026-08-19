@@ -1,0 +1,1086 @@
+{
+  "item": [
+    {
+      "id": "124701a3-2aeb-4b25-9b66-d074df36bc23",
+      "name": "Messages",
+      "description": {
+        "content": "Operations for finding, retrieving, creating, forwarding, replying to, and deleting the email and SMS messages received by your Mailosaur inboxes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1cb40a59-2797-4bed-978e-6b49838601f0",
+          "name": "List messages",
+          "request": {
+            "name": "List messages",
+            "description": {
+              "content": "Returns a list of your messages in summary form. The summaries are returned sorted by received date, with the most recently-received messages appearing first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "server",
+                  "value": "<string>",
+                  "description": "(Required) The unique identifier of the required inbox (server)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Used alongside itemsPerPage to paginate through results. This is zero-based, meaning 0 is the first page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "itemsPerPage",
+                  "value": "50",
+                  "description": "A limit on the number of results to be returned. This can be set between 1 and 1000, with the default being 50."
+                },
+                {
+                  "disabled": false,
+                  "key": "receivedAfter",
+                  "value": "<dateTime>",
+                  "description": "Limits results to only messages received after this date/time (default 1 hour ago)."
+                },
+                {
+                  "disabled": false,
+                  "key": "dir",
+                  "value": "<string>",
+                  "description": "Optionally limits results based on the direction (Sent or Received), with the default being Received."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8ebf0cf-ef96-42cc-9fab-2eaa38839f52",
+              "name": "A list of message summaries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "server",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "itemsPerPage",
+                      "value": "50"
+                    },
+                    {
+                      "key": "receivedAfter",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"Email\",\n      \"server\": \"string\",\n      \"from\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"to\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"cc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"bcc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"received\": \"1965-12-12T06:40:13.209Z\",\n      \"subject\": \"string\",\n      \"attachments\": 6923\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"Email\",\n      \"server\": \"string\",\n      \"from\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"to\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"cc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"bcc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"received\": \"1991-07-26T10:37:09.856Z\",\n      \"subject\": \"string\",\n      \"attachments\": 6699\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18858d5b-97e9-4970-9929-79e4ea25da17",
+          "name": "Create a message",
+          "request": {
+            "name": "Create a message",
+            "description": {
+              "content": "Creates a new message that can be sent to a verified email address. This is useful in scenarios where you want an email to trigger a workflow in your product.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "server",
+                  "value": "<string>",
+                  "description": "(Required) The unique identifier of the required inbox (server)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"<string>\",\n  \"cc\": \"<string>\",\n  \"from\": \"<string>\",\n  \"send\": \"<boolean>\",\n  \"subject\": \"<string>\",\n  \"text\": \"<string>\",\n  \"html\": \"<string>\",\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4df3ae0c-a27b-405a-ac67-638288e63b94",
+              "name": "The newly-created message.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "server",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"<string>\",\n  \"cc\": \"<string>\",\n  \"from\": \"<string>\",\n  \"send\": \"<boolean>\",\n  \"subject\": \"<string>\",\n  \"text\": \"<string>\",\n  \"html\": \"<string>\",\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"Email\",\n  \"from\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"to\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"bcc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"received\": \"1977-11-18T15:58:50.574Z\",\n  \"subject\": \"string\",\n  \"html\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"text\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"metadata\": {\n    \"headers\": [\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      }\n    ],\n    \"ehlo\": \"string\",\n    \"mailFrom\": \"string\",\n    \"rcptTo\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"server\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79eda2d9-c946-4fd1-ace8-460ca0eabbff",
+          "name": "Delete all messages",
+          "request": {
+            "name": "Delete all messages",
+            "description": {
+              "content": "Permanently delete all messages within an inbox (server). This operation cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "server",
+                  "value": "<string>",
+                  "description": "(Required) The unique identifier of the inbox (server)."
+                }
+              ],
+              "variable": []
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0eddd45c-3fe2-4fe8-9d8c-a0c899daf075",
+              "name": "All messages were successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "server",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec709f5a-06e8-4dda-8141-73c888e2eb5e",
+          "name": "Search messages",
+          "request": {
+            "name": "Search messages",
+            "description": {
+              "content": "Returns a list of messages matching the specified search criteria, in summary form. The messages are returned sorted by received date, with the most recently-received messages appearing first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "server",
+                  "value": "<string>",
+                  "description": "(Required) The unique identifier of the inbox (server) to search."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Used alongside itemsPerPage to paginate through results."
+                },
+                {
+                  "disabled": false,
+                  "key": "itemsPerPage",
+                  "value": "50",
+                  "description": "A limit on the number of results to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "receivedAfter",
+                  "value": "<dateTime>",
+                  "description": "Limits results to only messages received after this date/time."
+                },
+                {
+                  "disabled": false,
+                  "key": "dir",
+                  "value": "<string>",
+                  "description": "Optionally limits results based on direction."
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "<integer>",
+                  "description": "Specify how long to wait for a matching result in milliseconds. Default is 0 (no waiting)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sentFrom\": \"<string>\",\n  \"sentTo\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"match\": \"ALL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "46117377-2fad-4f82-bcb7-6130f211862e",
+              "name": "A list of matching message summaries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "server",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "itemsPerPage",
+                      "value": "50"
+                    },
+                    {
+                      "key": "receivedAfter",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sentFrom\": \"<string>\",\n  \"sentTo\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\",\n  \"match\": \"ALL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"SMS\",\n      \"server\": \"string\",\n      \"from\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"to\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"cc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"bcc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"received\": \"2017-12-22T12:22:11.117Z\",\n      \"subject\": \"string\",\n      \"attachments\": 1329\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"SMS\",\n      \"server\": \"string\",\n      \"from\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"to\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"cc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"bcc\": [\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"phone\": \"string\"\n        }\n      ],\n      \"received\": \"2004-02-28T08:28:02.420Z\",\n      \"subject\": \"string\",\n      \"attachments\": 3395\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c51e0b0-d6b3-4d7d-8fe7-0a0cfcf14c91",
+          "name": "Get a message",
+          "request": {
+            "name": "Get a message",
+            "description": {
+              "content": "Retrieves the detail for a single message. Must be used in conjunction with either list or search in order to get the unique identifier for the required message.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                ":messageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7b9c6b65-e317-415a-b4d0-4c0828479600",
+              "name": "The full message detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"Email\",\n  \"from\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"to\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"bcc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"received\": \"1976-10-19T08:14:36.265Z\",\n  \"subject\": \"string\",\n  \"html\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"text\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"metadata\": {\n    \"headers\": [\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      }\n    ],\n    \"ehlo\": \"string\",\n    \"mailFrom\": \"string\",\n    \"rcptTo\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"server\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0aa4aae9-7d8f-4b5a-9b3c-4ebe5be4b16e",
+          "name": "Delete a message",
+          "request": {
+            "name": "Delete a message",
+            "description": {
+              "content": "Permanently deletes a message. Also deletes any attachments related to the message. This operation cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                ":messageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "58108efa-592b-4b38-bd10-e66ebcd4d387",
+              "name": "The message was successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32d58200-10c8-4806-ae31-cf299a78dc5a",
+          "name": "Forward a message",
+          "request": {
+            "name": "Forward a message",
+            "description": {
+              "content": "Forwards the specified message to a verified email address. This is useful for simulating a user forwarding one of your email messages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                ":messageId",
+                "forward"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"<string>\",\n  \"cc\": \"<string>\",\n  \"text\": \"<string>\",\n  \"html\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1cde3f79-ebee-4135-8035-6bb495dcfa9b",
+              "name": "The forwarded message.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId",
+                    "forward"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"<string>\",\n  \"cc\": \"<string>\",\n  \"text\": \"<string>\",\n  \"html\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"Email\",\n  \"from\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"to\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"bcc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"received\": \"1976-10-19T08:14:36.265Z\",\n  \"subject\": \"string\",\n  \"html\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"text\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"metadata\": {\n    \"headers\": [\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      }\n    ],\n    \"ehlo\": \"string\",\n    \"mailFrom\": \"string\",\n    \"rcptTo\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"server\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18706a06-7f69-49be-9c0b-70ae50d36c28",
+          "name": "Reply to a message",
+          "request": {
+            "name": "Reply to a message",
+            "description": {
+              "content": "Sends a reply to the specified message. This is useful for when simulating a user replying to one of your email or SMS messages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                ":messageId",
+                "reply"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cc\": \"<string>\",\n  \"text\": \"<string>\",\n  \"html\": \"<string>\",\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5814fd89-996c-4a87-8aff-0a131d47cdaa",
+              "name": "The reply message.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId",
+                    "reply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cc\": \"<string>\",\n  \"text\": \"<string>\",\n  \"html\": \"<string>\",\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"Email\",\n  \"from\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"to\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"cc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"bcc\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"phone\": \"string\"\n    }\n  ],\n  \"received\": \"1976-10-19T08:14:36.265Z\",\n  \"subject\": \"string\",\n  \"html\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"text\": {\n    \"links\": [\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      },\n      {\n        \"href\": \"string\",\n        \"text\": \"string\"\n      }\n    ],\n    \"codes\": [\n      {\n        \"value\": \"string\"\n      },\n      {\n        \"value\": \"string\"\n      }\n    ],\n    \"images\": [\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      },\n      {\n        \"src\": \"string\",\n        \"alt\": \"string\"\n      }\n    ],\n    \"body\": \"string\"\n  },\n  \"attachments\": [\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"fileName\": \"<string>\",\n      \"content\": \"<string>\",\n      \"contentId\": \"<string>\",\n      \"length\": \"<integer>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"metadata\": {\n    \"headers\": [\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"value\": \"string\"\n      }\n    ],\n    \"ehlo\": \"string\",\n    \"mailFrom\": \"string\",\n    \"rcptTo\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"server\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9da477f-0137-4494-9176-b7455f98b42f",
+          "name": "Generate email previews",
+          "request": {
+            "name": "Generate email previews",
+            "description": {
+              "content": "Generates screenshots of an email rendered in the specified email clients.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                ":messageId",
+                "screenshots"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) The unique identifier of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"previews\": [\n    {\n      \"emailClient\": \"<string>\"\n    },\n    {\n      \"emailClient\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e429d00-655f-488d-a097-fa8d13e827b2",
+              "name": "The generated previews.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId",
+                    "screenshots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) The unique identifier of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"previews\": [\n    {\n      \"emailClient\": \"<string>\"\n    },\n    {\n      \"emailClient\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"emailClient\": \"string\",\n      \"capture\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"emailClient\": \"string\",\n      \"capture\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://mailosaur.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "38aaf5a8-827d-4c1c-a48e-0aceb2d15b63",
+    "name": "Mailosaur Analysis Messages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.\n\nContact Support:\n Name: Mailosaur Support",
+      "type": "text/plain"
+    }
+  }
+}
