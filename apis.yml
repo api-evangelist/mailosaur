@@ -82,6 +82,8 @@ apis:
   humanURL: https://mailosaur.com/docs/api
   baseURL: https://mailosaur.com/api
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -101,6 +103,8 @@ apis:
   humanURL: https://mailosaur.com/docs/api
   baseURL: https://mailosaur.com/api
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
