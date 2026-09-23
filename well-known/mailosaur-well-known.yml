@@ -3,16 +3,22 @@ method: probed
 source: live GET of the /.well-known/ discovery surface on every apis.yml and OpenAPI servers[] host
 host: https://mailosaur.com
 result: none
-note: >-
-  Every /.well-known/ path probed on mailosaur.com returned HTTP 404. The host
-  answers 404 with a 63,233-byte HTML "Page not found" document, so no path here
-  can be mistaken for a served discovery document. mailosaur.com is the single
-  host in play — apis.yml baseURL (https://mailosaur.com/api) and every OpenAPI
-  servers[] entry (https://mailosaur.com) resolve to it, and the docs host
-  docs.mailosaur.com is not delegated (it 404s from the same apex site). Because
-  nothing returned a document, NO WellKnown or SecurityTxt pointer is emitted in
-  apis.yml — this file records a verified absence, not a surface.
-documents:
+note: Every /.well-known/ path probed on mailosaur.com returned HTTP 404. The host answers 404 with a
+  63,233-byte HTML "Page not found" document, so no path here can be mistaken for a served discovery document.
+  mailosaur.com is the single host in play — apis.yml baseURL (https://mailosaur.com/api) and every OpenAPI
+  servers[] entry (https://mailosaur.com) resolve to it, and the docs host docs.mailosaur.com is not delegated
+  (it 404s from the same apex site). Because nothing returned a document, NO WellKnown or SecurityTxt
+  pointer is emitted in apis.yml — this file records a verified absence, not a surface.
+adjacent_discovery:
+- path: /llms.txt
+  status: 200
+  note: Not a /.well-known/ document, but Mailosaur does serve a real llms.txt (26,652 bytes, text/plain)
+    at the site root, captured verbatim at llms/mailosaur-llms.txt.
+- path: /sitemap.xml
+  status: 200
+hosts:
+- host: https://mailosaur.com
+  documents:
   - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
@@ -31,12 +37,8 @@ documents:
     status: 404
   - path: /.well-known/mcp.json
     status: 404
-adjacent_discovery:
-  - path: /llms.txt
-    status: 200
-    note: >-
-      Not a /.well-known/ document, but Mailosaur does serve a real llms.txt
-      (26,652 bytes, text/plain) at the site root, captured verbatim at
-      llms/mailosaur-llms.txt.
-  - path: /sitemap.xml
-    status: 200
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.

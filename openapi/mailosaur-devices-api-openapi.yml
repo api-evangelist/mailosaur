@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Mailosaur Analysis Devices API
+  title: Mailosaur Devices API
   description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
   version: 1.0.0
   contact:
@@ -107,14 +107,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/OtpResult'
 components:
-  parameters:
-    deviceId:
-      name: deviceId
-      in: path
-      required: true
-      description: The unique identifier of the virtual security device.
-      schema:
-        type: string
   schemas:
     DeviceCreateOptions:
       type: object
@@ -126,6 +118,17 @@ components:
         sharedSecret:
           type: string
           description: The base32-encoded shared secret for this device.
+    OtpResult:
+      type: object
+      description: A one-time password result from a virtual security device.
+      properties:
+        code:
+          type: string
+          description: The current one-time password.
+        expires:
+          type: string
+          format: date-time
+          description: The expiry date/time of the current one-time password.
     DeviceListResult:
       type: object
       description: A list of virtual security devices.
@@ -145,17 +148,14 @@ components:
         name:
           type: string
           description: The name of the device.
-    OtpResult:
-      type: object
-      description: A one-time password result from a virtual security device.
-      properties:
-        code:
-          type: string
-          description: The current one-time password.
-        expires:
-          type: string
-          format: date-time
-          description: The expiry date/time of the current one-time password.
+  parameters:
+    deviceId:
+      name: deviceId
+      in: path
+      required: true
+      description: The unique identifier of the virtual security device.
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http

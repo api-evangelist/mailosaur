@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Mailosaur Analysis API
   description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
@@ -53,6 +53,97 @@ paths:
                 $ref: '#/components/schemas/DeliverabilityReport'
 components:
   schemas:
+    BlockListResult:
+      type: object
+      description: The result of checking against a blocklist.
+      properties:
+        id:
+          type: string
+          description: The blocklist identifier.
+        name:
+          type: string
+          description: The name of the blocklist.
+        result:
+          type: string
+          description: The blocklist check result (e.g. Listed, NotListed).
+    DnsRecords:
+      type: object
+      description: DNS record checks made against the sender's domain.
+      properties:
+        a:
+          type: array
+          description: A records.
+          items:
+            type: string
+        mx:
+          type: array
+          description: MX records.
+          items:
+            type: string
+        ptr:
+          type: array
+          description: PTR (reverse DNS) records.
+          items:
+            type: string
+    SpamAssassinResult:
+      type: object
+      description: The result of SpamAssassin analysis.
+      properties:
+        score:
+          type: number
+          format: float
+          description: The SpamAssassin score.
+        result:
+          type: string
+          description: The SpamAssassin result.
+        rules:
+          type: array
+          description: Individual SpamAssassin rule results.
+          items:
+            $ref: '#/components/schemas/SpamAssassinRule'
+    SpamAnalysisResult:
+      type: object
+      description: The results of spam analysis performed by Mailosaur.
+      properties:
+        spamFilterResults:
+          $ref: '#/components/schemas/SpamFilterResults'
+        score:
+          type: number
+          format: float
+          description: Overall Mailosaur spam score.
+    DeliverabilityReport:
+      type: object
+      description: The results of a deliverability report performed by Mailosaur.
+      properties:
+        spf:
+          $ref: '#/components/schemas/EmailAuthenticationResult'
+        dkim:
+          type: array
+          description: The result(s) of checking for DKIM issues.
+          items:
+            $ref: '#/components/schemas/EmailAuthenticationResult'
+        dmarc:
+          $ref: '#/components/schemas/EmailAuthenticationResult'
+        blockLists:
+          type: array
+          description: The result of each blocklist that was checked.
+          items:
+            $ref: '#/components/schemas/BlockListResult'
+        content:
+          $ref: '#/components/schemas/Content'
+        dnsRecords:
+          $ref: '#/components/schemas/DnsRecords'
+        spamAssassin:
+          $ref: '#/components/schemas/SpamAssassinResult'
+    SpamFilterResults:
+      type: object
+      description: Spam filter analysis results.
+      properties:
+        spamAssassin:
+          type: array
+          description: SpamAssassin rule results.
+          items:
+            $ref: '#/components/schemas/SpamAssassinRule'
     SpamAssassinRule:
       type: object
       description: A single SpamAssassin rule result.
@@ -67,15 +158,6 @@ components:
         description:
           type: string
           description: The description of the rule.
-    SpamFilterResults:
-      type: object
-      description: Spam filter analysis results.
-      properties:
-        spamAssassin:
-          type: array
-          description: SpamAssassin rule results.
-          items:
-            $ref: '#/components/schemas/SpamAssassinRule'
     Content:
       type: object
       description: The result of content checks on the email.
@@ -107,25 +189,6 @@ components:
         missingListUnsubscribe:
           type: boolean
           description: Whether the List-Unsubscribe header is missing.
-    DnsRecords:
-      type: object
-      description: DNS record checks made against the sender's domain.
-      properties:
-        a:
-          type: array
-          description: A records.
-          items:
-            type: string
-        mx:
-          type: array
-          description: MX records.
-          items:
-            type: string
-        ptr:
-          type: array
-          description: PTR (reverse DNS) records.
-          items:
-            type: string
     EmailAuthenticationResult:
       type: object
       description: The result of an email authentication check (SPF, DKIM, or DMARC).
@@ -144,69 +207,6 @@ components:
           description: Key-value pairs of authentication tags.
           additionalProperties:
             type: string
-    SpamAnalysisResult:
-      type: object
-      description: The results of spam analysis performed by Mailosaur.
-      properties:
-        spamFilterResults:
-          $ref: '#/components/schemas/SpamFilterResults'
-        score:
-          type: number
-          format: float
-          description: Overall Mailosaur spam score.
-    SpamAssassinResult:
-      type: object
-      description: The result of SpamAssassin analysis.
-      properties:
-        score:
-          type: number
-          format: float
-          description: The SpamAssassin score.
-        result:
-          type: string
-          description: The SpamAssassin result.
-        rules:
-          type: array
-          description: Individual SpamAssassin rule results.
-          items:
-            $ref: '#/components/schemas/SpamAssassinRule'
-    BlockListResult:
-      type: object
-      description: The result of checking against a blocklist.
-      properties:
-        id:
-          type: string
-          description: The blocklist identifier.
-        name:
-          type: string
-          description: The name of the blocklist.
-        result:
-          type: string
-          description: The blocklist check result (e.g. Listed, NotListed).
-    DeliverabilityReport:
-      type: object
-      description: The results of a deliverability report performed by Mailosaur.
-      properties:
-        spf:
-          $ref: '#/components/schemas/EmailAuthenticationResult'
-        dkim:
-          type: array
-          description: The result(s) of checking for DKIM issues.
-          items:
-            $ref: '#/components/schemas/EmailAuthenticationResult'
-        dmarc:
-          $ref: '#/components/schemas/EmailAuthenticationResult'
-        blockLists:
-          type: array
-          description: The result of each blocklist that was checked.
-          items:
-            $ref: '#/components/schemas/BlockListResult'
-        content:
-          $ref: '#/components/schemas/Content'
-        dnsRecords:
-          $ref: '#/components/schemas/DnsRecords'
-        spamAssassin:
-          $ref: '#/components/schemas/SpamAssassinResult'
   parameters:
     messageId:
       name: messageId

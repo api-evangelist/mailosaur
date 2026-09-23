@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Mailosaur Analysis Servers API
+  title: Mailosaur Servers API
   description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
   version: 1.0.0
   contact:
@@ -122,13 +122,6 @@ paths:
                     description: The password value.
 components:
   schemas:
-    ServerCreateOptions:
-      type: object
-      description: Options used to create a new Mailosaur inbox (server).
-      properties:
-        name:
-          type: string
-          description: A name used to identify the inbox (server).
     Server:
       type: object
       description: A Mailosaur inbox (server) — a virtual SMTP/SMS endpoint.
@@ -147,6 +140,13 @@ components:
         messages:
           type: integer
           description: The number of messages currently in the inbox (server).
+    ServerCreateOptions:
+      type: object
+      description: Options used to create a new Mailosaur inbox (server).
+      properties:
+        name:
+          type: string
+          description: A name used to identify the inbox (server).
     ServerListResult:
       type: object
       description: The result of a request to list Mailosaur inboxes (servers).

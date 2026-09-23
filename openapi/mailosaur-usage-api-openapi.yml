@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Mailosaur Analysis Usage API
+  title: Mailosaur Usage API
   description: REST API for email and SMS testing. Provides endpoints for managing test inboxes (servers), retrieving and searching messages, running deliverability checks, generating OTPs for authenticator testing, and accessing account usage data. All requests authenticate via HTTP Basic Auth using an API key.
   version: 1.0.0
   contact:
@@ -49,6 +49,27 @@ paths:
                 $ref: '#/components/schemas/UsageTransactionListResult'
 components:
   schemas:
+    UsageAccountLimits:
+      type: object
+      description: The account usage limits.
+      properties:
+        servers:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        users:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        email:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        sms:
+          $ref: '#/components/schemas/UsageAccountLimit'
+    UsageTransactionListResult:
+      type: object
+      description: A list of usage transaction records.
+      properties:
+        items:
+          type: array
+          description: A list of usage transactions for the last 31 days.
+          items:
+            $ref: '#/components/schemas/UsageTransaction'
     UsageTransaction:
       type: object
       description: A usage transaction record.
@@ -63,18 +84,6 @@ components:
         sms:
           type: integer
           description: The number of SMS messages processed.
-    UsageAccountLimits:
-      type: object
-      description: The account usage limits.
-      properties:
-        servers:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        users:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        email:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        sms:
-          $ref: '#/components/schemas/UsageAccountLimit'
     UsageAccountLimit:
       type: object
       description: A single account limit.
@@ -85,15 +94,6 @@ components:
         current:
           type: integer
           description: The current value for this limit.
-    UsageTransactionListResult:
-      type: object
-      description: A list of usage transaction records.
-      properties:
-        items:
-          type: array
-          description: A list of usage transactions for the last 31 days.
-          items:
-            $ref: '#/components/schemas/UsageTransaction'
   securitySchemes:
     basicAuth:
       type: http
