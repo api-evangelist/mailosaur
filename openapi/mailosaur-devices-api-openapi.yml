@@ -108,16 +108,6 @@ paths:
                 $ref: '#/components/schemas/OtpResult'
 components:
   schemas:
-    DeviceCreateOptions:
-      type: object
-      description: Options used to create a new Mailosaur virtual security device.
-      properties:
-        name:
-          type: string
-          description: A name used to identify the device.
-        sharedSecret:
-          type: string
-          description: The base32-encoded shared secret for this device.
     OtpResult:
       type: object
       description: A one-time password result from a virtual security device.
@@ -129,15 +119,16 @@ components:
           type: string
           format: date-time
           description: The expiry date/time of the current one-time password.
-    DeviceListResult:
+    DeviceCreateOptions:
       type: object
-      description: A list of virtual security devices.
+      description: Options used to create a new Mailosaur virtual security device.
       properties:
-        items:
-          type: array
-          description: A list of devices.
-          items:
-            $ref: '#/components/schemas/Device'
+        name:
+          type: string
+          description: A name used to identify the device.
+        sharedSecret:
+          type: string
+          description: The base32-encoded shared secret for this device.
     Device:
       type: object
       description: A Mailosaur virtual security device (for TOTP/2FA testing).
@@ -148,6 +139,15 @@ components:
         name:
           type: string
           description: The name of the device.
+    DeviceListResult:
+      type: object
+      description: A list of virtual security devices.
+      properties:
+        items:
+          type: array
+          description: A list of devices.
+          items:
+            $ref: '#/components/schemas/Device'
   parameters:
     deviceId:
       name: deviceId

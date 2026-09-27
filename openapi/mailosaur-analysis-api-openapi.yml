@@ -53,19 +53,39 @@ paths:
                 $ref: '#/components/schemas/DeliverabilityReport'
 components:
   schemas:
-    BlockListResult:
+    DeliverabilityReport:
       type: object
-      description: The result of checking against a blocklist.
+      description: The results of a deliverability report performed by Mailosaur.
       properties:
-        id:
-          type: string
-          description: The blocklist identifier.
-        name:
-          type: string
-          description: The name of the blocklist.
-        result:
-          type: string
-          description: The blocklist check result (e.g. Listed, NotListed).
+        spf:
+          $ref: '#/components/schemas/EmailAuthenticationResult'
+        dkim:
+          type: array
+          description: The result(s) of checking for DKIM issues.
+          items:
+            $ref: '#/components/schemas/EmailAuthenticationResult'
+        dmarc:
+          $ref: '#/components/schemas/EmailAuthenticationResult'
+        blockLists:
+          type: array
+          description: The result of each blocklist that was checked.
+          items:
+            $ref: '#/components/schemas/BlockListResult'
+        content:
+          $ref: '#/components/schemas/Content'
+        dnsRecords:
+          $ref: '#/components/schemas/DnsRecords'
+        spamAssassin:
+          $ref: '#/components/schemas/SpamAssassinResult'
+    SpamFilterResults:
+      type: object
+      description: Spam filter analysis results.
+      properties:
+        spamAssassin:
+          type: array
+          description: SpamAssassin rule results.
+          items:
+            $ref: '#/components/schemas/SpamAssassinRule'
     DnsRecords:
       type: object
       description: DNS record checks made against the sender's domain.
@@ -101,49 +121,6 @@ components:
           description: Individual SpamAssassin rule results.
           items:
             $ref: '#/components/schemas/SpamAssassinRule'
-    SpamAnalysisResult:
-      type: object
-      description: The results of spam analysis performed by Mailosaur.
-      properties:
-        spamFilterResults:
-          $ref: '#/components/schemas/SpamFilterResults'
-        score:
-          type: number
-          format: float
-          description: Overall Mailosaur spam score.
-    DeliverabilityReport:
-      type: object
-      description: The results of a deliverability report performed by Mailosaur.
-      properties:
-        spf:
-          $ref: '#/components/schemas/EmailAuthenticationResult'
-        dkim:
-          type: array
-          description: The result(s) of checking for DKIM issues.
-          items:
-            $ref: '#/components/schemas/EmailAuthenticationResult'
-        dmarc:
-          $ref: '#/components/schemas/EmailAuthenticationResult'
-        blockLists:
-          type: array
-          description: The result of each blocklist that was checked.
-          items:
-            $ref: '#/components/schemas/BlockListResult'
-        content:
-          $ref: '#/components/schemas/Content'
-        dnsRecords:
-          $ref: '#/components/schemas/DnsRecords'
-        spamAssassin:
-          $ref: '#/components/schemas/SpamAssassinResult'
-    SpamFilterResults:
-      type: object
-      description: Spam filter analysis results.
-      properties:
-        spamAssassin:
-          type: array
-          description: SpamAssassin rule results.
-          items:
-            $ref: '#/components/schemas/SpamAssassinRule'
     SpamAssassinRule:
       type: object
       description: A single SpamAssassin rule result.
@@ -158,6 +135,47 @@ components:
         description:
           type: string
           description: The description of the rule.
+    SpamAnalysisResult:
+      type: object
+      description: The results of spam analysis performed by Mailosaur.
+      properties:
+        spamFilterResults:
+          $ref: '#/components/schemas/SpamFilterResults'
+        score:
+          type: number
+          format: float
+          description: Overall Mailosaur spam score.
+    BlockListResult:
+      type: object
+      description: The result of checking against a blocklist.
+      properties:
+        id:
+          type: string
+          description: The blocklist identifier.
+        name:
+          type: string
+          description: The name of the blocklist.
+        result:
+          type: string
+          description: The blocklist check result (e.g. Listed, NotListed).
+    EmailAuthenticationResult:
+      type: object
+      description: The result of an email authentication check (SPF, DKIM, or DMARC).
+      properties:
+        result:
+          type: string
+          description: The authentication result (e.g. Pass, Fail, None).
+        description:
+          type: string
+          description: A description of the authentication result.
+        rawValue:
+          type: string
+          description: The raw value of the authentication header.
+        tags:
+          type: object
+          description: Key-value pairs of authentication tags.
+          additionalProperties:
+            type: string
     Content:
       type: object
       description: The result of content checks on the email.
@@ -189,24 +207,6 @@ components:
         missingListUnsubscribe:
           type: boolean
           description: Whether the List-Unsubscribe header is missing.
-    EmailAuthenticationResult:
-      type: object
-      description: The result of an email authentication check (SPF, DKIM, or DMARC).
-      properties:
-        result:
-          type: string
-          description: The authentication result (e.g. Pass, Fail, None).
-        description:
-          type: string
-          description: A description of the authentication result.
-        rawValue:
-          type: string
-          description: The raw value of the authentication header.
-        tags:
-          type: object
-          description: Key-value pairs of authentication tags.
-          additionalProperties:
-            type: string
   parameters:
     messageId:
       name: messageId

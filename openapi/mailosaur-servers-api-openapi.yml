@@ -140,13 +140,6 @@ components:
         messages:
           type: integer
           description: The number of messages currently in the inbox (server).
-    ServerCreateOptions:
-      type: object
-      description: Options used to create a new Mailosaur inbox (server).
-      properties:
-        name:
-          type: string
-          description: A name used to identify the inbox (server).
     ServerListResult:
       type: object
       description: The result of a request to list Mailosaur inboxes (servers).
@@ -156,6 +149,13 @@ components:
           description: A list of inboxes (servers).
           items:
             $ref: '#/components/schemas/Server'
+    ServerCreateOptions:
+      type: object
+      description: Options used to create a new Mailosaur inbox (server).
+      properties:
+        name:
+          type: string
+          description: A name used to identify the inbox (server).
   parameters:
     serverId:
       name: serverId

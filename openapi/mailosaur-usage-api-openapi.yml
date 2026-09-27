@@ -49,6 +49,16 @@ paths:
                 $ref: '#/components/schemas/UsageTransactionListResult'
 components:
   schemas:
+    UsageAccountLimit:
+      type: object
+      description: A single account limit.
+      properties:
+        limit:
+          type: integer
+          description: The maximum value for this limit.
+        current:
+          type: integer
+          description: The current value for this limit.
     UsageAccountLimits:
       type: object
       description: The account usage limits.
@@ -84,16 +94,6 @@ components:
         sms:
           type: integer
           description: The number of SMS messages processed.
-    UsageAccountLimit:
-      type: object
-      description: A single account limit.
-      properties:
-        limit:
-          type: integer
-          description: The maximum value for this limit.
-        current:
-          type: integer
-          description: The current value for this limit.
   securitySchemes:
     basicAuth:
       type: http
