@@ -35,15 +35,6 @@ paths:
                 $ref: '#/components/schemas/EmailClientListResult'
 components:
   schemas:
-    EmailClientListResult:
-      type: object
-      description: A list of available email clients for generating previews.
-      properties:
-        items:
-          type: array
-          description: A list of email clients.
-          items:
-            $ref: '#/components/schemas/EmailClient'
     EmailClient:
       type: object
       description: An email client available for generating email previews.
@@ -66,6 +57,15 @@ components:
               name:
                 type: string
                 description: The platform name.
+    EmailClientListResult:
+      type: object
+      description: A list of available email clients for generating previews.
+      properties:
+        items:
+          type: array
+          description: A list of email clients.
+          items:
+            $ref: '#/components/schemas/EmailClient'
   securitySchemes:
     basicAuth:
       type: http

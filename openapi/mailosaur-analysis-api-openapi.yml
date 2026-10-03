@@ -77,15 +77,6 @@ components:
           $ref: '#/components/schemas/DnsRecords'
         spamAssassin:
           $ref: '#/components/schemas/SpamAssassinResult'
-    SpamFilterResults:
-      type: object
-      description: Spam filter analysis results.
-      properties:
-        spamAssassin:
-          type: array
-          description: SpamAssassin rule results.
-          items:
-            $ref: '#/components/schemas/SpamAssassinRule'
     DnsRecords:
       type: object
       description: DNS record checks made against the sender's domain.
@@ -135,47 +126,6 @@ components:
         description:
           type: string
           description: The description of the rule.
-    SpamAnalysisResult:
-      type: object
-      description: The results of spam analysis performed by Mailosaur.
-      properties:
-        spamFilterResults:
-          $ref: '#/components/schemas/SpamFilterResults'
-        score:
-          type: number
-          format: float
-          description: Overall Mailosaur spam score.
-    BlockListResult:
-      type: object
-      description: The result of checking against a blocklist.
-      properties:
-        id:
-          type: string
-          description: The blocklist identifier.
-        name:
-          type: string
-          description: The name of the blocklist.
-        result:
-          type: string
-          description: The blocklist check result (e.g. Listed, NotListed).
-    EmailAuthenticationResult:
-      type: object
-      description: The result of an email authentication check (SPF, DKIM, or DMARC).
-      properties:
-        result:
-          type: string
-          description: The authentication result (e.g. Pass, Fail, None).
-        description:
-          type: string
-          description: A description of the authentication result.
-        rawValue:
-          type: string
-          description: The raw value of the authentication header.
-        tags:
-          type: object
-          description: Key-value pairs of authentication tags.
-          additionalProperties:
-            type: string
     Content:
       type: object
       description: The result of content checks on the email.
@@ -207,6 +157,56 @@ components:
         missingListUnsubscribe:
           type: boolean
           description: Whether the List-Unsubscribe header is missing.
+    EmailAuthenticationResult:
+      type: object
+      description: The result of an email authentication check (SPF, DKIM, or DMARC).
+      properties:
+        result:
+          type: string
+          description: The authentication result (e.g. Pass, Fail, None).
+        description:
+          type: string
+          description: A description of the authentication result.
+        rawValue:
+          type: string
+          description: The raw value of the authentication header.
+        tags:
+          type: object
+          description: Key-value pairs of authentication tags.
+          additionalProperties:
+            type: string
+    SpamAnalysisResult:
+      type: object
+      description: The results of spam analysis performed by Mailosaur.
+      properties:
+        spamFilterResults:
+          $ref: '#/components/schemas/SpamFilterResults'
+        score:
+          type: number
+          format: float
+          description: Overall Mailosaur spam score.
+    SpamFilterResults:
+      type: object
+      description: Spam filter analysis results.
+      properties:
+        spamAssassin:
+          type: array
+          description: SpamAssassin rule results.
+          items:
+            $ref: '#/components/schemas/SpamAssassinRule'
+    BlockListResult:
+      type: object
+      description: The result of checking against a blocklist.
+      properties:
+        id:
+          type: string
+          description: The blocklist identifier.
+        name:
+          type: string
+          description: The name of the blocklist.
+        result:
+          type: string
+          description: The blocklist check result (e.g. Listed, NotListed).
   parameters:
     messageId:
       name: messageId
