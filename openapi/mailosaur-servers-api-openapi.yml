@@ -121,15 +121,14 @@ paths:
                     type: string
                     description: The password value.
 components:
-  parameters:
-    serverId:
-      name: serverId
-      in: path
-      required: true
-      description: The unique identifier of the inbox (server).
-      schema:
-        type: string
   schemas:
+    ServerCreateOptions:
+      type: object
+      description: Options used to create a new Mailosaur inbox (server).
+      properties:
+        name:
+          type: string
+          description: A name used to identify the inbox (server).
     Server:
       type: object
       description: A Mailosaur inbox (server) — a virtual SMTP/SMS endpoint.
@@ -148,13 +147,6 @@ components:
         messages:
           type: integer
           description: The number of messages currently in the inbox (server).
-    ServerCreateOptions:
-      type: object
-      description: Options used to create a new Mailosaur inbox (server).
-      properties:
-        name:
-          type: string
-          description: A name used to identify the inbox (server).
     ServerListResult:
       type: object
       description: The result of a request to list Mailosaur inboxes (servers).
@@ -164,6 +156,14 @@ components:
           description: A list of inboxes (servers).
           items:
             $ref: '#/components/schemas/Server'
+  parameters:
+    serverId:
+      name: serverId
+      in: path
+      required: true
+      description: The unique identifier of the inbox (server).
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http

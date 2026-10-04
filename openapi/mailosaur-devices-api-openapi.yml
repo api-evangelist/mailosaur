@@ -107,17 +107,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/OtpResult'
 components:
+  parameters:
+    deviceId:
+      name: deviceId
+      in: path
+      required: true
+      description: The unique identifier of the virtual security device.
+      schema:
+        type: string
   schemas:
-    Device:
-      type: object
-      description: A Mailosaur virtual security device (for TOTP/2FA testing).
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the device.
-        name:
-          type: string
-          description: The name of the device.
     DeviceCreateOptions:
       type: object
       description: Options used to create a new Mailosaur virtual security device.
@@ -128,15 +126,16 @@ components:
         sharedSecret:
           type: string
           description: The base32-encoded shared secret for this device.
-    DeviceListResult:
+    Device:
       type: object
-      description: A list of virtual security devices.
+      description: A Mailosaur virtual security device (for TOTP/2FA testing).
       properties:
-        items:
-          type: array
-          description: A list of devices.
-          items:
-            $ref: '#/components/schemas/Device'
+        id:
+          type: string
+          description: Unique identifier for the device.
+        name:
+          type: string
+          description: The name of the device.
     OtpResult:
       type: object
       description: A one-time password result from a virtual security device.
@@ -148,14 +147,15 @@ components:
           type: string
           format: date-time
           description: The expiry date/time of the current one-time password.
-  parameters:
-    deviceId:
-      name: deviceId
-      in: path
-      required: true
-      description: The unique identifier of the virtual security device.
-      schema:
-        type: string
+    DeviceListResult:
+      type: object
+      description: A list of virtual security devices.
+      properties:
+        items:
+          type: array
+          description: A list of devices.
+          items:
+            $ref: '#/components/schemas/Device'
   securitySchemes:
     basicAuth:
       type: http

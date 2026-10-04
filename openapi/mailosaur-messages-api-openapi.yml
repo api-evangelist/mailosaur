@@ -265,52 +265,6 @@ paths:
                 $ref: '#/components/schemas/PreviewListResult'
 components:
   schemas:
-    PreviewRequestOptions:
-      type: object
-      description: Options to use when requesting email previews.
-      properties:
-        previews:
-          type: array
-          description: A list of email clients to generate previews for.
-          items:
-            type: object
-            properties:
-              emailClient:
-                type: string
-                description: The email client identifier.
-    Preview:
-      type: object
-      description: A rendered email preview screenshot.
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the preview.
-        emailClient:
-          type: string
-          description: The email client used to render the preview.
-        capture:
-          type: string
-          description: The type of capture (e.g. desktop, mobile).
-    Link:
-      type: object
-      description: A hyperlink found in a message body.
-      properties:
-        href:
-          type: string
-          description: The target URL of the hyperlink.
-        text:
-          type: string
-          description: The display text of the hyperlink.
-    Image:
-      type: object
-      description: An image found in a message body.
-      properties:
-        src:
-          type: string
-          description: The source URL of the image.
-        alt:
-          type: string
-          description: The alt text of the image.
     MessageListResult:
       type: object
       description: The result of a request to list or search messages.
@@ -320,160 +274,6 @@ components:
           description: A list of message summaries.
           items:
             $ref: '#/components/schemas/MessageSummary'
-    MessageHeader:
-      type: object
-      description: An email header.
-      properties:
-        field:
-          type: string
-          description: The header field name.
-        value:
-          type: string
-          description: The header field value.
-    SearchCriteria:
-      type: object
-      description: The criteria with which to find messages during a search.
-      properties:
-        sentFrom:
-          type: string
-          description: The full email address (or phone number for SMS) from which the target message was sent.
-        sentTo:
-          type: string
-          description: The full email address (or phone number for SMS) to which the target message was sent.
-        subject:
-          type: string
-          description: The value to seek within the subject line of a target email.
-        body:
-          type: string
-          description: The value to seek within the body of the target message.
-        match:
-          type: string
-          enum:
-          - ALL
-          - ANY
-          default: ALL
-          description: If set to ALL (default), then only results that match all specified criteria will be returned. If set to ANY, results that match any of the specified criteria will be returned.
-    PreviewListResult:
-      type: object
-      description: The result of a request to generate email previews.
-      properties:
-        items:
-          type: array
-          description: A list of generated previews.
-          items:
-            $ref: '#/components/schemas/Preview'
-    MessageContent:
-      type: object
-      description: The HTML or plain text content of a message.
-      properties:
-        links:
-          type: array
-          description: A list of hyperlinks found in the message body.
-          items:
-            $ref: '#/components/schemas/Link'
-        codes:
-          type: array
-          description: A list of verification codes found in the message body.
-          items:
-            type: object
-            properties:
-              value:
-                type: string
-                description: The verification code value.
-        images:
-          type: array
-          description: A list of images found in the message body.
-          items:
-            $ref: '#/components/schemas/Image'
-        body:
-          type: string
-          description: The full HTML or plain text body of the message.
-    MessageForwardOptions:
-      type: object
-      description: Options to use when forwarding a message.
-      required:
-      - to
-      properties:
-        to:
-          type: string
-          description: The email address to which the email will be sent. Must be a verified email address.
-        cc:
-          type: string
-          description: The email address to which the email will be CC'd to. Must be a verified email address.
-        text:
-          type: string
-          description: Any plain text to include when forwarding the message. Note that only text or html can be supplied, not both.
-        html:
-          type: string
-          description: Any HTML content to include when forwarding the message. Note that only text or html can be supplied, not both.
-    MessageReplyOptions:
-      type: object
-      description: Options to use when replying to a message.
-      properties:
-        cc:
-          type: string
-          description: The email address to which the email will be CC'd to. Must be a verified email address.
-        text:
-          type: string
-          description: Any additional plain text content to include in the reply. Note that only text or html can be supplied, not both.
-        html:
-          type: string
-          description: Any additional HTML content to include in the reply. Note that only html or text can be supplied, not both.
-        attachments:
-          type: array
-          description: Any message attachments.
-          items:
-            $ref: '#/components/schemas/Attachment'
-    MessageCreateOptions:
-      type: object
-      description: Options to use when creating a new message.
-      properties:
-        to:
-          type: string
-          description: The email address to which the email will be sent. Must be a verified email address.
-        cc:
-          type: string
-          description: The email address to which the email will be CC'd to. Must be a verified email address.
-        from:
-          type: string
-          description: Allows for the partial override of the message's 'from' address. This must be an address ending with YOUR_SERVER.mailosaur.net.
-        send:
-          type: boolean
-          description: If true, email will be sent upon creation.
-        subject:
-          type: string
-          description: The email subject line.
-        text:
-          type: string
-          description: The plain text body of the message. Note that only text or html can be supplied, not both.
-        html:
-          type: string
-          description: The HTML body of the message. Note that only text or html can be supplied, not both.
-        attachments:
-          type: array
-          description: Any message attachments.
-          items:
-            $ref: '#/components/schemas/Attachment'
-    Metadata:
-      type: object
-      description: Further metadata related to the message, including email headers.
-      properties:
-        headers:
-          type: array
-          description: A list of email headers.
-          items:
-            $ref: '#/components/schemas/MessageHeader'
-        ehlo:
-          type: string
-          description: The EHLO string.
-        mailFrom:
-          type: string
-          description: The MAIL FROM value.
-        rcptTo:
-          type: array
-          description: The RCPT TO values.
-          items:
-            type: string
     MessageAddress:
       type: object
       description: An email address or SMS phone number.
@@ -487,31 +287,19 @@ components:
         phone:
           type: string
           description: The phone number of the sender or recipient (SMS).
-    Attachment:
+    PreviewRequestOptions:
       type: object
-      description: A file attachment on a message.
+      description: Options to use when requesting email previews.
       properties:
-        id:
-          type: string
-          description: Unique identifier for the attachment.
-        contentType:
-          type: string
-          description: The MIME type of the attachment.
-        fileName:
-          type: string
-          description: The filename of the attachment.
-        content:
-          type: string
-          description: The base64-encoded content of the attachment.
-        contentId:
-          type: string
-          description: The content ID of the attachment (for inline attachments).
-        length:
-          type: integer
-          description: The size of the attachment in bytes.
-        url:
-          type: string
-          description: URL used to download the attachment.
+        previews:
+          type: array
+          description: A list of email clients to generate previews for.
+          items:
+            type: object
+            properties:
+              emailClient:
+                type: string
+                description: The email client identifier.
     MessageSummary:
       type: object
       description: A summary of a message (used in list results).
@@ -558,6 +346,208 @@ components:
         attachments:
           type: integer
           description: The number of attachments.
+    MessageContent:
+      type: object
+      description: The HTML or plain text content of a message.
+      properties:
+        links:
+          type: array
+          description: A list of hyperlinks found in the message body.
+          items:
+            $ref: '#/components/schemas/Link'
+        codes:
+          type: array
+          description: A list of verification codes found in the message body.
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: The verification code value.
+        images:
+          type: array
+          description: A list of images found in the message body.
+          items:
+            $ref: '#/components/schemas/Image'
+        body:
+          type: string
+          description: The full HTML or plain text body of the message.
+    MessageReplyOptions:
+      type: object
+      description: Options to use when replying to a message.
+      properties:
+        cc:
+          type: string
+          description: The email address to which the email will be CC'd to. Must be a verified email address.
+        text:
+          type: string
+          description: Any additional plain text content to include in the reply. Note that only text or html can be supplied, not both.
+        html:
+          type: string
+          description: Any additional HTML content to include in the reply. Note that only html or text can be supplied, not both.
+        attachments:
+          type: array
+          description: Any message attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+    SearchCriteria:
+      type: object
+      description: The criteria with which to find messages during a search.
+      properties:
+        sentFrom:
+          type: string
+          description: The full email address (or phone number for SMS) from which the target message was sent.
+        sentTo:
+          type: string
+          description: The full email address (or phone number for SMS) to which the target message was sent.
+        subject:
+          type: string
+          description: The value to seek within the subject line of a target email.
+        body:
+          type: string
+          description: The value to seek within the body of the target message.
+        match:
+          type: string
+          enum:
+          - ALL
+          - ANY
+          default: ALL
+          description: If set to ALL (default), then only results that match all specified criteria will be returned. If set to ANY, results that match any of the specified criteria will be returned.
+    MessageCreateOptions:
+      type: object
+      description: Options to use when creating a new message.
+      properties:
+        to:
+          type: string
+          description: The email address to which the email will be sent. Must be a verified email address.
+        cc:
+          type: string
+          description: The email address to which the email will be CC'd to. Must be a verified email address.
+        from:
+          type: string
+          description: Allows for the partial override of the message's 'from' address. This must be an address ending with YOUR_SERVER.mailosaur.net.
+        send:
+          type: boolean
+          description: If true, email will be sent upon creation.
+        subject:
+          type: string
+          description: The email subject line.
+        text:
+          type: string
+          description: The plain text body of the message. Note that only text or html can be supplied, not both.
+        html:
+          type: string
+          description: The HTML body of the message. Note that only text or html can be supplied, not both.
+        attachments:
+          type: array
+          description: Any message attachments.
+          items:
+            $ref: '#/components/schemas/Attachment'
+    Attachment:
+      type: object
+      description: A file attachment on a message.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the attachment.
+        contentType:
+          type: string
+          description: The MIME type of the attachment.
+        fileName:
+          type: string
+          description: The filename of the attachment.
+        content:
+          type: string
+          description: The base64-encoded content of the attachment.
+        contentId:
+          type: string
+          description: The content ID of the attachment (for inline attachments).
+        length:
+          type: integer
+          description: The size of the attachment in bytes.
+        url:
+          type: string
+          description: URL used to download the attachment.
+    MessageHeader:
+      type: object
+      description: An email header.
+      properties:
+        field:
+          type: string
+          description: The header field name.
+        value:
+          type: string
+          description: The header field value.
+    Link:
+      type: object
+      description: A hyperlink found in a message body.
+      properties:
+        href:
+          type: string
+          description: The target URL of the hyperlink.
+        text:
+          type: string
+          description: The display text of the hyperlink.
+    MessageForwardOptions:
+      type: object
+      description: Options to use when forwarding a message.
+      required:
+      - to
+      properties:
+        to:
+          type: string
+          description: The email address to which the email will be sent. Must be a verified email address.
+        cc:
+          type: string
+          description: The email address to which the email will be CC'd to. Must be a verified email address.
+        text:
+          type: string
+          description: Any plain text to include when forwarding the message. Note that only text or html can be supplied, not both.
+        html:
+          type: string
+          description: Any HTML content to include when forwarding the message. Note that only text or html can be supplied, not both.
+    PreviewListResult:
+      type: object
+      description: The result of a request to generate email previews.
+      properties:
+        items:
+          type: array
+          description: A list of generated previews.
+          items:
+            $ref: '#/components/schemas/Preview'
+    Preview:
+      type: object
+      description: A rendered email preview screenshot.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the preview.
+        emailClient:
+          type: string
+          description: The email client used to render the preview.
+        capture:
+          type: string
+          description: The type of capture (e.g. desktop, mobile).
+    Metadata:
+      type: object
+      description: Further metadata related to the message, including email headers.
+      properties:
+        headers:
+          type: array
+          description: A list of email headers.
+          items:
+            $ref: '#/components/schemas/MessageHeader'
+        ehlo:
+          type: string
+          description: The EHLO string.
+        mailFrom:
+          type: string
+          description: The MAIL FROM value.
+        rcptTo:
+          type: array
+          description: The RCPT TO values.
+          items:
+            type: string
     Message:
       type: object
       description: An email or SMS message processed by Mailosaur.
@@ -612,6 +602,16 @@ components:
         server:
           type: string
           description: Identifier for the inbox (server) in which the message is located.
+    Image:
+      type: object
+      description: An image found in a message body.
+      properties:
+        src:
+          type: string
+          description: The source URL of the image.
+        alt:
+          type: string
+          description: The alt text of the image.
   parameters:
     messageId:
       name: messageId

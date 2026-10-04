@@ -49,6 +49,18 @@ paths:
                 $ref: '#/components/schemas/UsageTransactionListResult'
 components:
   schemas:
+    UsageAccountLimits:
+      type: object
+      description: The account usage limits.
+      properties:
+        servers:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        users:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        email:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        sms:
+          $ref: '#/components/schemas/UsageAccountLimit'
     UsageTransaction:
       type: object
       description: A usage transaction record.
@@ -82,18 +94,6 @@ components:
           description: A list of usage transactions for the last 31 days.
           items:
             $ref: '#/components/schemas/UsageTransaction'
-    UsageAccountLimits:
-      type: object
-      description: The account usage limits.
-      properties:
-        servers:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        users:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        email:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        sms:
-          $ref: '#/components/schemas/UsageAccountLimit'
   securitySchemes:
     basicAuth:
       type: http
