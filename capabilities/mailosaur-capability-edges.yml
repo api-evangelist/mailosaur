@@ -1,0 +1,39 @@
+slug: mailosaur
+provider: Mailosaur
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Analysis
+  spec_file: mailosaur-analysis-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.7
+  evidence: GET /api/analysis/spam/{messageId}  "Perform spam analysis"; GET /api/analysis/deliverability/{messageId}  "Perform
+    deliverability analysis" — "email and SMS testing platform for developers and QA teams"
+  reason: Vendor is a developer/QA testing tool; these endpoints run automated checks on captured test
+    messages as part of CI/CD test suites, so the capability realised is software quality engineering,
+    not marketing deliverability operations.
+- tag: Messages
+  spec_file: mailosaur-messages-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.7
+  evidence: '"REST API for email and SMS testing ... retrieving and searching messages, running deliverability
+    checks" with operations "searchMessages  Search messages" and "generateMessagePreviews  Generate email
+    previews"'
+  reason: 'The messages surface is the core assertion/verification surface of a QA email-testing tool:
+    capture, search and inspect test messages so automated tests can assert on them. That is test-suite
+    tooling (software quality engineering), not end-customer messaging. Confidence moderate because the
+    tag itself is generic message CRUD and could be read as plain mailbox access.'

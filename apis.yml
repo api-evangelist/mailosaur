@@ -186,6 +186,9 @@ apis:
     url: >-
       https://www.postman.com/mailosaur/mailosaur/documentation/6961255-6cc72dff-f576-451a-9023-b82dec84f95d
 common:
+  - type: CapabilityMap
+    url: capabilities/mailosaur-capability-edges.yml
+    name: Mailosaur Business Capability Map
   - type: AgenticAccess
     url: agentic-access/mailosaur-agentic-access.yml
   - type: TrustCenter
