@@ -49,18 +49,6 @@ paths:
                 $ref: '#/components/schemas/UsageTransactionListResult'
 components:
   schemas:
-    UsageAccountLimits:
-      type: object
-      description: The account usage limits.
-      properties:
-        servers:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        users:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        email:
-          $ref: '#/components/schemas/UsageAccountLimit'
-        sms:
-          $ref: '#/components/schemas/UsageAccountLimit'
     UsageTransaction:
       type: object
       description: A usage transaction record.
@@ -75,6 +63,18 @@ components:
         sms:
           type: integer
           description: The number of SMS messages processed.
+    UsageAccountLimits:
+      type: object
+      description: The account usage limits.
+      properties:
+        servers:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        users:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        email:
+          $ref: '#/components/schemas/UsageAccountLimit'
+        sms:
+          $ref: '#/components/schemas/UsageAccountLimit'
     UsageAccountLimit:
       type: object
       description: A single account limit.

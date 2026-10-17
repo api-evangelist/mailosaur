@@ -53,15 +53,19 @@ paths:
                 $ref: '#/components/schemas/DeliverabilityReport'
 components:
   schemas:
-    SpamFilterResults:
+    BlockListResult:
       type: object
-      description: Spam filter analysis results.
+      description: The result of checking against a blocklist.
       properties:
-        spamAssassin:
-          type: array
-          description: SpamAssassin rule results.
-          items:
-            $ref: '#/components/schemas/SpamAssassinRule'
+        id:
+          type: string
+          description: The blocklist identifier.
+        name:
+          type: string
+          description: The name of the blocklist.
+        result:
+          type: string
+          description: The blocklist check result (e.g. Listed, NotListed).
     SpamAnalysisResult:
       type: object
       description: The results of spam analysis performed by Mailosaur.
@@ -72,24 +76,6 @@ components:
           type: number
           format: float
           description: Overall Mailosaur spam score.
-    EmailAuthenticationResult:
-      type: object
-      description: The result of an email authentication check (SPF, DKIM, or DMARC).
-      properties:
-        result:
-          type: string
-          description: The authentication result (e.g. Pass, Fail, None).
-        description:
-          type: string
-          description: A description of the authentication result.
-        rawValue:
-          type: string
-          description: The raw value of the authentication header.
-        tags:
-          type: object
-          description: Key-value pairs of authentication tags.
-          additionalProperties:
-            type: string
     SpamAssassinRule:
       type: object
       description: A single SpamAssassin rule result.
@@ -104,25 +90,6 @@ components:
         description:
           type: string
           description: The description of the rule.
-    DnsRecords:
-      type: object
-      description: DNS record checks made against the sender's domain.
-      properties:
-        a:
-          type: array
-          description: A records.
-          items:
-            type: string
-        mx:
-          type: array
-          description: MX records.
-          items:
-            type: string
-        ptr:
-          type: array
-          description: PTR (reverse DNS) records.
-          items:
-            type: string
     SpamAssassinResult:
       type: object
       description: The result of SpamAssassin analysis.
@@ -137,6 +104,15 @@ components:
         rules:
           type: array
           description: Individual SpamAssassin rule results.
+          items:
+            $ref: '#/components/schemas/SpamAssassinRule'
+    SpamFilterResults:
+      type: object
+      description: Spam filter analysis results.
+      properties:
+        spamAssassin:
+          type: array
+          description: SpamAssassin rule results.
           items:
             $ref: '#/components/schemas/SpamAssassinRule'
     DeliverabilityReport:
@@ -194,19 +170,43 @@ components:
         missingListUnsubscribe:
           type: boolean
           description: Whether the List-Unsubscribe header is missing.
-    BlockListResult:
+    DnsRecords:
       type: object
-      description: The result of checking against a blocklist.
+      description: DNS record checks made against the sender's domain.
       properties:
-        id:
-          type: string
-          description: The blocklist identifier.
-        name:
-          type: string
-          description: The name of the blocklist.
+        a:
+          type: array
+          description: A records.
+          items:
+            type: string
+        mx:
+          type: array
+          description: MX records.
+          items:
+            type: string
+        ptr:
+          type: array
+          description: PTR (reverse DNS) records.
+          items:
+            type: string
+    EmailAuthenticationResult:
+      type: object
+      description: The result of an email authentication check (SPF, DKIM, or DMARC).
+      properties:
         result:
           type: string
-          description: The blocklist check result (e.g. Listed, NotListed).
+          description: The authentication result (e.g. Pass, Fail, None).
+        description:
+          type: string
+          description: A description of the authentication result.
+        rawValue:
+          type: string
+          description: The raw value of the authentication header.
+        tags:
+          type: object
+          description: Key-value pairs of authentication tags.
+          additionalProperties:
+            type: string
   parameters:
     messageId:
       name: messageId

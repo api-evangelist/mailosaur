@@ -129,6 +129,15 @@ components:
         name:
           type: string
           description: A name used to identify the inbox (server).
+    ServerListResult:
+      type: object
+      description: The result of a request to list Mailosaur inboxes (servers).
+      properties:
+        items:
+          type: array
+          description: A list of inboxes (servers).
+          items:
+            $ref: '#/components/schemas/Server'
     Server:
       type: object
       description: A Mailosaur inbox (server) — a virtual SMTP/SMS endpoint.
@@ -147,15 +156,6 @@ components:
         messages:
           type: integer
           description: The number of messages currently in the inbox (server).
-    ServerListResult:
-      type: object
-      description: The result of a request to list Mailosaur inboxes (servers).
-      properties:
-        items:
-          type: array
-          description: A list of inboxes (servers).
-          items:
-            $ref: '#/components/schemas/Server'
   parameters:
     serverId:
       name: serverId
