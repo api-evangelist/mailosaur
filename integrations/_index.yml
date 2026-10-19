@@ -72,3 +72,96 @@
     builder: unknown (community connector; contributor not in the record)
   status: not-a-workflow
   arazzo: null
+- slug: mailosaur-maven-central
+  label: Maven Central
+  partner: maven-central
+  partner_name: Maven Central
+  category: official SDK (Java/JVM)
+  type: register
+  channel: package-registry
+  evidence: https://central.sonatype.com/artifact/com.mailosaur/mailosaur-java
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.mailosaur:mailosaur-java
+      version: 9.1.1
+      released: '2026-05-27'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.mailosaur/mailosaur-java
+      repo_leg: domain:mailosaur.com
+      publisher_leg: groupId:mailosaur.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: mailosaur-pypi
+  label: PyPI
+  partner: pypi
+  partner_name: PyPI
+  category: official SDK (Python)
+  type: register
+  channel: package-registry
+  evidence: https://pypi.org/project/mailosaur/
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: mailosaur
+      version: 8.1.1
+      released: '2026-05-27'
+      released_field: upload_time
+      lapsed: false
+      page: https://pypi.org/project/mailosaur/
+      repo_leg: domain:mailosaur.com
+      publisher_leg: email:mailosaur.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: mailosaur-rubygems
+  label: RubyGems
+  partner: rubygems
+  partner_name: RubyGems
+  category: official SDK (Ruby)
+  type: register
+  channel: package-registry
+  evidence: https://rubygems.org/gems/mailosaur
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: RubyGems (public registry JSON)
+    spec_file: null
+    language: Ruby
+    packages:
+    - name: mailosaur
+      version: 8.1.1
+      released: '2026-05-27'
+      released_field: version_created_at
+      lapsed: false
+      page: https://rubygems.org/gems/mailosaur
+      repo_leg: domain:mailosaur.com
+      publisher_leg: org:mailosaur
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
